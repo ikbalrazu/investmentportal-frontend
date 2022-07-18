@@ -1,10 +1,13 @@
-import React, {useEffect,useState} from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "../Sheard/Footer";
 import LoginTopHeader from "../Sheard/LoginTopHeader";
 import Menu from "../Sheard/Menu";
 import { useNavigate } from "react-router-dom";
 import { Base64 } from "js-base64";
 import axios from "axios";
+
+// Styling Extranal css
+import "./registration.css";
 
 const Login = () => {
   const registration = useNavigate();
@@ -42,7 +45,7 @@ const Login = () => {
           // console.log(userdata[i]?.Password)
           //console.log(DecodePass);
           if (userdata[i]?.Email === email && DecodePass === password) {
-            if(userdata[i].UserStatus === "Approved"){
+            if (userdata[i].UserStatus === "Approved") {
               localStorage.setItem(
                 "userinfo",
                 JSON.stringify({
@@ -56,14 +59,15 @@ const Login = () => {
               // message.success("Successfully login!");
               console.log("Successfully login!");
               registration("/home");
-            }else if(userdata[i].UserStatus === "Pending"){
+            } else if (userdata[i].UserStatus === "Pending") {
               //message.success("Your request is pending...");
               console.log("Your request is pending...");
-            }else{
+            } else {
               //message.success("Please ask an admin to grant permission to this app.");
-              console.log("Please ask an admin to grant permission to this app.");
+              console.log(
+                "Please ask an admin to grant permission to this app."
+              );
             }
-            
           } else {
             setAlertmsg("");
             // setAlertmsg(<Alert message="Incorrect Email and Password" type="warning" showIcon closable />)
@@ -75,14 +79,13 @@ const Login = () => {
     } else {
       // console.log("Server problem. User not found try after sometimes");
       // setAlertmsg("Server problem. User not found try after sometimes");
-   //   message.success("Server problem. User not found try after sometimes!");
+      //   message.success("Server problem. User not found try after sometimes!");
     }
   };
 
   const ForgotPassword = () => {
     forgotpassword("/forgotpassword");
   };
-
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userinfo"));
@@ -94,8 +97,7 @@ const Login = () => {
 
   return (
     <div>
-
-<LoginTopHeader></LoginTopHeader>
+      <LoginTopHeader></LoginTopHeader>
       <div className="container">
         <div className=" row ">
           <h3 className="text-white text-start mt-5">
@@ -119,16 +121,18 @@ const Login = () => {
                   <form>
                     <div class="form-group mt-2">
                       <input
+                        style={{ backgroundColor: "#00ADEE", color: "white" }}
                         type="text"
                         class="form-control"
                         id="username"
                         aria-describedby="username"
-                        placeholder="User Email "
+                        placeholder="User Email"
                         onChange={(e) => setEmail(e.target.value)}
                       />
                     </div>
                     <div class="form-group mt-3">
                       <input
+                        style={{ backgroundColor: "#00ADEE", color: "white" }}
                         type="password"
                         class="form-control"
                         id="password"
@@ -140,10 +144,11 @@ const Login = () => {
 
                     <div class="form-group mt-3">
                       <button
-                        style={{ float: "left", color: "#00ADEE" }}
+                        //  style={{ float: "left", color: "#00ADEE" }}
                         type="button"
-                        className="btn btn-primary bg-white mt-2 border-0"
+                        className="btn btn-primary mt-2 border-0"
                         onClick={userLogin}
+                        id="registetionbutton"
                       >
                         Sign In
                       </button>
@@ -164,7 +169,10 @@ const Login = () => {
 
                   <div>
                     If you do not already have a User ID and password, please{" "}
-                    <a onClick={() => registration("/registration")} className="text-white">
+                    <a
+                      onClick={() => registration("/register")}
+                      className="text-white"
+                    >
                       register now
                     </a>
                     .
