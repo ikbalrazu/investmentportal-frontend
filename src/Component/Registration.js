@@ -227,9 +227,10 @@ const Registration = () => {
 
                   <div class="form-group mt-3">
                     <button
-                      style={{ float: "left", color: "#00ADEE" }}
+                   //   style={{ float: "left", color: "#00ADEE" }}
                       type="button"
-                      className="btn btn-primary bg-white mt-2 border-0"
+                      className="btn btn-primary  mt-2 border-0"
+                      id='registetionbutton'
                     >
                       Submit
                     </button>

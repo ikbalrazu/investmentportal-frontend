@@ -1,3 +1,15 @@
 input::placeholder {
     color: white !important;
   }
+
+
+
+#registetionbutton {
+    background-color: white;
+    color: black;
+  }
+
+#registetionbutton:hover{
+    background-color: black ;
+    color: white;
+}
