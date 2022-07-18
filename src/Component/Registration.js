@@ -52,7 +52,7 @@ const Registration = () => {
                         class="form-control"
                         id="firstname"
                         aria-describedby="firstname"
-                        placeholder="First Name "
+                        placeholder="First Name* "
                       />
                     </div>
                     <div
@@ -64,7 +64,7 @@ const Registration = () => {
                         class="form-control"
                         id="lastname"
                         aria-describedby="firstname"
-                        placeholder="Last Name "
+                        placeholder="Last Name* "
                         style={{ backgroundColor: "#00ADEE", color: "white" }}
                       />
                     </div>
@@ -85,7 +85,7 @@ const Registration = () => {
                         class="form-control"
                         id="email"
                         aria-describedby="email"
-                        placeholder="Email "
+                        placeholder="Email* "
                         style={{ backgroundColor: "#00ADEE", color: "white" }}
                       />
                     </div>
@@ -99,7 +99,7 @@ const Registration = () => {
                         id="lastname"
                         aria-describedby="phone"
                         placeholder="
-                        Phone"
+                        Phone*"
                         style={{ backgroundColor: "#00ADEE", color: "white" }}
                       />
                     </div>
@@ -218,7 +218,7 @@ const Registration = () => {
                         class="form-control"
                         id="jobrole"
                         aria-describedby="jobrole"
-                        placeholder="Job Role"
+                        placeholder="Job Role*"
                         style={{ backgroundColor: "#00ADEE", color: "white" }}
                       />
                     </div>
