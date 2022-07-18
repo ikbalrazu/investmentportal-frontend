@@ -6,6 +6,11 @@ import { useNavigate } from "react-router-dom";
 import { Base64 } from "js-base64";
 import axios from "axios";
 
+// All Extranal images
+import img1 from "../images/img1.svg";
+import img2 from "../images/img2.svg";
+import img3 from "../images/img3.svg";
+
 // Styling Extranal css
 import "./registration.css";
 
@@ -202,81 +207,70 @@ const Login = () => {
                   color: "#00ADEE",
                 }}
               >
-                Latest News
+                Trustee Services
               </h3>
 
-              <ul class="list-group ">
-                <li
-                  class="list-group"
-                  style={{
-                    backgroundColor: "transparent",
-                    color: "white",
-                  }}
-                >
-                  <span> 22/06/2022 </span>
-                  <div>
-                    An Article 77 proceeding was recently filed relating to
-                    certain GSR RMBS trusts. A Notice entitled "Notice of
-                    proceeding re payment waterfalls on GSR RMBS Trusts" has
-                    been posted in the Available Documents section of each
-                    affected trust's website.
-                    <hr />
-                  </div>
-                </li>
-                <li
-                  class="list-group"
-                  style={{
-                    backgroundColor: "transparent",
-                    color: "white",
-                  }}
-                >
-                  <span> 22/06/2022 </span>
-                  <div>
-                    An Article 77 proceeding was recently filed relating to
-                    certain GSR RMBS trusts. A Notice entitled "Notice of
-                    proceeding re payment waterfalls on GSR RMBS Trusts" has
-                    been posted in the Available Documents section of each
-                    affected trust's website.
-                    <hr />
-                  </div>
-                </li>
+              <div
+                className="row"
+                style={{
+                  padding: 10,
+                }}
+              >
+                <div className="col-lg-4 col-md-4 col-sm-12 col-12">
+                  <img src={img1} alt="example" style={{ height: 33 }} />
+                  <h4>Funds</h4>
 
-                <li
-                  class="list-group"
-                  style={{
-                    backgroundColor: "transparent",
-                    color: "white",
-                  }}
-                >
-                  <span> 22/06/2022 </span>
-                  <div>
-                    An Article 77 proceeding was recently filed relating to
-                    certain GSR RMBS trusts. A Notice entitled "Notice of
-                    proceeding re payment waterfalls on GSR RMBS Trusts" has
-                    been posted in the Available Documents section of each
-                    affected trust's website.
-                    <hr />
-                  </div>
-                </li>
+                  <ul>
+                    <li>Wholesale Trustee (including Custody).</li>
+                    <li>Wholesale Trustee (including Custody).</li>
+                  </ul>
 
-                <li
-                  class="list-group"
-                  style={{
-                    backgroundColor: "transparent",
-                    color: "white",
-                  }}
-                >
-                  <span> 22/06/2022 </span>
                   <div>
-                    An Article 77 proceeding was recently filed relating to
-                    certain GSR RMBS trusts. A Notice entitled "Notice of
-                    proceeding re payment waterfalls on GSR RMBS Trusts" has
-                    been posted in the Available Documents section of each
-                    affected trust's website.
-                    <hr />
+                    Includes acting as trustee for credit, property, mortgage,
+                    private equity and fixed interest funds.
                   </div>
-                </li>
-              </ul>
+                </div>
+
+                <div className="col-lg-4 col-md-4 col-sm-12 col-12">
+
+                <img src={img3} alt="example" style={{ height: 33}}/>
+
+                  <h4>Agency Services</h4>
+
+                  <ul>
+                    <li>Escrow Agent.</li>
+                    <li>Paying Agent.</li>
+                    <li>
+                      Facility Agent and Security Trustee - Syndicated Debt
+                      Facilities.
+                    </li>
+                  </ul>
+
+                  <div>
+                    Includes holding assets on trust, holding security on behalf
+                    of lenders, managing syndicated facilities, maintaining bank
+                    accounts and distributing funds.
+                  </div>
+                </div>
+
+                <div className="col-lg-4 col-md-4 col-sm-12 col-12">
+                  <img src={img2} alt="example" style={{ height: 33 }} />
+
+                  <h3>Structured Finance</h3>
+                  <ul>
+                    <li>Trustee.</li>
+                    <li>Security Trustee.</li>
+                    <li>Trust Management.</li>
+                    <li>Document Custodian.</li>
+                    <li>Issuing and Paying Agent.</li>
+                  </ul>
+
+                  <div>
+                    Includes securitisation programs for RMBS, CMBS, ABS,
+                    corporate finance and trade receivables.
+                  </div>
+                </div>
+              </div>
             </section>
             {/* Latest News End  */}
           </div>
@@ -290,6 +284,8 @@ const Login = () => {
                 minHeight: 919,
               }}
             >
+
+
               <h3
                 style={{
                   color: "#00ADEE",
