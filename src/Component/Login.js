@@ -174,12 +174,13 @@ const Login = () => {
 
                   <div>
                     If you do not already have a User ID and password, please{" "}
-                    <a
+                    {/* <a
                       onClick={() => registration("/register")}
                       className="text-white"
                     >
                       register now
-                    </a>
+                    </a> */}
+                    <button onClick={() => registration("/register")} className="buttonreg">Register your Details</button>
                     .
                     <br />
                     Once you have completed your registration, you may sign into

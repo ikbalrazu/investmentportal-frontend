@@ -11,6 +11,10 @@ const Search = () => {
   const detailspage = useNavigate();
   const [dealsdata,setDealsData] = useState();
   const [documentdata, setDocumentData] = useState();
+  const [issuername, setIssuerName] = useState([]);
+  const [unique_issuername, setUniqueIssuerName] = useState([]);
+  const [financername, setFinancerName] = useState([]);
+  const [unique_financername, setUniqueFinancerName] = useState([]);
 
   const AllDeals = () =>{
     axios.post("https://investmentportal.herokuapp.com/getalldeals").then(function(data){
@@ -18,16 +22,88 @@ const Search = () => {
       setDealsData(data.data.data);
       //console.log(data.data.data[0].Documents);
       setDocumentData(data.data.data);
+      for(let i=0; i<data.data.data.length; i++){
+        console.log(data.data.data[i].Issuer_Name);
+        setIssuerName(preData=>[...preData,data.data.data[i].Issuer_Name]);
+        setFinancerName(preData=>[...preData,data.data.data[i].Financer]);
+        console.log(data.data.data[i].Financer);
+      }
+    }).catch(function(error){
+      console.log(error);
     })
   }
 
+  const ListHandler = () =>{
+    console.log(dealsdata);
+    const withoutDuplicates_issuername = [...new Set(issuername)];
+    console.log(withoutDuplicates_issuername);
+    for(let k=0; k<withoutDuplicates_issuername?.length; k++){
+      console.log(withoutDuplicates_issuername[k]);
+      //const str_issuername = withoutDuplicates_issuername[k];
+      for(let l=0; l<dealsdata.length; l++){
+        console.log(dealsdata[l].Issuer_Name);
+        if(dealsdata[l].Issuer_Name === withoutDuplicates_issuername[k]){
+          //console.log("IssuerList",dealsdata[l].DealName);
+          setUniqueIssuerName(oldData=>[...oldData,{"IssuerList":dealsdata[l].DealName}]);
+        }
+      }
+    }
+  }
+
+
   const ShowData = () =>{
-    console.log("deals data: ",dealsdata);
+    // console.log("Issuer name: ",issuername);
+    // console.log("Financer", financername);
+    // const withoutDuplicates = [...new Set(issuername)];
+    // console.log(withoutDuplicates);
+    // const withoutDuplicates_issuername = [...new Set(issuername)];
+    // console.log(withoutDuplicates_issuername);
+    //console.log(issuername);
+    console.log(unique_issuername);
   }
 
   useEffect(()=>{
     AllDeals();
+    // const DealsData = async () => {
+    //   try{
+    //     const data = await axios.post("https://investmentportal.herokuapp.com/getalldeals");
+    //     //console.log(data);
+    //     //const data = await res.json();
+    //     //console.log(data);
+    //     setDealsData(data.data.data);
+    //     for(let i=0; i<data.data.data.length; i++){
+    //       console.log(data.data.data[i].Issuer_Name);
+    //       setIssuerName(preData=>[...preData,data.data.data[i].Issuer_Name]);
+    //       setFinancerName(preData=>[...preData,data.data.data[i].Financer]);
+    //       console.log(data.data.data[i].Financer);
+    //     }
+
+    //     return data.data.data;
+
+    //   }catch(error){
+    //     console.log(error);
+    //   }
+      
+    // }
+
+    // DealsData().then(data=>{
+    //   const withoutDuplicates_issuername = [...new Set(issuername)]; //0, 1
+    //   console.log(withoutDuplicates_issuername);
+    //   console.log(data);
+    //   for(let k=0; k<withoutDuplicates_issuername?.length; k++){
+    //     console.log(withoutDuplicates_issuername[k]);
+    //     for(let l=0; l<data?.data?.data?.length; l++){
+    //       if(withoutDuplicates_issuername[k] === data?.data?.data[l]?.Issuer_Name){
+    //         setUniqueIssuerName(oldData=>[...oldData,{"IssuerList":data?.data?.data[l]?.DealName}]);
+    //       }
+    //     }
+    //   }
+    // }).catch(console.error);
   },[]);
+
+  // useEffect(()=>{
+  //   ShowData();
+  // },[]);
 
 
 
@@ -309,8 +385,8 @@ const Search = () => {
       {/* Advance Search Section End  */}
 
       {/* Start table of All content  */}
-      {/* <button onClick={AllDeals}>Get all deals</button>
-      <button onClick={ShowData}>Show data</button> */}
+      <button onClick={ShowData}>Get issuer list</button>
+      <button onClick={ListHandler}>Show data</button>
       <section
         className="container mt-5"
         style={{
