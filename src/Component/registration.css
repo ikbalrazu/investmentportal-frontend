@@ -13,3 +13,14 @@ input::placeholder {
     background-color: black ;
     color: white;
 }
+
+.buttonreg{
+  color: blue;
+  background-color: #fff;
+  border: 1px solid white;
+}
+
+.buttonreg:hover{
+  background-color: black;
+  border: 1px solid black;
+}

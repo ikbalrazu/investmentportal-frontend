@@ -1,10 +1,86 @@
-import React from "react";
-
+import React,{useState,useEffect} from "react";
+import {useNavigate} from 'react-router-dom';
+import axios from "axios";
 import './registration.css';
 
 
 const Registration = () => {
+  const login = useNavigate();
 
+  const [firstname, setFirstName] = useState();
+  const [lastname, setLastName] = useState();
+  const [email, setEmail] = useState();
+  const [phone, setPhone] = useState();
+  const [company, setCompany] = useState();
+  const [password, setPassword] = useState();
+  const [confirmpassword, setConfirmpassword] = useState();
+  const [picture, setPicture] = useState();
+  const [alertmsg, setAlertmsg] = useState();
+
+
+  const UserRegistration = () => {
+    
+    if (!firstname || !lastname || !email || !password || !confirmpassword) {
+      setAlertmsg("Plz fill up all fields!");
+    } else if (password !== confirmpassword) {
+      console.log("password not matched");
+      setAlertmsg("password not matched!");
+    } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+      setAlertmsg("Invalid Email entered");
+    } else if (password.length < 8) {
+      setAlertmsg("Password is too short!");
+    } else {
+      const monthNames = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+      var today = new Date();
+      var date =
+        today.getDate() +
+        "-" +
+        monthNames[today.getMonth()] +
+        "-" +
+        today.getFullYear();
+      axios
+        .post("http://localhost:5000/addrecord", {
+          firstname,
+          lastname,
+          email,
+          password,
+          date,
+        })
+        .then(function (data) {
+          const userid = data.data.data.ID;
+          console.log(data.data.message);
+          // console.log(data.data.data.ID);
+          if (data.data.message === "Data Added Successfully") {
+            console.log(userid);
+            setAlertmsg("Your registration created successfully!");
+            axios.post("http://localhost:5000/createdeskticket",{
+              firstname,
+              lastname,
+              email,
+              userid,
+            }).then(function(obj){
+              //console.log(obj);
+              login("/");
+            })
+          } else {
+            setAlertmsg("Server error! plz try again after sometimes !");
+          }
+        });
+    }
+  };
 
   return (
     <div>
@@ -169,7 +245,7 @@ const Registration = () => {
                       }}
                       value="volvo"
                     >
-                      Select One{" "}
+                      Company Role{" "}
                     </option>
                     <option
                       style={{
@@ -180,7 +256,7 @@ const Registration = () => {
                       }}
                       value="saab"
                     >
-                      First Choice{" "}
+                      Issuer{" "}
                     </option>
                     <option
                       style={{
@@ -192,7 +268,7 @@ const Registration = () => {
                       value="opel"
                       default
                     >
-                      Secound Choice
+                      Financier
                     </option>
                     <option
                       style={{
@@ -203,7 +279,18 @@ const Registration = () => {
                       }}
                       value="audi"
                     >
-                      Third Choice{" "}
+                      Investor{" "}
+                    </option>
+                    <option
+                      style={{
+                        width: "90%",
+                        height: 40,
+                        backgroundColor: "transparent",
+                        color: "black",
+                      }}
+                      value="audi"
+                    >
+                      Other{" "}
                     </option>
                   </select>
                      
