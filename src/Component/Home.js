@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Footer from "../Sheard/Footer";
 import Menu from "../Sheard/Menu";
 import TopHeader from "../Sheard/TopHeader";
@@ -8,30 +8,31 @@ import { useNavigate } from "react-router-dom";
 export default function Home() {
   const loginpage = useNavigate();
   const [userinfo, setUserInfo] = useState();
-  const [filedata,setFileData] = useState();
-  const [documentname,setDocumentName] = useState();
+  const [filedata, setFileData] = useState();
+  const [documentname, setDocumentName] = useState();
   const [documentdata, setDocumentData] = useState();
   const FileData = (e) => {
     console.log(e.target.files[0]);
     setFileData(e.target.files[0]);
-  }
+  };
 
-  const UploadFileHandler = async(e) => {
+  const UploadFileHandler = async (e) => {
     //let formData = new FormData();
     // formData.append("file", filename);
     // console.log(formData);
-    
 
     e.preventDefault();
 
     //handle file data from the state before sending
     const data = new FormData();
-    data.append('featuredImage', filedata);
-    data.append('id',documentname);
+    data.append("featuredImage", filedata);
+    data.append("id", documentname);
 
-    await axios.post("http://localhost:5000/uploadfile",data).then(function(data){
-      console.log(data);
-    })
+    await axios
+      .post("http://localhost:5000/uploadfile", data)
+      .then(function (data) {
+        console.log(data);
+      });
 
     // await axios.post("http://localhost:5000/postdocuments",data).then(function(data){
     //   console.log(data.data.data.ID);
@@ -48,24 +49,23 @@ export default function Home() {
     // .catch((err)=>{
     //   console.log(err.message);
     // })
-     
-  }
+  };
 
-  const AllDocuments = () =>{
-    axios.post("http://localhost:5000/getalldocuments").then(function(data){
+  const AllDocuments = () => {
+    axios.post("http://localhost:5000/getalldocuments").then(function (data) {
       console.log(data);
       console.log(data.data.data[0].Documents);
       setDocumentData(data.data.data);
-    })
-  }
+    });
+  };
 
-  const AllDeals = () =>{
-    axios.post("http://localhost:5000/getalldeals").then(function(data){
+  const AllDeals = () => {
+    axios.post("http://localhost:5000/getalldeals").then(function (data) {
       console.log(data);
       console.log(data.data.data[0].Documents);
       setDocumentData(data.data.data);
-    })
-  }
+    });
+  };
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userinfo"));
@@ -96,15 +96,16 @@ export default function Home() {
             {/* Search Section Start */}
             <section>
               <div
-                className="py-5 mt-4"
-                style={{
-                  backgroundColor: "#232323",
-                  padding: 20,
-                }}
+                className=" mt-4"
+                style={
+                  {
+                    // backgroundColor: "#232323",
+                    // padding: 20,
+                  }
+                }
               >
                 <h5 className="text-start py-1" style={{ color: "#00ADEE" }}>
-                  {" "}
-                  Search{" "}
+                  Welcome, Nicole Wang
                 </h5>
 
                 <div class="input-group mb-3">
@@ -131,15 +132,192 @@ export default function Home() {
             </section>
             {/* Search Section End  */}
 
-            {/* File Section Start  */}
-            <section>
-              <div
-                className="py-5 mt-4"
-                style={{
-                  backgroundColor: "#232323",
-                  padding: 10,
-                }}
+            {/* File Section tart  */}
+
+            <section
+              className="container mt-1"
+              style={{
+                backgroundColor: "#222222",
+                padding: 25,
+              }}
+            >
+              <ul
+                className="nav nav-pills mb-3 d-flex justify-content-center"
+                id="pills-tab"
+                role="tablist"
               >
+                <li className="nav-item" role="presentation">
+                  <button
+                    className="nav-link active"
+                    id="pills-home-tab"
+                    data-bs-toggle="pill"
+                    data-bs-target="#pills-home"
+                    type="button"
+                    role="tab"
+                    aria-controls="pills-home"
+                    aria-selected="true"
+                  >
+                    Issuser Name
+                  </button>
+                </li>
+                <li className="nav-item" role="presentation">
+                  <button
+                    className="nav-link"
+                    id="pills-profile-tab"
+                    data-bs-toggle="pill"
+                    data-bs-target="#pills-profile"
+                    type="button"
+                    role="tab"
+                    aria-controls="pills-profile"
+                    aria-selected="false"
+                  >
+                    Deal Name
+                  </button>
+                </li>
+                <li className="nav-item" role="presentation">
+                  <button
+                    className="nav-link"
+                    id="pills-contact-tab"
+                    data-bs-toggle="pill"
+                    data-bs-target="#pills-contact"
+                    type="button"
+                    role="tab"
+                    aria-controls="pills-contact"
+                    aria-selected="false"
+                  >
+                    Financer Name
+                  </button>
+                </li>
+              </ul>
+              <div className="tab-content" id="pills-tabContent">
+                <div
+                  className="tab-pane fade show active text-white"
+                  id="pills-home"
+                  role="tabpanel"
+                  aria-labelledby="pills-home-tab"
+                >
+                  <h3> Issuser Name </h3>
+                  <span>4419 Search Results</span>
+
+                  <table className="table text-white mt-3">
+                    <thead>
+                      <tr>
+                        <th scope="col">Issuer Name</th>
+                        <th scope="col">Product Title</th>
+                        <th scope="col">Count</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row"> Name of Issuer </th>
+                        <td>Other </td>
+                        <td>1</td>
+                        <td>
+                          {" "}
+                          <i className="bi bi-arrow-up-right-square"> </i>{" "}
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row"> Name of Issuer </th>
+                        <td>Other </td>
+                        <td>1</td>
+                        <td>
+                          {" "}
+                          <i className="bi bi-arrow-up-right-square"> </i>{" "}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div
+                  className="tab-pane fade text-white"
+                  id="pills-profile"
+                  role="tabpanel"
+                  aria-labelledby="pills-profile-tab"
+                >
+                  <h3> Deal Name </h3>
+                  <span>4419 Search Results</span>
+                  <table className="table text-white mt-3">
+                    <thead>
+                      <tr>
+                        <th scope="col">Deal Name</th>
+                        <th scope="col">Issuer Name</th>
+                        <th scope="col">Product</th>
+                        <th scope="col">Contact</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row"> Name of Deal </th>
+                        <td>Name of Issuer </td>
+                        <td>Other </td>
+                        <td> Name Name </td>
+                        <td>
+                          {" "}
+                          <i className="bi bi-arrow-up-right-square"> </i>{" "}
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row"> Name of Deal </th>
+                        <td>Name of Issuer </td>
+                        <td>Other </td>
+                        <td> Name Name </td>
+                        <td>
+                          {" "}
+                          <i className="bi bi-arrow-up-right-square"> </i>{" "}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>{" "}
+                </div>
+                <div
+                  className="tab-pane fade text-white"
+                  id="pills-contact"
+                  role="tabpanel"
+                  aria-labelledby="pills-contact-tab"
+                >
+                  <h3> Financer Name </h3>
+                  <span>4419 Search Results</span>
+
+                  <table className="table text-white mt-3">
+                    <thead>
+                      <tr>
+                        <th scope="col">Financer Name</th>
+                        <th scope="col">Issuer Name</th>
+                        <th scope="col">Product</th>
+                        <th scope="col">Contact</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row"> Name of Financer </th>
+                        <td>Name of Issuer </td>
+                        <td>Other </td>
+                        <td> Name Name </td>
+                        <td>
+                          {" "}
+                          <i className="bi bi-arrow-up-right-square"> </i>{" "}
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row"> Name of Financer </th>
+                        <td>Name of Issuer </td>
+                        <td>Other </td>
+                        <td> Name Name </td>
+                        <td>
+                          {" "}
+                          <i className="bi bi-arrow-up-right-square"> </i>{" "}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                {/* End table of All content  */}
+
                 {/*
                 <h1 style={{color:"white"}}>File Upload</h1>
 
@@ -155,7 +333,6 @@ export default function Home() {
               <button onClick={AllDocuments}>Get Documents</button>
               <br/>
               <button onClick={AllDeals}>Get Deals</button> */}
-
               </div>
             </section>
 
