@@ -1,72 +1,12 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import Footer from "../Sheard/Footer";
 import Menu from "../Sheard/Menu";
 import TopHeader from "../Sheard/TopHeader";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { AppState } from "../context/Context";
-import {AppContext} from "../context/Context";
 
-export default function Home() {
-  const loginpage = useNavigate();
-  const IssuerListPage = useNavigate();
-  const [userinfo, setUserInfo] = useState();
-  const [dealsdata,setDealsData] = useState();
-  // const [issuername, setIssuerName] = useState([]);
-  // const [financername, setFinancerName] = useState([]);
-  const [unique_issuername, setUniqueIssuerName] = useState()
-  const {deals,issuername,financername} = useContext(AppContext);
-
-
-  useEffect(() => {
-    const userInfo = JSON.parse(localStorage.getItem("userinfo"));
-    if (!userInfo) {
-      loginpage("/");
-    }
-
-    if (userInfo) {
-      //console.log(userInfo.id, userInfo.name, userInfo.email);
-      setUserInfo({
-        id: userInfo.id,
-        name: userInfo.name,
-        email: userInfo.email,
-      });
-    } else {
-      loginpage("/");
-    }
-
-    console.log(deals);
-    const withoutDuplicates_issuername = [...new Map(issuername.map(item => [JSON.stringify(item), item])).values()];
-    console.log(withoutDuplicates_issuername);
-    setUniqueIssuerName(withoutDuplicates_issuername);
-    // const DealsData = async () => {
-    //   try{
-    //     const data = await axios.post("https://investmentportal.herokuapp.com/getalldeals");
-    //     setDealsData(data.data.data);
-    //     for(let i=0; i<data.data.data.length; i++){
-    //       console.log(data.data.data[i].Issuer_Name);
-    //       setIssuerName(preData=>[...preData,data.data.data[i].Issuer_Name]);
-    //       setFinancerName(preData=>[...preData,data.data.data[i].Financer]);
-    //       console.log(data.data.data[i].Financer);
-    //     }
-    //     return data.data.data;
-
-    //   }catch(error){
-    //     console.log(error);
-    //   }
-      
-    // }
-
-    // DealsData().then(data=>{
-    //   //const withoutDuplicates_issuername = [...new Set(issuername)]; //0, 1
-    //   const withoutDuplicates_issuername = [...new Map(issuername?.map(item => [JSON.stringify(item), item])).values()];
-    //   console.log(data);
-    //   for(let k=0; k<withoutDuplicates_issuername?.length; k++){
-    //     console.log(withoutDuplicates_issuername[k]);
-    //   }
-    // }).catch(console.error);
-  }, []);
-
+export default function MonthsList() {
+  
   return (
     <div>
       <TopHeader></TopHeader>
@@ -108,7 +48,6 @@ export default function Home() {
                     >
                       Search
                     </button>
-                    <button onClick={()=>console.log(unique_issuername)}>show data</button>
                   </div>
                 </div>
               </div>
@@ -180,7 +119,7 @@ export default function Home() {
                   aria-labelledby="pills-home-tab"
                 >
                   <h3> Issuser Name </h3>
-                  <span>{unique_issuername?.length}</span>
+                  <span>4419 Search Results</span>
 
                   <table className="table text-white mt-3">
                     <thead>
@@ -192,26 +131,24 @@ export default function Home() {
                       </tr>
                     </thead>
                     <tbody>
-                      {unique_issuername?.map((data,index)=>{
-                        var issuer_list_filter = deals?.filter(function(el){
-                          return el.Issuer_Name === unique_issuername[index];
-                        })
-                        return(
-                          <tr onClick={()=>{
-                            
-                            console.log(issuer_list_filter);
-                            IssuerListPage("/issuerlist",{state:{issuer_list_filter}})}} >
-                          <th scope="row" style={{cursor:"pointer"}}> {data} </th>
-                          <td>Other </td>
-                          <td>{index}</td>
-                          <td>
+                      <tr>
+                        <th scope="row"> Name of Issuer </th>
+                        <td>Other </td>
+                        <td>1</td>
+                        <td>
                           {" "}
                           <i className="bi bi-arrow-up-right-square"> </i>{" "}
-                          </td>
-                          </tr>
-                        )
-                      })}
-                    
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row"> Name of Issuer </th>
+                        <td>Other </td>
+                        <td>1</td>
+                        <td>
+                          {" "}
+                          <i className="bi bi-arrow-up-right-square"> </i>{" "}
+                        </td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
