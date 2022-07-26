@@ -159,6 +159,67 @@ const Login = () => {
                       </button>
                     </div>
 
+                    {/* test start  */}
+                    <p style={{ marginTop: 5 }}>
+                      <a
+                        style={{ color: "white" }}
+                        data-bs-toggle="collapse"
+                        href="#collapseExample"
+                        role="button"
+                        aria-expanded="false"
+                        aria-controls="collapseExample"
+                      >
+                        Forget Password?
+                      </a>
+                    </p>
+                    <div
+                      className="collapse"
+                      id="collapseExample"
+                      style={{
+                        marginLeft: 0,
+                      }}
+                    >
+                      <div
+                        className="card card-body"
+                        style={{
+                          backgroundColor: "#00ADEE",
+                          border: 0,
+                          color: "white",
+                          marginTop: "-5px",
+                        }}
+                      >
+                        In order to reset your password, please enter your email
+                        address and we will send you a password reset link
+                        shortly.
+                        <div class="form-group mt-1">
+                          <input
+                            style={{
+                              backgroundColor: "#00ADEE",
+                              color: "white",
+                            }}
+                            type="text"
+                            className="form-control"
+                            id=""
+                            aria-describedby="username"
+                            placeholder="User Email"
+                            required
+                          />
+                        </div>
+                        <div class="form-group mt-1">
+                          <button
+                            //  style={{ float: "left", color: "#00ADEE" }}
+                            type="submit"
+                            className="btn btn-primary mt-2 border-0"
+                            id="registetionbutton"
+                          >
+                            Submit
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Test end  */}
+
                     {/* <div class="form-group mt-2">
                   
                   <a  style={{ float: "left", color: "white" }}> 
@@ -180,7 +241,12 @@ const Login = () => {
                     >
                       register now
                     </a> */}
-                    <button onClick={() => registration("/register")} className="buttonreg">Register your Details</button>
+                    <button
+                      onClick={() => registration("/register")}
+                      className="buttonreg"
+                    >
+                      Register your Details
+                    </button>
                     .
                     <br />
                     Once you have completed your registration, you may sign into
@@ -189,7 +255,7 @@ const Login = () => {
 
                   <div className="mt-3">
                     <h4> Contact Us</h4>
-                    <span>Contact details to go here.</span>
+                    <span>Email: <a href=" " style={{ color:'white'}}> support@amalinvestorportal.com.au </a></span>
                   </div>
                 </div>
               </div>
@@ -233,8 +299,7 @@ const Login = () => {
                 </div>
 
                 <div className="col-lg-4 col-md-4 col-sm-12 col-12">
-
-                <img src={img3} alt="example" style={{ height: 33}}/>
+                  <img src={img3} alt="example" style={{ height: 33 }} />
 
                   <h4>Agency Services</h4>
 
@@ -285,8 +350,6 @@ const Login = () => {
                 minHeight: 919,
               }}
             >
-
-
               <h3
                 style={{
                   color: "#00ADEE",
