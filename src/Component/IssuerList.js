@@ -8,9 +8,20 @@ import { useLocation } from "react-router-dom";
 
 export default function IssuerList() {
   const location = useLocation();
+  const monthlist = useNavigate();
+  const [issuerlist,setIssuerList] = useState();
+  const [issuername,setIssuerName] = useState([]);
+
+  const IssuerList = () => {
+    setIssuerList(location?.state?.issuer_list_filter);
+    for(let i=0; i<location?.state?.issuer_list_filter?.length; i++){
+      setIssuerName(location.state.issuer_list_filter[0].Issuer_Name);
+    }
+  }
 
   useEffect(()=>{
-    console.log(location);
+    IssuerList();
+    //console.log(location?.state.issuer_list_filter.length);
   },[])
   return (
     <div>
@@ -32,10 +43,10 @@ export default function IssuerList() {
                 }
               >
                 <h5 className="text-start py-1" style={{ color: "#00ADEE" }}>
-                  Welcome, Nicole Wang
+                 wellcome {issuername}
                 </h5>
 
-                <div class="input-group mb-3">
+                {/* <div class="input-group mb-3">
                   <input
                     type="text"
                     class="form-control  border-0"
@@ -54,7 +65,7 @@ export default function IssuerList() {
                       Search
                     </button>
                   </div>
-                </div>
+                </div> */}
               </div>
             </section>
             {/* Search Section End  */}
@@ -68,7 +79,7 @@ export default function IssuerList() {
                 padding: 25,
               }}
             >
-              <ul
+              {/* <ul
                 className="nav nav-pills mb-3 d-flex justify-content-center"
                 id="pills-tab"
                 role="tablist"
@@ -115,7 +126,7 @@ export default function IssuerList() {
                     Financer Name
                   </button>
                 </li>
-              </ul>
+              </ul> */}
               <div className="tab-content" id="pills-tabContent">
                 <div
                   className="tab-pane fade show active text-white"
@@ -123,37 +134,37 @@ export default function IssuerList() {
                   role="tabpanel"
                   aria-labelledby="pills-home-tab"
                 >
-                  <h3> Issuser Name </h3>
-                  <span>4419 Search Results</span>
+                  <h3> List of Deals for {issuername} </h3>
+                  <span>{issuerlist?.length}</span>
 
                   <table className="table text-white mt-3">
                     <thead>
                       <tr>
+                        <th scope="col">Deal Name</th>
                         <th scope="col">Issuer Name</th>
-                        <th scope="col">Product Title</th>
-                        <th scope="col">Count</th>
+                        <th scope="col">Product Type</th>
+                        <th scope="col">Deal Administrator</th>
+                        <th scope="col">Last Update Date</th>
                         <th></th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <th scope="row"> Name of Issuer </th>
-                        <td>Other </td>
-                        <td>1</td>
-                        <td>
-                          {" "}
-                          <i className="bi bi-arrow-up-right-square"> </i>{" "}
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row"> Name of Issuer </th>
-                        <td>Other </td>
-                        <td>1</td>
-                        <td>
-                          {" "}
-                          <i className="bi bi-arrow-up-right-square"> </i>{" "}
-                        </td>
-                      </tr>
+                      {issuerlist?.map((data,index)=>{
+                        return(
+                          <tr onClick={()=>monthlist("/monthslist",{state:data.Documents})}>
+                          <th scope="row"> {data?.DealName} </th>
+                          <td>{data?.Issuer_Name}</td>
+                          <td>RMBS</td>
+                          <td>Nicole Wang</td>
+                          <td>01/01/2022</td>
+                          <td>
+                            {" "}
+                            <i className="bi bi-arrow-up-right-square"> </i>{" "}
+                          </td>
+                        </tr>
+                        )
+                      })}
+                      
                     </tbody>
                   </table>
                 </div>
@@ -267,7 +278,7 @@ export default function IssuerList() {
           </div>
 
           {/* For Your Information Start  */}
-          <div className="col-lg-4 col-md-4 col-sm-12 col-12">
+          {/* <div className="col-lg-4 col-md-4 col-sm-12 col-12">
             <section
               className="mt-4 text-white text-start"
               style={{
@@ -352,7 +363,7 @@ export default function IssuerList() {
                 </li>
               </ul>
             </section>
-          </div>
+          </div> */}
 
           {/*  For Your Information End  */}
         </div>
