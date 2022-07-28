@@ -4,9 +4,50 @@ import Menu from "../Sheard/Menu";
 import TopHeader from "../Sheard/TopHeader";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 export default function MonthsList() {
+  const location = useLocation();
+  const detailspage = useNavigate();
+  const [documents,setDocuments] = useState([]);
+  const [monthreport,setMonthReport] = useState();
+
+  const DocumentHandler = () => {
+    let MonthsReport=[];
+    const userInfo = JSON.parse(localStorage.getItem("userinfo"));
+    console.log(location?.state);
+    for(let i=0; i<location?.state?.length; i++){
+      const id=location.state[i].ID;
+      console.log(id);
+      axios.post("https://investmentportal.herokuapp.com/getdocuments",{id}).then(function(data){
+        console.log(data);
+        for(let k=0;k<data?.data?.data?.User?.length;k++){
+          if(data?.data?.data?.User[k]?.ID === userInfo.id){
+            const filename = data.data.data.Documents
+            const fileformat = filename.split(".")[1];
+            //console.log(fileformat);
+            MonthsReport.push(data.data.data.MonthOfReport);
+            setDocuments(olddata=>[...olddata,{"Id":data.data.data.ID,"DocumentName":data.data.data.DocumentName,"DownloadLink":data.data.data.Documents,"FormatType":fileformat,"ReportDate":data.data.data.CreatedDateTime,"MonthReport":data.data.data.MonthOfReport}]);
+          }
+        }
+        return MonthsReport;
+      }).then(MonthsReport=>{
+        console.log(MonthsReport);
+        const withoutDuplicates_MonthsReport= [...new Set(MonthsReport)];
+        console.log(withoutDuplicates_MonthsReport);
+        setMonthReport(withoutDuplicates_MonthsReport);
+        // var MonthsReport_filter = documents?.filter(function(el){
+        //   return el.MonthOfReport === unique_issuername[index];
+        // })
+      })
+    }
+    
+  }
   
+  useEffect(()=>{
+    DocumentHandler();
+    //console.log(location);
+  },[])
   return (
     <div>
       <TopHeader></TopHeader>
@@ -30,7 +71,7 @@ export default function MonthsList() {
                   Welcome, Nicole Wang
                 </h5>
 
-                <div class="input-group mb-3">
+                {/* <div class="input-group mb-3">
                   <input
                     type="text"
                     class="form-control  border-0"
@@ -49,7 +90,7 @@ export default function MonthsList() {
                       Search
                     </button>
                   </div>
-                </div>
+                </div> */}
               </div>
             </section>
             {/* Search Section End  */}
@@ -63,7 +104,7 @@ export default function MonthsList() {
                 padding: 25,
               }}
             >
-              <ul
+              {/* <ul
                 className="nav nav-pills mb-3 d-flex justify-content-center"
                 id="pills-tab"
                 role="tablist"
@@ -110,7 +151,7 @@ export default function MonthsList() {
                     Financer Name
                   </button>
                 </li>
-              </ul>
+              </ul> */}
               <div className="tab-content" id="pills-tabContent">
                 <div
                   className="tab-pane fade show active text-white"
@@ -119,121 +160,37 @@ export default function MonthsList() {
                   aria-labelledby="pills-home-tab"
                 >
                   <h3> Issuser Name </h3>
-                  <span>4419 Search Results</span>
+                  <span>{documents.length} Search Results</span>
 
                   <table className="table text-white mt-3">
                     <thead>
                       <tr>
-                        <th scope="col">Issuer Name</th>
+                        <th scope="col">Month</th>
                         <th scope="col">Product Title</th>
-                        <th scope="col">Count</th>
+                        <th scope="col">Deal Administrator</th>
                         <th></th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <th scope="row"> Name of Issuer </th>
-                        <td>Other </td>
-                        <td>1</td>
-                        <td>
+                    {monthreport?.map((data,index)=>{
+                        var months_list_filter = documents?.filter(function(el){
+                          return el.MonthReport === monthreport[index];
+                        })
+                        return(
+                          <tr onClick={()=>{
+                            
+                            console.log(months_list_filter);
+                            detailspage("/details",{state:{months_list_filter}})}} >
+                          <th scope="row" style={{cursor:"pointer"}}> {data} </th>
+                          <td>Other </td>
+                          <td>{index}</td>
+                          <td>
                           {" "}
                           <i className="bi bi-arrow-up-right-square"> </i>{" "}
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row"> Name of Issuer </th>
-                        <td>Other </td>
-                        <td>1</td>
-                        <td>
-                          {" "}
-                          <i className="bi bi-arrow-up-right-square"> </i>{" "}
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <div
-                  className="tab-pane fade text-white"
-                  id="pills-profile"
-                  role="tabpanel"
-                  aria-labelledby="pills-profile-tab"
-                >
-                  <h3> Deal Name </h3>
-                  <span>4419 Search Results</span>
-                  <table className="table text-white mt-3">
-                    <thead>
-                      <tr>
-                        <th scope="col">Deal Name</th>
-                        <th scope="col">Issuer Name</th>
-                        <th scope="col">Product</th>
-                        <th scope="col">Contact</th>
-                        <th></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row"> Name of Deal </th>
-                        <td>Name of Issuer </td>
-                        <td>Other </td>
-                        <td> Name Name </td>
-                        <td>
-                          {" "}
-                          <i className="bi bi-arrow-up-right-square"> </i>{" "}
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row"> Name of Deal </th>
-                        <td>Name of Issuer </td>
-                        <td>Other </td>
-                        <td> Name Name </td>
-                        <td>
-                          {" "}
-                          <i className="bi bi-arrow-up-right-square"> </i>{" "}
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>{" "}
-                </div>
-                <div
-                  className="tab-pane fade text-white"
-                  id="pills-contact"
-                  role="tabpanel"
-                  aria-labelledby="pills-contact-tab"
-                >
-                  <h3> Financer Name </h3>
-                  <span>4419 Search Results</span>
-
-                  <table className="table text-white mt-3">
-                    <thead>
-                      <tr>
-                        <th scope="col">Financer Name</th>
-                        <th scope="col">Issuer Name</th>
-                        <th scope="col">Product</th>
-                        <th scope="col">Contact</th>
-                        <th></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row"> Name of Financer </th>
-                        <td>Name of Issuer </td>
-                        <td>Other </td>
-                        <td> Name Name </td>
-                        <td>
-                          {" "}
-                          <i className="bi bi-arrow-up-right-square"> </i>{" "}
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row"> Name of Financer </th>
-                        <td>Name of Issuer </td>
-                        <td>Other </td>
-                        <td> Name Name </td>
-                        <td>
-                          {" "}
-                          <i className="bi bi-arrow-up-right-square"> </i>{" "}
-                        </td>
-                      </tr>
+                          </td>
+                          </tr>
+                        )
+                      })}
                     </tbody>
                   </table>
                 </div>
@@ -262,7 +219,7 @@ export default function MonthsList() {
           </div>
 
           {/* For Your Information Start  */}
-          <div className="col-lg-4 col-md-4 col-sm-12 col-12">
+          {/* <div className="col-lg-4 col-md-4 col-sm-12 col-12">
             <section
               className="mt-4 text-white text-start"
               style={{
@@ -347,7 +304,7 @@ export default function MonthsList() {
                 </li>
               </ul>
             </section>
-          </div>
+          </div> */}
 
           {/*  For Your Information End  */}
         </div>

@@ -8,6 +8,8 @@ import axios from "axios";
 const Details = () => {
   const location = useLocation();
   const [documents,setDocuments] = useState([]);
+  const [documentslist, setDocumenstList] = useState([]);
+
   //const [accessdocuments,setAccessDocuments] = useState();
   // console.log(location.state);
   // console.log(location.state[0].ID);
@@ -50,7 +52,9 @@ const Details = () => {
   }
 
   useEffect(()=>{
-    AllDocumentsById();
+    //AllDocumentsById();
+    console.log(location.state);
+    setDocumenstList(location?.state?.months_list_filter);
   },[]);
 
   return (
@@ -101,19 +105,35 @@ const Details = () => {
                     <tr>
                     <th scope="col">Available Reports</th>
                     <th scope="col">Format Type</th>
-                    <th scope="col">Download</th>
-                    <th scope="col">Historical Reports</th>
                     <th scope="col">Report Date</th>
-                    <th scope="col">Category</th>
+                    <th scope="col">Publish Date</th>
+                    <th scope="col">Deal  Administrator</th>
+                    {/* <th scope="col">Category</th>
                     <th scope="col">Status</th>
                     <th scope="col">Deal Status</th>
                     <th scope="col"> Portfolio </th>
-                    <th scope="col">Publish Date</th>
+                    <th scope="col">Publish Date</th> */}
                     </tr>
                   
                 </thead>
                 <tbody>
-                {documents?.map((data,index)=>(
+                  {documentslist?.map((data,index)=>{
+                    return(
+                      <tr>
+                      <th scope="row">{data?.DocumentName}</th>
+                      <td>{data?.FormatType}</td>
+                      <td> {data?.ReportDate}</td>
+                      {/* <td><a href={`https://creator.zoho.com${data?.DownloadLink}`}>Download</a></td> */}
+                      <td>Publish Date</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td>{data?.ReportDate}</td>
+                    </tr>
+                    )
+                  })}
+                {/* {documentslist?.map((data,index)=>(
                   <tr>
                     <th scope="row">{data.DocumentName}</th>
                     <td>{data.FormatType}</td>
@@ -126,7 +146,7 @@ const Details = () => {
                     <td></td>
                     <td>{data.ReportDate}</td>
                   </tr>
-                ))}
+                ))} */}
                   
                 </tbody>
               </table>
