@@ -30,6 +30,7 @@ export default function MonthsList() {
             setDocuments(olddata=>[...olddata,{"Id":data.data.data.ID,"DocumentName":data.data.data.DocumentName,"DownloadLink":data.data.data.Documents,"FormatType":fileformat,"ReportDate":data.data.data.CreatedDateTime,"MonthReport":data.data.data.MonthOfReport}]);
           }
         }
+        console.log("MONTH REPORT: ",MonthsReport);
         return MonthsReport;
       }).then(MonthsReport=>{
         console.log(MonthsReport);
