@@ -1,30 +1,46 @@
 input::placeholder {
-    color: white !important;
-  }
-
-
-
-#registetionbutton {
-    background-color: white;
-    color: black;
-  }
-
-#registetionbutton:hover{
-    background-color: black ;
-    color: white;
+  color: white !important;
 }
 
-.buttonreg{
-  color: blue;
+#registetionbutton {
+  background-color: white;
+  color: black;
+}
+
+#registetionbutton:hover {
+  background-color: black;
+  color: white;
+}
+
+.buttonreg {
+  padding: 5px 8px;
+  color: black;
+  border-radius: 4px;
   background-color: #fff;
   border: 1px solid white;
 }
 
-.buttonreg:hover{
+.buttonreg:hover {
   background-color: black;
   border: 1px solid black;
+  color: #fff;
 }
 
+.nav-link {
+  text-decoration: none !important;
+}
 
 /* test renee code */
 
+.btn{
+  background-color: #222222;
+  color: #fff;
+
+}
+
+
+.btn:hover{
+  background-color: #00ADEE;
+  border-radius: 0px;
+
+}

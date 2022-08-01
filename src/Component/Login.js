@@ -35,6 +35,8 @@ const Login = () => {
       });
   };
 
+  console.log(email);
+
   const userLogin = () => {
     if (userdata) {
       if (!email || !password) {
@@ -242,20 +244,30 @@ const Login = () => {
                       register now
                     </a> */}
                     <button
+                    style={{ marginTop:5 }}
                       onClick={() => registration("/register")}
                       className="buttonreg"
                     >
                       Register your Details
                     </button>
-                    .
-                    <br />
-                    Once you have completed your registration, you may sign into
+                   <p style={{
+                    marginTop:5,
+                   }}> 
+                        Once you have completed your registration, you may sign into
                     the website.
+                   </p>
+                
                   </div>
 
                   <div className="mt-3">
                     <h4> Contact Us</h4>
-                    <span>Email: <a href=" " style={{ color:'white'}}> support@amalinvestorportal.com.au </a></span>
+                    <span>
+                      Email:{" "}
+                      <a href=" " style={{ color: "white" }}>
+                        {" "}
+                        support@amalinvestorportal.com.au{" "}
+                      </a>
+                    </span>
                   </div>
                 </div>
               </div>
@@ -295,6 +307,16 @@ const Login = () => {
                   <div>
                     Includes acting as trustee for credit, property, mortgage,
                     private equity and fixed interest funds.
+                  </div>
+
+                  <div class="form-group mt-3">
+                    <button
+                      style={{ backgroundColor: "white", color: "#00ADEE" }}
+                      type="button"
+                      className="btn btn-primary  mt-2 border-0"
+                    >
+                      Discover More
+                    </button>
                   </div>
                 </div>
 
