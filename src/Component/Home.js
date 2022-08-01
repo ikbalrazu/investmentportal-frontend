@@ -7,6 +7,10 @@ import { useNavigate } from "react-router-dom";
 import { AppState } from "../context/Context";
 import {AppContext} from "../context/Context";
 
+import "./registration.css";
+
+import classes from "./home.module.css";
+
 export default function Home() {
   const loginpage = useNavigate();
   const IssuerListPage = useNavigate();
@@ -120,18 +124,21 @@ export default function Home() {
             <section
               className="container mt-1"
               style={{
-                backgroundColor: "#222222",
-                padding: 25,
+                backgroundColor: "#333333",
               }}
             >
               <ul
                 className="nav nav-pills mb-3 d-flex justify-content-center"
                 id="pills-tab"
                 role="tablist"
+                style={{
+                  backgroundColor: "#232323",
+                  padding: 25,
+                }}
               >
                 <li className="nav-item" role="presentation">
                   <button
-                    className="nav-link active"
+                    className={classes.btn }
                     id="pills-home-tab"
                     data-bs-toggle="pill"
                     data-bs-target="#pills-home"
@@ -145,7 +152,7 @@ export default function Home() {
                 </li>
                 <li className="nav-item" role="presentation">
                   <button
-                    className="nav-link"
+                    className={classes.btn }
                     id="pills-profile-tab"
                     data-bs-toggle="pill"
                     data-bs-target="#pills-profile"
@@ -159,7 +166,7 @@ export default function Home() {
                 </li>
                 <li className="nav-item" role="presentation">
                   <button
-                    className="nav-link"
+                    className={classes.btn }
                     id="pills-contact-tab"
                     data-bs-toggle="pill"
                     data-bs-target="#pills-contact"
@@ -172,9 +179,16 @@ export default function Home() {
                   </button>
                 </li>
               </ul>
-              <div className="tab-content" id="pills-tabContent">
+              <div
+                style={{
+                  backgroundColor: "#232323",
+                  padding: 25,
+                }}
+                className="tab-content"
+                id="pills-tabContent"
+              >
                 <div
-                  className="tab-pane fade show active text-white"
+                  className="tab-pane fade show text-white"
                   id="pills-home"
                   role="tabpanel"
                   aria-labelledby="pills-home-tab"

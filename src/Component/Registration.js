@@ -1,8 +1,7 @@
-import React,{useState,useEffect} from "react";
-import {useNavigate} from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import './registration.css';
-
+import "./registration.css";
 
 const Registration = () => {
   const login = useNavigate();
@@ -17,9 +16,7 @@ const Registration = () => {
   const [picture, setPicture] = useState();
   const [alertmsg, setAlertmsg] = useState();
 
-
   const UserRegistration = () => {
-    
     if (!firstname || !lastname || !email || !password || !confirmpassword) {
       setAlertmsg("Plz fill up all fields!");
     } else if (password !== confirmpassword) {
@@ -66,15 +63,17 @@ const Registration = () => {
           if (data.data.message === "Data Added Successfully") {
             console.log(userid);
             setAlertmsg("Your registration created successfully!");
-            axios.post("http://localhost:5000/createdeskticket",{
-              firstname,
-              lastname,
-              email,
-              userid,
-            }).then(function(obj){
-              //console.log(obj);
-              login("/");
-            })
+            axios
+              .post("http://localhost:5000/createdeskticket", {
+                firstname,
+                lastname,
+                email,
+                userid,
+              })
+              .then(function (obj) {
+                //console.log(obj);
+                login("/");
+              });
           } else {
             setAlertmsg("Server error! plz try again after sometimes !");
           }
@@ -154,7 +153,6 @@ const Registration = () => {
                     <div
                       class="form-group mt-2"
                       style={{ width: "50%", padding: 5 }}
-                      
                     >
                       <input
                         type="text"
@@ -213,8 +211,6 @@ const Registration = () => {
                     </div>
                   </div>
 
-                  
-
                   <div
                     style={{
                       display: "flex",
@@ -224,76 +220,73 @@ const Registration = () => {
                       class="form-group mt-2"
                       style={{ width: "50%", padding: 5 }}
                     >
-                     
-                     <select
-                    name="productType"
-                    id="productType"
-                    style={{
-                      width: "90%",
-                      height: 40,
-                      backgroundColor: "transparent",
-                      color: "white",
-                      
-                    }}
-                  >
-                    <option
-                      style={{
-                        width: "90%",
-                        height: 40,
-                        backgroundColor: "transparent",
-                        color: "black",
-                      }}
-                      value="volvo"
-                    >
-                      Company Role{" "}
-                    </option>
-                    <option
-                      style={{
-                        width: "90%",
-                        height: 40,
-                        backgroundColor: "transparent",
-                        color: "black",
-                      }}
-                      value="saab"
-                    >
-                      Issuer{" "}
-                    </option>
-                    <option
-                      style={{
-                        width: "90%",
-                        height: 40,
-                        backgroundColor: "transparent",
-                        color: "black",
-                      }}
-                      value="opel"
-                      default
-                    >
-                      Financier
-                    </option>
-                    <option
-                      style={{
-                        width: "90%",
-                        height: 40,
-                        backgroundColor: "transparent",
-                        color: "black",
-                      }}
-                      value="audi"
-                    >
-                      Investor{" "}
-                    </option>
-                    <option
-                      style={{
-                        width: "90%",
-                        height: 40,
-                        backgroundColor: "transparent",
-                        color: "black",
-                      }}
-                      value="audi"
-                    >
-                      Other{" "}
-                    </option>
-                  </select>
-                     
+                      <select
+                        name="productType"
+                        id="productType"
+                        style={{
+                          width: "90%",
+                          height: 40,
+                          backgroundColor: "transparent",
+                          color: "white",
+                        }}
+                      >
+                        <option
+                          style={{
+                            width: "90%",
+                            height: 40,
+                            backgroundColor: "transparent",
+                            color: "black",
+                          }}
+                          value="volvo"
+                        >
+                          Company Role{" "}
+                        </option>
+                        <option
+                          style={{
+                            width: "90%",
+                            height: 40,
+                            backgroundColor: "transparent",
+                            color: "black",
+                          }}
+                          value="saab"
+                        >
+                          Issuer{" "}
+                        </option>
+                        <option
+                          style={{
+                            width: "90%",
+                            height: 40,
+                            backgroundColor: "transparent",
+                            color: "black",
+                          }}
+                          value="opel"
+                          default
+                        >
+                          Financier
+                        </option>
+                        <option
+                          style={{
+                            width: "90%",
+                            height: 40,
+                            backgroundColor: "transparent",
+                            color: "black",
+                          }}
+                          value="audi"
+                        >
+                          Investor{" "}
+                        </option>
+                        <option
+                          style={{
+                            width: "90%",
+                            height: 40,
+                            backgroundColor: "transparent",
+                            color: "black",
+                          }}
+                          value="audi"
+                        >
+                          Other{" "}
+                        </option>
+                      </select>
                     </div>
 
                     <div
@@ -311,19 +304,16 @@ const Registration = () => {
                     </div>
                   </div>
 
-
                   <div class="form-group mt-3">
                     <button
-                   //   style={{ float: "left", color: "#00ADEE" }}
+                      //   style={{ float: "left", color: "#00ADEE" }}
                       type="button"
                       className="btn btn-primary  mt-2 border-0"
-                      id='registetionbutton'
+                      id="registetionbutton"
                     >
                       Submit
                     </button>
                   </div>
-
-
                 </form>
               </div>
             </div>
