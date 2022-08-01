@@ -438,7 +438,7 @@ const Search = () => {
           </li>
           <li className="nav-item" role="presentation">
             <button
-              className="nav-link"
+              className="nav-link active"
               id="pills-profile-tab"
               data-bs-toggle="pill"
               data-bs-target="#pills-profile"
@@ -452,7 +452,7 @@ const Search = () => {
           </li>
           <li className="nav-item" role="presentation">
             <button
-              className="nav-link"
+              className="nav-link active"
               id="pills-contact-tab"
               data-bs-toggle="pill"
               data-bs-target="#pills-contact"

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import Footer from "../Sheard/Footer";
 import Menu from "../Sheard/Menu";
 import TopHeader from "../Sheard/TopHeader";
+import Pagination2 from "./Pagination2";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { AppState } from "../context/Context";
@@ -122,23 +123,24 @@ export default function Home() {
             {/* File Section tart  */}
 
             <section
-              className="container mt-1"
+              className="container mt-5"
               style={{
-                backgroundColor: "#333333",
+                backgroundColor: "#222222",
+                padding: 25,
               }}
             >
               <ul
                 className="nav nav-pills mb-3 d-flex justify-content-center"
                 id="pills-tab"
                 role="tablist"
-                style={{
-                  backgroundColor: "#232323",
-                  padding: 25,
-                }}
+                // style={{
+                //   backgroundColor: "#232323",
+                //   padding: 25,
+                // }}
               >
                 <li className="nav-item" role="presentation">
                   <button
-                    className={classes.btn }
+                    className="nav-link active"
                     id="pills-home-tab"
                     data-bs-toggle="pill"
                     data-bs-target="#pills-home"
@@ -152,7 +154,7 @@ export default function Home() {
                 </li>
                 <li className="nav-item" role="presentation">
                   <button
-                    className={classes.btn }
+                    className="nav-link active"
                     id="pills-profile-tab"
                     data-bs-toggle="pill"
                     data-bs-target="#pills-profile"
@@ -166,7 +168,7 @@ export default function Home() {
                 </li>
                 <li className="nav-item" role="presentation">
                   <button
-                    className={classes.btn }
+                    className="nav-link active"
                     id="pills-contact-tab"
                     data-bs-toggle="pill"
                     data-bs-target="#pills-contact"
@@ -180,20 +182,25 @@ export default function Home() {
                 </li>
               </ul>
               <div
-                style={{
-                  backgroundColor: "#232323",
-                  padding: 25,
-                }}
+                // style={{
+                //   backgroundColor: "#232323",
+                //   padding: 25,
+                // }}
                 className="tab-content"
                 id="pills-tabContent"
               >
                 <div
-                  className="tab-pane fade show text-white"
+                  className="tab-pane fade show active text-white"
                   id="pills-home"
                   role="tabpanel"
                   aria-labelledby="pills-home-tab"
+                  style={{
+                    padding : '0px 50px 50px 0px'
+      
+                  }}
                 >
                   <h3> Issuser Name </h3>
+                  
                   <span>{unique_issuername?.length}</span>
 
                   <table className="table text-white mt-3">
@@ -228,12 +235,17 @@ export default function Home() {
                     
                     </tbody>
                   </table>
+                  <Pagination2></Pagination2>
                 </div>
                 <div
                   className="tab-pane fade text-white"
                   id="pills-profile"
                   role="tabpanel"
                   aria-labelledby="pills-profile-tab"
+                  style={{
+                    padding : '0px 50px 50px 0px'
+      
+                  }}
                 >
                   <h3> Deal Name </h3>
                   <span>4419 Search Results</span>
