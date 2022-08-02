@@ -124,12 +124,8 @@ const Details = () => {
                       <td>{data?.FormatType}</td>
                       <td> {data?.ReportDate}</td>
                       {/* <td><a href={`https://creator.zoho.com${data?.DownloadLink}`}>Download</a></td> */}
-                      <td>Publish Date</td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
                       <td>{data?.ReportDate}</td>
+                      <td>name</td>
                     </tr>
                     )
                   })}
