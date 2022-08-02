@@ -1,77 +1,54 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import Footer from "../Sheard/Footer";
 import Menu from "../Sheard/Menu";
 import TopHeader from "../Sheard/TopHeader";
-import Pagination2 from "./Pagination2";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { AppState } from "../context/Context";
-import {AppContext} from "../context/Context";
+import { useLocation } from "react-router-dom";
 
-import "./registration.css";
+export default function MonthsList() {
+  const location = useLocation();
+  const detailspage = useNavigate();
+  const [documents,setDocuments] = useState([]);
+  const [monthreport,setMonthReport] = useState();
 
-import classes from "./home.module.css";
-
-export default function Home() {
-  const loginpage = useNavigate();
-  const IssuerListPage = useNavigate();
-  const [userinfo, setUserInfo] = useState();
-  const [dealsdata,setDealsData] = useState();
-  // const [issuername, setIssuerName] = useState([]);
-  // const [financername, setFinancerName] = useState([]);
-  const [unique_issuername, setUniqueIssuerName] = useState()
-  const {deals,issuername,financername} = useContext(AppContext);
-
-
-  useEffect(() => {
+  const DocumentHandler = () => {
+    let MonthsReport=[];
     const userInfo = JSON.parse(localStorage.getItem("userinfo"));
-    if (!userInfo) {
-      loginpage("/");
+    console.log(location?.state);
+    for(let i=0; i<location?.state?.length; i++){
+      const id=location.state[i].ID;
+      console.log(id);
+      axios.post("https://investmentportal.herokuapp.com/getdocuments",{id}).then(function(data){
+        console.log(data);
+        for(let k=0;k<data?.data?.data?.User?.length;k++){
+          if(data?.data?.data?.User[k]?.ID === userInfo.id){
+            const filename = data.data.data.Documents
+            const fileformat = filename.split(".")[1];
+            //console.log(fileformat);
+            MonthsReport.push(data.data.data.MonthOfReport);
+            setDocuments(olddata=>[...olddata,{"Id":data.data.data.ID,"DocumentName":data.data.data.DocumentName,"DownloadLink":data.data.data.Documents,"FormatType":fileformat,"ReportDate":data.data.data.CreatedDateTime,"MonthReport":data.data.data.MonthOfReport}]);
+          }
+        }
+        console.log("MONTH REPORT: ",MonthsReport);
+        return MonthsReport;
+      }).then(MonthsReport=>{
+        console.log(MonthsReport);
+        const withoutDuplicates_MonthsReport= [...new Set(MonthsReport)];
+        console.log(withoutDuplicates_MonthsReport);
+        setMonthReport(withoutDuplicates_MonthsReport);
+        // var MonthsReport_filter = documents?.filter(function(el){
+        //   return el.MonthOfReport === unique_issuername[index];
+        // })
+      })
     }
-
-    if (userInfo) {
-      //console.log(userInfo.id, userInfo.name, userInfo.email);
-      setUserInfo({
-        id: userInfo.id,
-        name: userInfo.name,
-        email: userInfo.email,
-      });
-    } else {
-      loginpage("/");
-    }
-
-    console.log(deals);
-    const withoutDuplicates_issuername = [...new Map(issuername.map(item => [JSON.stringify(item), item])).values()];
-    console.log(withoutDuplicates_issuername);
-    setUniqueIssuerName(withoutDuplicates_issuername);
-    // const DealsData = async () => {
-    //   try{
-    //     const data = await axios.post("https://investmentportal.herokuapp.com/getalldeals");
-    //     setDealsData(data.data.data);
-    //     for(let i=0; i<data.data.data.length; i++){
-    //       console.log(data.data.data[i].Issuer_Name);
-    //       setIssuerName(preData=>[...preData,data.data.data[i].Issuer_Name]);
-    //       setFinancerName(preData=>[...preData,data.data.data[i].Financer]);
-    //       console.log(data.data.data[i].Financer);
-    //     }
-    //     return data.data.data;
-
-    //   }catch(error){
-    //     console.log(error);
-    //   }
-      
-    // }
-
-    // DealsData().then(data=>{
-    //   //const withoutDuplicates_issuername = [...new Set(issuername)]; //0, 1
-    //   const withoutDuplicates_issuername = [...new Map(issuername?.map(item => [JSON.stringify(item), item])).values()];
-    //   console.log(data);
-    //   for(let k=0; k<withoutDuplicates_issuername?.length; k++){
-    //     console.log(withoutDuplicates_issuername[k]);
-    //   }
-    // }).catch(console.error);
-  }, []);
-
+    
+  }
+  
+  useEffect(()=>{
+    DocumentHandler();
+    //console.log(location);
+  },[])
   return (
     <div>
       <TopHeader></TopHeader>
@@ -95,7 +72,7 @@ export default function Home() {
                   Welcome, Nicole Wang
                 </h5>
 
-                <div class="input-group mb-3">
+                {/* <div class="input-group mb-3">
                   <input
                     type="text"
                     class="form-control  border-0"
@@ -113,9 +90,8 @@ export default function Home() {
                     >
                       Search
                     </button>
-                    <button onClick={()=>console.log(unique_issuername)}>show data</button>
                   </div>
-                </div>
+                </div> */}
               </div>
             </section>
             {/* Search Section End  */}
@@ -123,20 +99,16 @@ export default function Home() {
             {/* File Section tart  */}
 
             <section
-              className="container mt-5"
+              className="container mt-1"
               style={{
                 backgroundColor: "#222222",
                 padding: 25,
               }}
             >
-              <ul
+              {/* <ul
                 className="nav nav-pills mb-3 d-flex justify-content-center"
                 id="pills-tab"
                 role="tablist"
-                // style={{
-                //   backgroundColor: "#232323",
-                //   padding: 25,
-                // }}
               >
                 <li className="nav-item" role="presentation">
                   <button
@@ -154,7 +126,7 @@ export default function Home() {
                 </li>
                 <li className="nav-item" role="presentation">
                   <button
-                    className="nav-link active"
+                    className="nav-link"
                     id="pills-profile-tab"
                     data-bs-toggle="pill"
                     data-bs-target="#pills-profile"
@@ -168,7 +140,7 @@ export default function Home() {
                 </li>
                 <li className="nav-item" role="presentation">
                   <button
-                    className="nav-link active"
+                    className="nav-link"
                     id="pills-contact-tab"
                     data-bs-toggle="pill"
                     data-bs-target="#pills-contact"
@@ -180,48 +152,36 @@ export default function Home() {
                     Financer Name
                   </button>
                 </li>
-              </ul>
-              <div
-                // style={{
-                //   backgroundColor: "#232323",
-                //   padding: 25,
-                // }}
-                className="tab-content"
-                id="pills-tabContent"
-              >
+              </ul> */}
+              <div className="tab-content" id="pills-tabContent">
                 <div
                   className="tab-pane fade show active text-white"
                   id="pills-home"
                   role="tabpanel"
                   aria-labelledby="pills-home-tab"
-                  style={{
-                    padding : '0px 50px 50px 0px'
-      
-                  }}
                 >
                   <h3> Issuser Name </h3>
-                  
-                  <span>{unique_issuername?.length}</span>
+                  <span>{documents.length} Search Results</span>
 
                   <table className="table text-white mt-3">
                     <thead>
                       <tr>
-                        <th scope="col">Issuer Name</th>
+                        <th scope="col">Month</th>
                         <th scope="col">Product Title</th>
-                        <th scope="col">Count</th>
+                        <th scope="col">Deal Administrator</th>
                         <th></th>
                       </tr>
                     </thead>
                     <tbody>
-                      {unique_issuername?.map((data,index)=>{
-                        var issuer_list_filter = deals?.filter(function(el){
-                          return el.Issuer_Name === unique_issuername[index];
+                    {monthreport?.map((data,index)=>{
+                        var months_list_filter = documents?.filter(function(el){
+                          return el.MonthReport === monthreport[index];
                         })
                         return(
                           <tr onClick={()=>{
                             
-                            console.log(issuer_list_filter);
-                            IssuerListPage("/issuerlist",{state:{issuer_list_filter}})}} >
+                            console.log(months_list_filter);
+                            detailspage("/details",{state:{months_list_filter}})}} >
                           <th scope="row" style={{cursor:"pointer"}}> {data} </th>
                           <td>Other </td>
                           <td>{index}</td>
@@ -232,97 +192,6 @@ export default function Home() {
                           </tr>
                         )
                       })}
-                    
-                    </tbody>
-                  </table>
-                  <Pagination2></Pagination2>
-                </div>
-                <div
-                  className="tab-pane fade text-white"
-                  id="pills-profile"
-                  role="tabpanel"
-                  aria-labelledby="pills-profile-tab"
-                  style={{
-                    padding : '0px 50px 50px 0px'
-      
-                  }}
-                >
-                  <h3> Deal Name </h3>
-                  <span>4419 Search Results</span>
-                  <table className="table text-white mt-3">
-                    <thead>
-                      <tr>
-                        <th scope="col">Deal Name</th>
-                        <th scope="col">Issuer Name</th>
-                        <th scope="col">Product</th>
-                        <th scope="col">Contact</th>
-                        <th></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row"> Name of Deal </th>
-                        <td>Name of Issuer </td>
-                        <td>Other </td>
-                        <td> Name Name </td>
-                        <td>
-                          {" "}
-                          <i className="bi bi-arrow-up-right-square"> </i>{" "}
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row"> Name of Deal </th>
-                        <td>Name of Issuer </td>
-                        <td>Other </td>
-                        <td> Name Name </td>
-                        <td>
-                          {" "}
-                          <i className="bi bi-arrow-up-right-square"> </i>{" "}
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>{" "}
-                </div>
-                <div
-                  className="tab-pane fade text-white"
-                  id="pills-contact"
-                  role="tabpanel"
-                  aria-labelledby="pills-contact-tab"
-                >
-                  <h3> Financer Name </h3>
-                  <span>4419 Search Results</span>
-
-                  <table className="table text-white mt-3">
-                    <thead>
-                      <tr>
-                        <th scope="col">Financer Name</th>
-                        <th scope="col">Issuer Name</th>
-                        <th scope="col">Product</th>
-                        <th scope="col">Contact</th>
-                        <th></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row"> Name of Financer </th>
-                        <td>Name of Issuer </td>
-                        <td>Other </td>
-                        <td> Name Name </td>
-                        <td>
-                          {" "}
-                          <i className="bi bi-arrow-up-right-square"> </i>{" "}
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row"> Name of Financer </th>
-                        <td>Name of Issuer </td>
-                        <td>Other </td>
-                        <td> Name Name </td>
-                        <td>
-                          {" "}
-                          <i className="bi bi-arrow-up-right-square"> </i>{" "}
-                        </td>
-                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -351,7 +220,7 @@ export default function Home() {
           </div>
 
           {/* For Your Information Start  */}
-          <div className="col-lg-4 col-md-4 col-sm-12 col-12">
+          {/* <div className="col-lg-4 col-md-4 col-sm-12 col-12">
             <section
               className="mt-4 text-white text-start"
               style={{
@@ -436,7 +305,7 @@ export default function Home() {
                 </li>
               </ul>
             </section>
-          </div>
+          </div> */}
 
           {/*  For Your Information End  */}
         </div>

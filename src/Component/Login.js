@@ -21,21 +21,22 @@ const Login = () => {
   const [userdata, setUserData] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [resetemail, setResetEmail] = useState();
   const [alertmsg, setAlertmsg] = useState();
 
   const userAllData = () => {
     //Get Record - Detail View
     axios
-      .get("https://investmentportal.herokuapp.com/getrecord")
+      .get("http://localhost:5000/getrecord")
       .then(function (data) {
-        //console.log(data.data.data);
+        console.log(data.data.data);
         setUserData(data.data.data);
         // localStorage.setItem("userinfo",JSON.stringify(data));
         // setVisiable(true);
       });
   };
 
-  console.log(email);
+  //console.log(email);
 
   const userLogin = () => {
     if (userdata) {
@@ -125,7 +126,7 @@ const Login = () => {
               <div className="row">
                 <div className="col-lg-6 col-md-6 col-sm-12 col-12 ">
                   {" "}
-                  <form>
+                  {/* <form> */}
                     <div class="form-group mt-2">
                       <input
                         style={{ backgroundColor: "#00ADEE", color: "white" }}
@@ -205,14 +206,16 @@ const Login = () => {
                             aria-describedby="username"
                             placeholder="User Email"
                             required
+                            onChange={(e)=>setResetEmail(e.target.value)}
                           />
                         </div>
                         <div class="form-group mt-1">
                           <button
                             //  style={{ float: "left", color: "#00ADEE" }}
-                            type="submit"
-                            className="btn btn-primary mt-2 border-0"
-                            id="registetionbutton"
+                            // type="submit"
+                            // className="btn btn-primary mt-2 border-0"
+                            //id="registetionbutton"
+                            onClick={()=>console.log(resetemail)}
                           >
                             Submit
                           </button>
@@ -228,7 +231,7 @@ const Login = () => {
                     
                     Forget Your Password ?
                     </a> </div> */}
-                  </form>
+                  {/* </form> */}
                   <div></div>
                 </div>
 

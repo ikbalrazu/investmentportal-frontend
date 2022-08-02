@@ -12,7 +12,7 @@ const Search = () => {
   const [dealsdata,setDealsData] = useState();
   const [documentdata, setDocumentData] = useState();
   const [issuername, setIssuerName] = useState([]);
-  const [unique_issuername, setUniqueIssuerName] = useState([]);
+  const [unique_issuername, setUniqueIssuerName] = useState(["Allied Credit Finance","momin","iqbal"]);
   const [financername, setFinancerName] = useState([]);
   const [unique_financername, setUniqueFinancerName] = useState([]);
 
@@ -23,11 +23,18 @@ const Search = () => {
       //console.log(data.data.data[0].Documents);
       setDocumentData(data.data.data);
       for(let i=0; i<data.data.data.length; i++){
-        console.log(data.data.data[i].Issuer_Name);
+        //console.log(data.data.data[i].Issuer_Name);
         setIssuerName(preData=>[...preData,data.data.data[i].Issuer_Name]);
         setFinancerName(preData=>[...preData,data.data.data[i].Financer]);
-        console.log(data.data.data[i].Financer);
+        //console.log(data.data.data[i].Financer);
       }
+      
+    }).then(function(el){
+      const obj = [...new Map(issuername?.map(item => [JSON.stringify(item), item])).values()];
+      // const withoutDuplicates_issuername = [...new Set(issuername)];
+      // setUniqueIssuerName(withoutDuplicates_issuername);
+      console.log(obj);
+
     }).catch(function(error){
       console.log(error);
     })
@@ -62,43 +69,59 @@ const Search = () => {
     console.log(unique_issuername);
   }
 
-  useEffect(()=>{
-    AllDeals();
-    // const DealsData = async () => {
-    //   try{
-    //     const data = await axios.post("https://investmentportal.herokuapp.com/getalldeals");
-    //     //console.log(data);
-    //     //const data = await res.json();
-    //     //console.log(data);
+  // useEffect( async()=>{
+    // axios.post("https://investmentportal.herokuapp.com/getalldeals")
+    //   .then(function(data){
+    //     console.log(data.data.data);
     //     setDealsData(data.data.data);
     //     for(let i=0; i<data.data.data.length; i++){
-    //       console.log(data.data.data[i].Issuer_Name);
     //       setIssuerName(preData=>[...preData,data.data.data[i].Issuer_Name]);
     //       setFinancerName(preData=>[...preData,data.data.data[i].Financer]);
-    //       console.log(data.data.data[i].Financer);
     //     }
+    //   })
+    //   .then((obj)=>{
+    //     console.log(dealsdata?.Issuer_Name);
+    //   })
 
-    //     return data.data.data;
+  // },[])
 
-    //   }catch(error){
-    //     console.log(error);
-    //   }
+  useEffect(()=>{
+    //AllDeals();
+    const DealsData = async () => {
+      try{
+        const data = await axios.post("https://investmentportal.herokuapp.com/getalldeals");
+        setDealsData(data.data.data);
+        for(let i=0; i<data.data.data.length; i++){
+          console.log(data.data.data[i].Issuer_Name);
+          setIssuerName(preData=>[...preData,data.data.data[i].Issuer_Name]);
+          setFinancerName(preData=>[...preData,data.data.data[i].Financer]);
+          console.log(data.data.data[i].Financer);
+        }
+
+        //const uniqueissuername = await [...new Map(issuername?.map(item => [JSON.stringify(item), item])).values()];
+        return data.data.data;
+
+      }catch(error){
+        console.log(error);
+      }
       
-    // }
+    }
 
-    // DealsData().then(data=>{
-    //   const withoutDuplicates_issuername = [...new Set(issuername)]; //0, 1
-    //   console.log(withoutDuplicates_issuername);
-    //   console.log(data);
-    //   for(let k=0; k<withoutDuplicates_issuername?.length; k++){
-    //     console.log(withoutDuplicates_issuername[k]);
-    //     for(let l=0; l<data?.data?.data?.length; l++){
-    //       if(withoutDuplicates_issuername[k] === data?.data?.data[l]?.Issuer_Name){
-    //         setUniqueIssuerName(oldData=>[...oldData,{"IssuerList":data?.data?.data[l]?.DealName}]);
-    //       }
-    //     }
-    //   }
-    // }).catch(console.error);
+    DealsData().then(data=>{
+      //const withoutDuplicates_issuername = [...new Set(issuername)]; //0, 1
+      const withoutDuplicates_issuername = [...new Map(issuername?.map(item => [JSON.stringify(item), item])).values()];
+      //setUniqueIssuerName(withoutDuplicates_issuername);
+      //console.log(withoutDuplicates_issuername);
+      console.log(data);
+      for(let k=0; k<withoutDuplicates_issuername?.length; k++){
+        console.log(withoutDuplicates_issuername[k]);
+        // for(let l=0; l<data?.data?.data?.length; l++){
+        //   if(withoutDuplicates_issuername[k] === data?.data?.data[l]?.Issuer_Name){
+        //     setUniqueIssuerName(oldData=>[...oldData,{"IssuerList":data?.data?.data[l]?.DealName}]);
+        //   }
+        // }
+      }
+    }).catch(console.error);
   },[]);
 
   // useEffect(()=>{
@@ -415,7 +438,7 @@ const Search = () => {
           </li>
           <li className="nav-item" role="presentation">
             <button
-              className="nav-link"
+              className="nav-link active"
               id="pills-profile-tab"
               data-bs-toggle="pill"
               data-bs-target="#pills-profile"
@@ -429,7 +452,7 @@ const Search = () => {
           </li>
           <li className="nav-item" role="presentation">
             <button
-              className="nav-link"
+              className="nav-link active"
               id="pills-contact-tab"
               data-bs-toggle="pill"
               data-bs-target="#pills-contact"
@@ -454,7 +477,8 @@ const Search = () => {
             }}
           >
             <h3> Issuser Name </h3>
-            <span>{dealsdata?.length} Search Results</span>
+            {}
+            <span>{unique_issuername?.length} Search Results</span>
 
             <table className="table text-white mt-3">
               <thead>
@@ -466,10 +490,40 @@ const Search = () => {
                 </tr>
               </thead>
               <tbody>
-                {dealsdata?.map((data,index)=>(
+
+                {/* {for(let i=0; i<unique_issuername.length; i++){
+                  var issuer_list = dealsdata.filter(function(el){
+                    return el.Issuer_Name === unique_issuername[i];
+                  })
+                }} */}
+
+                {(()=>{
                   
+                  for(let i=0; i<unique_issuername?.length; i++){
+                    var issuer_list_filter = dealsdata?.filter(function(el){
+                      return el.Issuer_Name === unique_issuername[i];
+                    })
+                    let issuer_list = issuer_list_filter?.map((data,index)=>{
+                      return(
+                        <tr onClick={()=>detailspage("/details",{state:data})} >
+                        <th scope="row" style={{cursor:"pointer"}}> {unique_issuername[i]} </th>
+                        <td>Other </td>
+                        <td>{index}</td>
+                        <td>
+                          {" "}
+                          <i className="bi bi-arrow-up-right-square"> </i>{" "}
+                        </td>
+                        </tr>
+                      )
+                    })
+                    return issuer_list
+                  }
+                  
+                })()}
+
+                {/* {unique_issuername?.map((data,index)=>(
                   <tr onClick={()=>detailspage("/details",{state:data.Documents})} >
-                  <th scope="row" style={{cursor:"pointer"}}> {data.Issuer_Name} </th>
+                  <th scope="row" style={{cursor:"pointer"}}> {data} </th>
                   <td>Other </td>
                   <td>1</td>
                   <td>
@@ -477,9 +531,7 @@ const Search = () => {
                     <i className="bi bi-arrow-up-right-square"> </i>{" "}
                   </td>
                   </tr>
-                  
-                  
-                ))}
+                ))} */}
                 
                 
               </tbody>
