@@ -5,24 +5,25 @@ import TopHeader from "../Sheard/TopHeader";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import classes from "./home.module.css";
 
 export default function IssuerList() {
   const location = useLocation();
   const monthlist = useNavigate();
-  const [issuerlist,setIssuerList] = useState();
-  const [issuername,setIssuerName] = useState([]);
+  const [issuerlist, setIssuerList] = useState();
+  const [issuername, setIssuerName] = useState([]);
 
   const IssuerList = () => {
     setIssuerList(location?.state?.issuer_list_filter);
-    for(let i=0; i<location?.state?.issuer_list_filter?.length; i++){
+    for (let i = 0; i < location?.state?.issuer_list_filter?.length; i++) {
       setIssuerName(location.state.issuer_list_filter[0].Issuer_Name);
     }
-  }
+  };
 
-  useEffect(()=>{
+  useEffect(() => {
     IssuerList();
     //console.log(location?.state.issuer_list_filter.length);
-  },[])
+  }, []);
   return (
     <div>
       <TopHeader></TopHeader>
@@ -30,7 +31,7 @@ export default function IssuerList() {
 
       <div className="container">
         <div className="row">
-          <div className="col-lg-8 col-md-8 col-sm-12 col-12">
+          <div className="col-lg-12 col-md-12 col-sm-12 col-12">
             {/* Search Section Start */}
             <section>
               <div
@@ -43,7 +44,7 @@ export default function IssuerList() {
                 }
               >
                 <h5 className="text-start py-1" style={{ color: "#00ADEE" }}>
-                 wellcome {issuername}
+                  wellcome {issuername}
                 </h5>
 
                 {/* <div class="input-group mb-3">
@@ -149,22 +150,29 @@ export default function IssuerList() {
                       </tr>
                     </thead>
                     <tbody>
-                      {issuerlist?.map((data,index)=>{
-                        return(
-                          <tr onClick={()=>monthlist("/monthslist",{state:data.Documents})}>
-                          <th scope="row"> {data?.DealName} </th>
-                          <td>{data?.Issuer_Name}</td>
-                          <td>RMBS</td>
-                          <td>Nicole Wang</td>
-                          <td>01/01/2022</td>
-                          <td>
-                            {" "}
-                            <i className="bi bi-arrow-up-right-square"> </i>{" "}
-                          </td>
-                        </tr>
-                        )
+                      {issuerlist?.map((data, index) => {
+                        return (
+                          <tr
+                            onClick={() =>
+                              monthlist("/monthslist", {
+                                state: data.Documents,
+                              })
+                            }
+                          >
+                            <th scope="row"> {data?.DealName} </th>
+                            <td>{data?.Issuer_Name}</td>
+                            <td>RMBS</td>
+                            <td>Nicole Wang</td>
+                            <td>01/01/2022</td>
+                            <td>
+                              {" "}
+                              <i className="bi bi-arrow-up-right-square">
+                                {" "}
+                              </i>{" "}
+                            </td>
+                          </tr>
+                        );
                       })}
-                      
                     </tbody>
                   </table>
                 </div>
@@ -369,9 +377,8 @@ export default function IssuerList() {
         </div>
       </div>
 
-      <Footer></Footer>
+      <Footer className={ classes.footer }
+      ></Footer>
     </div>
   );
 }
-
-

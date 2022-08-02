@@ -13,6 +13,7 @@ const Menu = () => {
         <button
           style={{
             backgroundColor: "white",
+            color: "black",
           }}
           className="navbar-toggler"
           type="button"
@@ -22,9 +23,7 @@ const Menu = () => {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span className="navbar-toggler-icon ">
-            <i class="fa fa-navicon" aria-hidden="false"></i>
-          </span>
+          <span className="navbar-toggler-icon"></span>
         </button>
         <div
           className="collapse navbar-collapse fw-bold"
@@ -38,13 +37,7 @@ const Menu = () => {
                 </Link>
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link">
-                <Link className="link" to="/search">
-                  Search
-                </Link>
-              </a>
-            </li>
+
             <li class="nav-item">
               <a class="nav-link" href="#">
                 General
