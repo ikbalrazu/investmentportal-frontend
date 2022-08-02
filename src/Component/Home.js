@@ -6,7 +6,7 @@ import Pagination2 from "./Pagination2";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { AppState } from "../context/Context";
-import {AppContext} from "../context/Context";
+import { AppContext } from "../context/Context";
 
 import "./registration.css";
 
@@ -16,12 +16,11 @@ export default function Home() {
   const loginpage = useNavigate();
   const IssuerListPage = useNavigate();
   const [userinfo, setUserInfo] = useState();
-  const [dealsdata,setDealsData] = useState();
+  const [dealsdata, setDealsData] = useState();
   // const [issuername, setIssuerName] = useState([]);
   // const [financername, setFinancerName] = useState([]);
-  const [unique_issuername, setUniqueIssuerName] = useState()
-  const {deals,issuername,financername} = useContext(AppContext);
-
+  const [unique_issuername, setUniqueIssuerName] = useState();
+  const { deals, issuername, financername } = useContext(AppContext);
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userinfo"));
@@ -41,7 +40,11 @@ export default function Home() {
     }
 
     console.log(deals);
-    const withoutDuplicates_issuername = [...new Map(issuername.map(item => [JSON.stringify(item), item])).values()];
+    const withoutDuplicates_issuername = [
+      ...new Map(
+        issuername.map((item) => [JSON.stringify(item), item])
+      ).values(),
+    ];
     console.log(withoutDuplicates_issuername);
     setUniqueIssuerName(withoutDuplicates_issuername);
     // const DealsData = async () => {
@@ -59,7 +62,7 @@ export default function Home() {
     //   }catch(error){
     //     console.log(error);
     //   }
-      
+
     // }
 
     // DealsData().then(data=>{
@@ -79,7 +82,7 @@ export default function Home() {
 
       <div className="container">
         <div className="row">
-          <div className="col-lg-8 col-md-8 col-sm-12 col-12">
+          <div className="col-lg-12 col-md-12 col-sm-12 col-12">
             {/* Search Section Start */}
             <section>
               <div
@@ -113,7 +116,7 @@ export default function Home() {
                     >
                       Search
                     </button>
-                    <button onClick={()=>console.log(unique_issuername)}>show data</button>
+                    {/* <button onClick={()=>console.log(unique_issuername)}>show data</button> */}
                   </div>
                 </div>
               </div>
@@ -140,7 +143,7 @@ export default function Home() {
               >
                 <li className="nav-item" role="presentation">
                   <button
-                    className="nav-link active"
+                    className={classes.btn}
                     id="pills-home-tab"
                     data-bs-toggle="pill"
                     data-bs-target="#pills-home"
@@ -148,13 +151,16 @@ export default function Home() {
                     role="tab"
                     aria-controls="pills-home"
                     aria-selected="true"
+                    // style={{
+                    //   backgroundColor:'#00adee'
+                    // }}
                   >
                     Issuser Name
                   </button>
                 </li>
                 <li className="nav-item" role="presentation">
                   <button
-                    className="nav-link active"
+                    className={classes.btn}
                     id="pills-profile-tab"
                     data-bs-toggle="pill"
                     data-bs-target="#pills-profile"
@@ -168,7 +174,7 @@ export default function Home() {
                 </li>
                 <li className="nav-item" role="presentation">
                   <button
-                    className="nav-link active"
+                    className={classes.btn}
                     id="pills-contact-tab"
                     data-bs-toggle="pill"
                     data-bs-target="#pills-contact"
@@ -195,12 +201,11 @@ export default function Home() {
                   role="tabpanel"
                   aria-labelledby="pills-home-tab"
                   style={{
-                    padding : '0px 50px 50px 0px'
-      
+                    padding: "0px 50px 50px 0px",
                   }}
                 >
                   <h3> Issuser Name </h3>
-                  
+
                   <span>{unique_issuername?.length}</span>
 
                   <table className="table text-white mt-3">
@@ -213,26 +218,34 @@ export default function Home() {
                       </tr>
                     </thead>
                     <tbody>
-                      {unique_issuername?.map((data,index)=>{
-                        var issuer_list_filter = deals?.filter(function(el){
+                      {unique_issuername?.map((data, index) => {
+                        var issuer_list_filter = deals?.filter(function (el) {
                           return el.Issuer_Name === unique_issuername[index];
-                        })
-                        return(
-                          <tr onClick={()=>{
-                            
-                            console.log(issuer_list_filter);
-                            IssuerListPage("/issuerlist",{state:{issuer_list_filter}})}} >
-                          <th scope="row" style={{cursor:"pointer"}}> {data} </th>
-                          <td>Other </td>
-                          <td>{index}</td>
-                          <td>
-                          {" "}
-                          <i className="bi bi-arrow-up-right-square"> </i>{" "}
-                          </td>
+                        });
+                        return (
+                          <tr
+                            onClick={() => {
+                              console.log(issuer_list_filter);
+                              IssuerListPage("/issuerlist", {
+                                state: { issuer_list_filter },
+                              });
+                            }}
+                          >
+                            <th scope="row" style={{ cursor: "pointer" }}>
+                              {" "}
+                              {data}{" "}
+                            </th>
+                            <td>Other </td>
+                            <td>{index}</td>
+                            <td>
+                              {" "}
+                              <i className="bi bi-arrow-up-right-square">
+                                {" "}
+                              </i>{" "}
+                            </td>
                           </tr>
-                        )
+                        );
                       })}
-                    
                     </tbody>
                   </table>
                   <Pagination2></Pagination2>
@@ -243,8 +256,7 @@ export default function Home() {
                   role="tabpanel"
                   aria-labelledby="pills-profile-tab"
                   style={{
-                    padding : '0px 50px 50px 0px'
-      
+                    padding: "0px 50px 50px 0px",
                   }}
                 >
                   <h3> Deal Name </h3>
@@ -349,96 +361,6 @@ export default function Home() {
 
             {/* File Section End  */}
           </div>
-
-          {/* For Your Information Start  */}
-          <div className="col-lg-4 col-md-4 col-sm-12 col-12">
-            <section
-              className="mt-4 text-white text-start"
-              style={{
-                backgroundColor: "#232323",
-                padding: 20,
-                minHeight: 919,
-              }}
-            >
-              <h3
-                style={{
-                  color: "#00ADEE",
-                }}
-              >
-                For your Information
-              </h3>
-              <ul class="list-group mt-3">
-                <li
-                  class="list-group"
-                  style={{
-                    backgroundColor: "transparent",
-                    color: "white",
-                  }}
-                >
-                  <div>
-                    An Article 77 proceeding was recently filed relating to
-                    certain GSR RMBS trusts. A Notice entitled "Notice of
-                    proceeding re payment waterfalls on GSR RMBS Trusts" has
-                    been posted in the Available Documents section of each
-                    affected trust's website.
-                    <hr />
-                  </div>
-                </li>
-                <li
-                  class="list-group"
-                  style={{
-                    backgroundColor: "transparent",
-                    color: "white",
-                  }}
-                >
-                  <div>
-                    An Article 77 proceeding was recently filed relating to
-                    certain GSR RMBS trusts. A Notice entitled "Notice of
-                    proceeding re payment waterfalls on GSR RMBS Trusts" has
-                    been posted in the Available Documents section of each
-                    affected trust's website.
-                    <hr />
-                  </div>
-                </li>
-
-                <li
-                  class="list-group"
-                  style={{
-                    backgroundColor: "transparent",
-                    color: "white",
-                  }}
-                >
-                  <div>
-                    An Article 77 proceeding was recently filed relating to
-                    certain GSR RMBS trusts. A Notice entitled "Notice of
-                    proceeding re payment waterfalls on GSR RMBS Trusts" has
-                    been posted in the Available Documents section of each
-                    affected trust's website.
-                    <hr />
-                  </div>
-                </li>
-
-                <li
-                  class="list-group"
-                  style={{
-                    backgroundColor: "transparent",
-                    color: "white",
-                  }}
-                >
-                  <div>
-                    An Article 77 proceeding was recently filed relating to
-                    certain GSR RMBS trusts. A Notice entitled "Notice of
-                    proceeding re payment waterfalls on GSR RMBS Trusts" has
-                    been posted in the Available Documents section of each
-                    affected trust's website.
-                    <hr />
-                  </div>
-                </li>
-              </ul>
-            </section>
-          </div>
-
-          {/*  For Your Information End  */}
         </div>
       </div>
 
