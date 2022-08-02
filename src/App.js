@@ -11,6 +11,7 @@ import Registration from "./Component/Registration";
 import IssuerList from "./Component/IssuerList";
 import FinancierList from "./Component/FinancierList";
 import MonthsList from "./Component/MonthsList";
+import ResetPassword from "./Component/ResetPassword";
 import axios from "axios";
 
 
@@ -41,6 +42,7 @@ function App() {
       <Route path="/financierlist" element={<FinancierList />} />
       <Route path="/monthslist" element={<MonthsList />} />
       <Route path="/register" element={<Registration />} />
+      <Route path="/resetpassword/:token" element={<ResetPassword/>}/>
       <Route path="/" element={<Login />} />
     </Routes>
     </div>
