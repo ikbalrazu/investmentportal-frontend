@@ -21,13 +21,13 @@ const Details = () => {
       //const id = "3963856000000894007"
       
       axios.post("https://investmentportal.herokuapp.com/getdocuments",{id}).then(function(data){
-        console.log(data);
+        //console.log(data);
         //setDocuments(olddata=>[...olddata,{"document":data.data.data}]);
         //console.log(data.data.data.User);
         for(let k=0;k<data.data.data.User.length;k++){
           if(data.data.data.User[k].ID === userInfo.id){
-            console.log("matched",data.data.data.ID)
-            console.log("Documents Link", data.data.data.Documents);
+            //console.log("matched",data.data.data.ID)
+            //console.log("Documents Link", data.data.data.Documents);
             const filename = data.data.data.Documents
             const fileformat = filename.split(".")[1];
             //console.log(fileformat);
@@ -53,7 +53,7 @@ const Details = () => {
 
   useEffect(()=>{
     //AllDocumentsById();
-    console.log(location.state);
+    //console.log(location.state);
     setDocumenstList(location?.state?.months_list_filter);
   },[]);
 

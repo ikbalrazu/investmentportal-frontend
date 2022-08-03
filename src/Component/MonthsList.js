@@ -15,12 +15,12 @@ export default function MonthsList() {
   const DocumentHandler = () => {
     let MonthsReport=[];
     const userInfo = JSON.parse(localStorage.getItem("userinfo"));
-    console.log(location?.state);
+    //console.log(location?.state);
     for(let i=0; i<location?.state?.length; i++){
       const id=location.state[i].ID;
-      console.log(id);
+      //console.log(id);
       axios.post("https://investmentportal.herokuapp.com/getdocuments",{id}).then(function(data){
-        console.log(data);
+        //console.log(data);
         setDealName(data?.data?.data?.Deals?.display_value)
         if(data?.data?.data?.Access_Type === "Private"){
           for(let k=0; k<data?.data?.data?.User?.length; k++){
@@ -50,12 +50,12 @@ export default function MonthsList() {
         //   //   setDocuments(olddata=>[...olddata,{"Id":data.data.data.ID,"DocumentName":data.data.data.DocumentName,"DownloadLink":data.data.data.Documents,"FormatType":fileformat,"ReportDate":data.data.data.CreatedDateTime,"MonthReport":data.data.data.MonthOfReport}]);
         //   // }
         // }
-        console.log("MONTH REPORT: ",MonthsReport);
+        //console.log("MONTH REPORT: ",MonthsReport);
         return MonthsReport;
       }).then(MonthsReport=>{
-        console.log(MonthsReport);
+        //console.log(MonthsReport);
         const withoutDuplicates_MonthsReport= [...new Set(MonthsReport)];
-        console.log(withoutDuplicates_MonthsReport);
+        //console.log(withoutDuplicates_MonthsReport);
         setMonthReport(withoutDuplicates_MonthsReport);
         // var MonthsReport_filter = documents?.filter(function(el){
         //   return el.MonthOfReport === unique_issuername[index];
@@ -204,7 +204,7 @@ export default function MonthsList() {
                             detailspage("/details",{state:{months_list_filter}})}} >
                           <th scope="row" style={{cursor:"pointer"}}> {data} </th>
                           <td>Other </td>
-                          <td>{index}</td>
+                          <td>--</td>
                           <td>
                           {" "}
                           <i className="bi bi-arrow-up-right-square"> </i>{" "}
