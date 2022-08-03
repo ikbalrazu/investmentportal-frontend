@@ -16,6 +16,7 @@ import "./registration.css";
 
 const Login = () => {
   const registration = useNavigate();
+  const twofactorauth = useNavigate();
   const forgotpassword = useNavigate();
   const homepage = useNavigate();
   const [userdata, setUserData] = useState();
@@ -29,7 +30,7 @@ const Login = () => {
     axios
       .get("https://investmentportal.herokuapp.com/getrecord")
       .then(function (data) {
-        console.log(data.data.data);
+        //console.log(data.data.data);
         setUserData(data.data.data);
         // localStorage.setItem("userinfo",JSON.stringify(data));
         // setVisiable(true);
@@ -54,19 +55,20 @@ const Login = () => {
           //console.log(DecodePass);
           if (userdata[i]?.Email === email && DecodePass === password) {
             if (userdata[i].UserStatus === "Approved") {
-              localStorage.setItem(
-                "userinfo",
-                JSON.stringify({
-                  id: userdata[i].ID,
-                  name: userdata[i].Name.display_value,
-                  email: userdata[i].Email,
-                  userstatus: userdata[i].UserStatus,
-                })
-              );
+              console.log(userdata[i]);
+              // localStorage.setItem(
+              //   "userinfo",
+              //   JSON.stringify({
+              //     id: userdata[i].ID,
+              //     name: userdata[i].Name.display_value,
+              //     email: userdata[i].Email,
+              //     userstatus: userdata[i].UserStatus,
+              //   })
+              // );
               // console.log("");
               // message.success("Successfully login!");
               console.log("Successfully login!");
-              registration("/home");
+              twofactorauth("/emailotpverify",{state: userdata[i]});
             } else if (userdata[i].UserStatus === "Pending") {
               //message.success("Your request is pending...");
               console.log("Your request is pending...");

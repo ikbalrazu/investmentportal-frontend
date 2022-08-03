@@ -12,30 +12,11 @@ import IssuerList from "./Component/IssuerList";
 import FinancierList from "./Component/FinancierList";
 import MonthsList from "./Component/MonthsList";
 import ResetPassword from "./Component/ResetPassword";
+import EmailOTPVerify from "./Component/EmailOTPVerify";
 import axios from "axios";
 
 
 function App() {
-  const [deals,setDeals] = useState();
-  const [issuername, setIssuerName] = useState([]);
-  const [financername, setFinancerName] = useState([]);
-
-  const GetDeals = async() =>{
-    try{
-      const data = await axios.post("https://investmentportal.herokuapp.com/getalldeals");
-      console.log(data.data.data);
-      setDeals(data.data.data);
-      for(let i=0; i<data.data.data.length; i++){
-        //console.log(data.data.data[i].Issuer_Name);
-        setIssuerName(preData=>[...preData,data.data.data[i].Issuer_Name]);
-        setFinancerName(preData=>[...preData,data.data.data[i].Financer]);
-        //console.log(data.data.data[i].Financer);
-      }
-    }catch(error){
-      console.log(error);
-    }
-
-  }
 //   const [deals,setDeals] = useState();
 //   const GetDeals = async() =>{
 //     try{
@@ -47,9 +28,9 @@ function App() {
 //     }
 
 // }
-useEffect(()=>{
-  GetDeals();
-},[]);
+// useEffect(()=>{
+//   GetDeals();
+// },[]);
   return (
     // <div className="App" style={{ backgroundColor: "#333333" }}>
     <div>
@@ -63,6 +44,7 @@ useEffect(()=>{
       <Route path="/monthslist" element={<MonthsList />} />
       <Route path="/register" element={<Registration />} />
       <Route path="/resetpassword/:token" element={<ResetPassword/>}/>
+      <Route path="/emailotpverify" element={<EmailOTPVerify />} />
       <Route path="/" element={<Login />} />
       
     </Routes>

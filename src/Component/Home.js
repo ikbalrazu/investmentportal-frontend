@@ -42,7 +42,7 @@ export default function Home() {
       loginpage("/");
     }
 
-    console.log(deals);
+    //console.log(deals);
     const withoutDuplicates_issuername = [
       ...new Map(
         issuername.map((item) => [JSON.stringify(item), item])
@@ -53,7 +53,7 @@ export default function Home() {
         financername.map((item) => [JSON.stringify(item), item])
       ).values(),
     ];
-    console.log(withoutDuplicates_issuername);
+    //console.log(withoutDuplicates_issuername);
     setUniqueIssuerName(withoutDuplicates_issuername);
     setUniqueFinancierName(withoutDuplicates_financiername);
     // const DealsData = async () => {
