@@ -82,7 +82,7 @@ export default function Home() {
     //     console.log(withoutDuplicates_issuername[k]);
     //   }
     // }).catch(console.error);
-  }, []);
+  }, [deals]);
 
   return (
     <div>
@@ -274,15 +274,15 @@ export default function Home() {
                   }}
                 >
                   <h3 style={{fontFamily:"Roboto, sans-serif",fontSize:"1.5em",color:"#00adee"}}> Deal Name </h3>
-                  <span>{deals?.length} Search Results</span>
+                  <span style={{color:"#00adee",fontSize:"85%",lineHeight:"1.1em"}}>{deals?.length} Search Results</span>
                   <table className="table text-white mt-3">
                     <thead>
                       <tr>
-                        <th scope="col">Deal Name</th>
-                        <th scope="col">Issuer Name</th>
-                        <th scope="col">Product Type</th>
-                        <th scope="col">Deal Administrator</th>
-                        <th scope="col">Last Update Date</th>
+                        <th scope="col" style={{color:"#00adee",fontSize:"1em"}}>Deal Name</th>
+                        <th scope="col" style={{color:"#00adee",fontSize:"1em"}}>Issuer Name</th>
+                        <th scope="col" style={{color:"#00adee",fontSize:"1em"}}>Product Type</th>
+                        <th scope="col" style={{color:"#00adee",fontSize:"1em"}}>Deal Administrator</th>
+                        <th scope="col" style={{color:"#00adee",fontSize:"1em"}}>Last Update Date</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -317,13 +317,13 @@ export default function Home() {
                   aria-labelledby="pills-contact-tab"
                 >
                   <h3 style={{fontFamily:"Roboto, sans-serif",fontSize:"1.5em",color:"#00adee"}}> Financer Name </h3>
-                  <span>{unique_financiername?.length} Search Results</span>
+                  <span style={{color:"#00adee",fontSize:"85%",lineHeight:"1.1em"}}>{unique_financiername?.length} Search Results</span>
 
                   <table className="table text-white mt-3">
                     <thead>
                       <tr>
-                        <th scope="col">Financer Name</th>
-                        <th scope="col">Deal Count</th>
+                        <th scope="col" style={{color:"#00adee",fontSize:"1em"}}>Financer Name</th>
+                        <th scope="col" style={{color:"#00adee",fontSize:"1em"}}>Deal Count</th>
                       </tr>
                     </thead>
                     <tbody>
