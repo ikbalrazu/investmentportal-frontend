@@ -103,7 +103,17 @@ export default function Home() {
                   }
                 }
               >
-                <h5 className="text-start py-1" style={{ color: "white", marginTop:"0px", marginBottom:"16px", fontSize:"2em", lineHeight:"1em", fontWeight:"300" }}>
+                <h5
+                  className="text-start py-1"
+                  style={{
+                    color: "white",
+                    marginTop: "0px",
+                    marginBottom: "16px",
+                    fontSize: "2em",
+                    lineHeight: "1em",
+                    fontWeight: "300",
+                  }}
+                >
                   Welcome, {userinfo?.name}
                 </h5>
 
@@ -149,9 +159,13 @@ export default function Home() {
                   padding: 15,
                 }}
               >
-                <li className="nav-item" role="presentation" style={{backgroundColor:"#333"}}>
+                <li
+                  className="nav-item"
+                  role="presentation"
+                  style={{ backgroundColor: "#333" }}
+                >
                   <button
-                    className={classes.btn}
+                    className={`${classes.t} ${classes.tt} `}
                     id="pills-home-tab"
                     data-bs-toggle="pill"
                     data-bs-target="#pills-home"
@@ -159,16 +173,13 @@ export default function Home() {
                     role="tab"
                     aria-controls="pills-home"
                     aria-selected="true"
-                    style={{
-                      backgroundColor:'#333'
-                    }}
                   >
-                  Issuser Name
+                    Issuser Name
                   </button>
                 </li>
                 <li className="nav-item" role="presentation">
                   <button
-                    className={classes.btn}
+                    className={`${classes.t} ${classes.tt} `}
                     id="pills-profile-tab"
                     data-bs-toggle="pill"
                     data-bs-target="#pills-profile"
@@ -176,16 +187,13 @@ export default function Home() {
                     role="tab"
                     aria-controls="pills-profile"
                     aria-selected="false"
-                    style={{
-                      backgroundColor:'#333'
-                    }}
                   >
                     Deal Name
                   </button>
                 </li>
                 <li className="nav-item" role="presentation">
                   <button
-                    className={classes.btn}
+                    className={`${classes.t} ${classes.tt} `}
                     id="pills-contact-tab"
                     data-bs-toggle="pill"
                     data-bs-target="#pills-contact"
@@ -193,9 +201,6 @@ export default function Home() {
                     role="tab"
                     aria-controls="pills-contact"
                     aria-selected="false"
-                    style={{
-                      backgroundColor:'#333'
-                    }}
                   >
                     Financer Name
                   </button>
@@ -218,17 +223,48 @@ export default function Home() {
                     padding: "0px 50px 50px 0px",
                   }}
                 >
-                  <h3 style={{fontFamily:"Roboto, sans-serif",fontSize:"1.5em",color:"#00adee"}}> Issuser Name </h3>
+                  <h3
+                    style={{
+                      fontFamily: "Roboto, sans-serif",
+                      fontSize: "1.5em",
+                      color: "#00adee",
+                    }}
+                  >
+                    {" "}
+                    Issuser Name{" "}
+                  </h3>
 
-                  <span style={{color:"#00adee",fontSize:"85%",lineHeight:"1.1em"}}>{unique_issuername?.length} Search Results</span>
+                  <span
+                    style={{
+                      color: "#00adee",
+                      fontSize: "85%",
+                      lineHeight: "1.1em",
+                    }}
+                  >
+                    {unique_issuername?.length} Search Results
+                  </span>
 
                   <table className="table text-white mt-3">
                     <thead>
                       <tr>
-                        <th scope="col" style={{color:"#00adee",fontSize:"1em"}}>Issuer Name</th>
-                        <th scope="col" style={{color:"#00adee",fontSize:"1em"}}>Product Type</th>
-                        <th scope="col" style={{color:"#00adee",fontSize:"1em"}}>Deal Count</th>
-                        
+                        <th
+                          scope="col"
+                          style={{ color: "#00adee", fontSize: "1em" }}
+                        >
+                          Issuer Name
+                        </th>
+                        <th
+                          scope="col"
+                          style={{ color: "#00adee", fontSize: "1em" }}
+                        >
+                          Product Type
+                        </th>
+                        <th
+                          scope="col"
+                          style={{ color: "#00adee", fontSize: "1em" }}
+                        >
+                          Deal Count
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -273,40 +309,83 @@ export default function Home() {
                     padding: "0px 50px 50px 0px",
                   }}
                 >
-                  <h3 style={{fontFamily:"Roboto, sans-serif",fontSize:"1.5em",color:"#00adee"}}> Deal Name </h3>
-                  <span style={{color:"#00adee",fontSize:"85%",lineHeight:"1.1em"}}>{deals?.length} Search Results</span>
+                  <h3
+                    style={{
+                      fontFamily: "Roboto, sans-serif",
+                      fontSize: "1.5em",
+                      color: "#00adee",
+                    }}
+                  >
+                    {" "}
+                    Deal Name{" "}
+                  </h3>
+                  <span
+                    style={{
+                      color: "#00adee",
+                      fontSize: "85%",
+                      lineHeight: "1.1em",
+                    }}
+                  >
+                    {deals?.length} Search Results
+                  </span>
                   <table className="table text-white mt-3">
                     <thead>
                       <tr>
-                        <th scope="col" style={{color:"#00adee",fontSize:"1em"}}>Deal Name</th>
-                        <th scope="col" style={{color:"#00adee",fontSize:"1em"}}>Issuer Name</th>
-                        <th scope="col" style={{color:"#00adee",fontSize:"1em"}}>Product Type</th>
-                        <th scope="col" style={{color:"#00adee",fontSize:"1em"}}>Deal Administrator</th>
-                        <th scope="col" style={{color:"#00adee",fontSize:"1em"}}>Last Update Date</th>
+                        <th
+                          scope="col"
+                          style={{ color: "#00adee", fontSize: "1em" }}
+                        >
+                          Deal Name
+                        </th>
+                        <th
+                          scope="col"
+                          style={{ color: "#00adee", fontSize: "1em" }}
+                        >
+                          Issuer Name
+                        </th>
+                        <th
+                          scope="col"
+                          style={{ color: "#00adee", fontSize: "1em" }}
+                        >
+                          Product Type
+                        </th>
+                        <th
+                          scope="col"
+                          style={{ color: "#00adee", fontSize: "1em" }}
+                        >
+                          Deal Administrator
+                        </th>
+                        <th
+                          scope="col"
+                          style={{ color: "#00adee", fontSize: "1em" }}
+                        >
+                          Last Update Date
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
-                      {deals?.map((data,index)=>{
-                        return(
+                      {deals?.map((data, index) => {
+                        return (
                           <tr
-                          onClick={() =>
-                            monthlist("/monthslist", {
-                              state: data.Documents,
-                            })
-                          }
+                            onClick={() =>
+                              monthlist("/monthslist", {
+                                state: data.Documents,
+                              })
+                            }
                           >
-                          <th scope="row"> {data?.DealName} </th>
-                          <td>{data?.Issuer_Name} </td>
-                          <td>Other </td>
-                          <td> Name Name </td>
-                          <td>
-                            {" "}
-                            <i className="bi bi-arrow-up-right-square"> </i>{" "}
-                          </td>
+                            <th scope="row"> {data?.DealName} </th>
+                            <td>{data?.Issuer_Name} </td>
+                            <td>Other </td>
+                            <td> Name Name </td>
+                            <td>
+                              {" "}
+                              <i className="bi bi-arrow-up-right-square">
+                                {" "}
+                              </i>{" "}
+                            </td>
                           </tr>
-                        )
+                        );
                       })}
-                      
                     </tbody>
                   </table>{" "}
                 </div>
@@ -316,19 +395,48 @@ export default function Home() {
                   role="tabpanel"
                   aria-labelledby="pills-contact-tab"
                 >
-                  <h3 style={{fontFamily:"Roboto, sans-serif",fontSize:"1.5em",color:"#00adee"}}> Financer Name </h3>
-                  <span style={{color:"#00adee",fontSize:"85%",lineHeight:"1.1em"}}>{unique_financiername?.length} Search Results</span>
+                  <h3
+                    style={{
+                      fontFamily: "Roboto, sans-serif",
+                      fontSize: "1.5em",
+                      color: "#00adee",
+                    }}
+                  >
+                    {" "}
+                    Financer Name{" "}
+                  </h3>
+                  <span
+                    style={{
+                      color: "#00adee",
+                      fontSize: "85%",
+                      lineHeight: "1.1em",
+                    }}
+                  >
+                    {unique_financiername?.length} Search Results
+                  </span>
 
                   <table className="table text-white mt-3">
                     <thead>
                       <tr>
-                        <th scope="col" style={{color:"#00adee",fontSize:"1em"}}>Financer Name</th>
-                        <th scope="col" style={{color:"#00adee",fontSize:"1em"}}>Deal Count</th>
+                        <th
+                          scope="col"
+                          style={{ color: "#00adee", fontSize: "1em" }}
+                        >
+                          Financer Name
+                        </th>
+                        <th
+                          scope="col"
+                          style={{ color: "#00adee", fontSize: "1em" }}
+                        >
+                          Deal Count
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
-                    {unique_financiername?.map((data, index) => {
-                        var financier_list_filter = deals?.filter(function (el) {
+                      {unique_financiername?.map((data, index) => {
+                        var financier_list_filter = deals?.filter(function (
+                          el
+                        ) {
                           return el.Financer === unique_financiername[index];
                         });
                         return (

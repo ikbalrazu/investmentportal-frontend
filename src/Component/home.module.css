@@ -1,15 +1,18 @@
-.btn {
+.t {
   background-color: #222222;
   color: #fff;
   border: 0px;
   padding: 0.5rem 4rem;
 }
 
-.btn:hover {
+.t:focus {
   background-color: #00adee;
   border-radius: 0px;
 }
 
+.tt{
+  width: 20rem;
+}
 
 .footer {
   position: fixed;
@@ -20,3 +23,4 @@
   color: white;
   text-align: center;
 }
+
