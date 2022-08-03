@@ -34,7 +34,9 @@ const AppProvider = ({ children }) =>{
         <AppContext.Provider value={{
             deals,
             issuername,
-            financername
+            financername,
+            setIssuerName,
+            setFinancerName
         }}>{children}</AppContext.Provider>
     )
     

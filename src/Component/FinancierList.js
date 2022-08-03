@@ -4,9 +4,26 @@ import Menu from "../Sheard/Menu";
 import TopHeader from "../Sheard/TopHeader";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import classes from "./home.module.css";
 
-export default function FinancierList() {
-  
+export default function IssuerList() {
+  const location = useLocation();
+  const monthlist = useNavigate();
+  const [issuerlist, setIssuerList] = useState();
+  const [issuername, setIssuerName] = useState([]);
+
+  const IssuerList = () => {
+    setIssuerList(location?.state?.financier_list_filter);
+    for (let i = 0; i < location?.state?.financier_list_filter?.length; i++) {
+      setIssuerName(location.state.financier_list_filter[0].Financer);
+    }
+  };
+
+  useEffect(() => {
+    IssuerList();
+    //console.log(location?.state.issuer_list_filter.length);
+  }, []);
   return (
     <div>
       <TopHeader></TopHeader>
@@ -14,7 +31,7 @@ export default function FinancierList() {
 
       <div className="container">
         <div className="row">
-          <div className="col-lg-8 col-md-8 col-sm-12 col-12">
+          <div className="col-lg-12 col-md-12 col-sm-12 col-12">
             {/* Search Section Start */}
             <section>
               <div
@@ -27,10 +44,10 @@ export default function FinancierList() {
                 }
               >
                 <h5 className="text-start py-1" style={{ color: "#00ADEE" }}>
-                  Welcome, Nicole Wang
+                  wellcome {issuername}
                 </h5>
 
-                <div class="input-group mb-3">
+                {/* <div class="input-group mb-3">
                   <input
                     type="text"
                     class="form-control  border-0"
@@ -49,7 +66,7 @@ export default function FinancierList() {
                       Search
                     </button>
                   </div>
-                </div>
+                </div> */}
               </div>
             </section>
             {/* Search Section End  */}
@@ -63,7 +80,7 @@ export default function FinancierList() {
                 padding: 25,
               }}
             >
-              <ul
+              {/* <ul
                 className="nav nav-pills mb-3 d-flex justify-content-center"
                 id="pills-tab"
                 role="tablist"
@@ -110,7 +127,7 @@ export default function FinancierList() {
                     Financer Name
                   </button>
                 </li>
-              </ul>
+              </ul> */}
               <div className="tab-content" id="pills-tabContent">
                 <div
                   className="tab-pane fade show active text-white"
@@ -118,37 +135,44 @@ export default function FinancierList() {
                   role="tabpanel"
                   aria-labelledby="pills-home-tab"
                 >
-                  <h3> Issuser Name </h3>
-                  <span>4419 Search Results</span>
+                  <h3> List of Deals for {issuername} </h3>
+                  <span>{issuerlist?.length}</span>
 
                   <table className="table text-white mt-3">
                     <thead>
                       <tr>
-                        <th scope="col">Issuer Name</th>
-                        <th scope="col">Product Title</th>
-                        <th scope="col">Count</th>
+                        <th scope="col">Deal Name</th>
+                        <th scope="col">Financier Name</th>
+                        <th scope="col">Product Type</th>
+                        <th scope="col">Deal Administrator</th>
+                        <th scope="col">Last Update Date</th>
                         <th></th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <th scope="row"> Name of Issuer </th>
-                        <td>Other </td>
-                        <td>1</td>
-                        <td>
-                          {" "}
-                          <i className="bi bi-arrow-up-right-square"> </i>{" "}
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row"> Name of Issuer </th>
-                        <td>Other </td>
-                        <td>1</td>
-                        <td>
-                          {" "}
-                          <i className="bi bi-arrow-up-right-square"> </i>{" "}
-                        </td>
-                      </tr>
+                      {issuerlist?.map((data, index) => {
+                        return (
+                          <tr
+                            onClick={() =>
+                              monthlist("/monthslist", {
+                                state: data.Documents,
+                              })
+                            }
+                          >
+                            <th scope="row"> {data?.DealName} </th>
+                            <td>{data?.Financer}</td>
+                            <td>RMBS</td>
+                            <td>Nicole Wang</td>
+                            <td>01/01/2022</td>
+                            <td>
+                              {" "}
+                              <i className="bi bi-arrow-up-right-square">
+                                {" "}
+                              </i>{" "}
+                            </td>
+                          </tr>
+                        );
+                      })}
                     </tbody>
                   </table>
                 </div>
@@ -262,7 +286,7 @@ export default function FinancierList() {
           </div>
 
           {/* For Your Information Start  */}
-          <div className="col-lg-4 col-md-4 col-sm-12 col-12">
+          {/* <div className="col-lg-4 col-md-4 col-sm-12 col-12">
             <section
               className="mt-4 text-white text-start"
               style={{
@@ -347,15 +371,14 @@ export default function FinancierList() {
                 </li>
               </ul>
             </section>
-          </div>
+          </div> */}
 
           {/*  For Your Information End  */}
         </div>
       </div>
 
-      <Footer></Footer>
+      <Footer className={ classes.footer }
+      ></Footer>
     </div>
   );
 }
-
-

@@ -27,7 +27,7 @@ const Login = () => {
   const userAllData = () => {
     //Get Record - Detail View
     axios
-      .get("http://localhost:5000/getrecord")
+      .get("https://investmentportal.herokuapp.com/getrecord")
       .then(function (data) {
         console.log(data.data.data);
         setUserData(data.data.data);

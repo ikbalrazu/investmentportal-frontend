@@ -18,7 +18,7 @@ export default function TopHeader() {
 
   return (
     <div className="container d-flex justify-content-between text-white py-2">
-      <div>CORPORATE TRUST INVESTOR REPORTING</div>
+      <div style={{paddingRight:"0px",paddingLeft:"0px",fontWeight:"500"}}>CORPORATE TRUST INVESTOR REPORTING</div>
       <div className="d-flex d-flex align-items-center">
         <div style={{ paddingRight : 20 }}>WELCOME, {userInfo.name}</div>
         <div class="form-group ">

@@ -15,11 +15,14 @@ import classes from "./home.module.css";
 export default function Home() {
   const loginpage = useNavigate();
   const IssuerListPage = useNavigate();
+  const FinancierListPage = useNavigate();
+  const monthlist = useNavigate();
   const [userinfo, setUserInfo] = useState();
   const [dealsdata, setDealsData] = useState();
   // const [issuername, setIssuerName] = useState([]);
   // const [financername, setFinancerName] = useState([]);
   const [unique_issuername, setUniqueIssuerName] = useState();
+  const [unique_financiername, setUniqueFinancierName] = useState();
   const { deals, issuername, financername } = useContext(AppContext);
 
   useEffect(() => {
@@ -45,8 +48,14 @@ export default function Home() {
         issuername.map((item) => [JSON.stringify(item), item])
       ).values(),
     ];
+    const withoutDuplicates_financiername = [
+      ...new Map(
+        financername.map((item) => [JSON.stringify(item), item])
+      ).values(),
+    ];
     console.log(withoutDuplicates_issuername);
     setUniqueIssuerName(withoutDuplicates_issuername);
+    setUniqueFinancierName(withoutDuplicates_financiername);
     // const DealsData = async () => {
     //   try{
     //     const data = await axios.post("https://investmentportal.herokuapp.com/getalldeals");
@@ -73,7 +82,7 @@ export default function Home() {
     //     console.log(withoutDuplicates_issuername[k]);
     //   }
     // }).catch(console.error);
-  }, []);
+  }, [deals]);
 
   return (
     <div>
@@ -94,8 +103,8 @@ export default function Home() {
                   }
                 }
               >
-                <h5 className="text-start py-1" style={{ color: "#00ADEE" }}>
-                  Welcome, Nicole Wang
+                <h5 className="text-start py-1" style={{ color: "white", marginTop:"0px", marginBottom:"16px", fontSize:"2em", lineHeight:"1em", fontWeight:"300" }}>
+                  Welcome, {userinfo?.name}
                 </h5>
 
                 <div class="input-group mb-3">
@@ -136,12 +145,11 @@ export default function Home() {
                 className="nav nav-pills mb-3 d-flex justify-content-center"
                 id="pills-tab"
                 role="tablist"
-                // style={{
-                //   backgroundColor: "#232323",
-                //   padding: 25,
-                // }}
+                style={{
+                  padding: 15,
+                }}
               >
-                <li className="nav-item" role="presentation">
+                <li className="nav-item" role="presentation" style={{backgroundColor:"#333"}}>
                   <button
                     className={classes.btn}
                     id="pills-home-tab"
@@ -151,11 +159,11 @@ export default function Home() {
                     role="tab"
                     aria-controls="pills-home"
                     aria-selected="true"
-                    // style={{
-                    //   backgroundColor:'#00adee'
-                    // }}
+                    style={{
+                      backgroundColor:'#333'
+                    }}
                   >
-                    Issuser Name
+                  Issuser Name
                   </button>
                 </li>
                 <li className="nav-item" role="presentation">
@@ -168,6 +176,9 @@ export default function Home() {
                     role="tab"
                     aria-controls="pills-profile"
                     aria-selected="false"
+                    style={{
+                      backgroundColor:'#333'
+                    }}
                   >
                     Deal Name
                   </button>
@@ -182,6 +193,9 @@ export default function Home() {
                     role="tab"
                     aria-controls="pills-contact"
                     aria-selected="false"
+                    style={{
+                      backgroundColor:'#333'
+                    }}
                   >
                     Financer Name
                   </button>
@@ -204,17 +218,17 @@ export default function Home() {
                     padding: "0px 50px 50px 0px",
                   }}
                 >
-                  <h3> Issuser Name </h3>
+                  <h3 style={{fontFamily:"Roboto, sans-serif",fontSize:"1.5em",color:"#00adee"}}> Issuser Name </h3>
 
-                  <span>{unique_issuername?.length}</span>
+                  <span style={{color:"#00adee",fontSize:"85%",lineHeight:"1.1em"}}>{unique_issuername?.length} Search Results</span>
 
                   <table className="table text-white mt-3">
                     <thead>
                       <tr>
-                        <th scope="col">Issuer Name</th>
-                        <th scope="col">Product Title</th>
-                        <th scope="col">Count</th>
-                        <th></th>
+                        <th scope="col" style={{color:"#00adee",fontSize:"1em"}}>Issuer Name</th>
+                        <th scope="col" style={{color:"#00adee",fontSize:"1em"}}>Product Type</th>
+                        <th scope="col" style={{color:"#00adee",fontSize:"1em"}}>Deal Count</th>
+                        
                       </tr>
                     </thead>
                     <tbody>
@@ -236,7 +250,7 @@ export default function Home() {
                               {data}{" "}
                             </th>
                             <td>Other </td>
-                            <td>{index}</td>
+                            <td>{issuer_list_filter?.length}</td>
                             <td>
                               {" "}
                               <i className="bi bi-arrow-up-right-square">
@@ -259,39 +273,40 @@ export default function Home() {
                     padding: "0px 50px 50px 0px",
                   }}
                 >
-                  <h3> Deal Name </h3>
-                  <span>4419 Search Results</span>
+                  <h3 style={{fontFamily:"Roboto, sans-serif",fontSize:"1.5em",color:"#00adee"}}> Deal Name </h3>
+                  <span style={{color:"#00adee",fontSize:"85%",lineHeight:"1.1em"}}>{deals?.length} Search Results</span>
                   <table className="table text-white mt-3">
                     <thead>
                       <tr>
-                        <th scope="col">Deal Name</th>
-                        <th scope="col">Issuer Name</th>
-                        <th scope="col">Product</th>
-                        <th scope="col">Contact</th>
-                        <th></th>
+                        <th scope="col" style={{color:"#00adee",fontSize:"1em"}}>Deal Name</th>
+                        <th scope="col" style={{color:"#00adee",fontSize:"1em"}}>Issuer Name</th>
+                        <th scope="col" style={{color:"#00adee",fontSize:"1em"}}>Product Type</th>
+                        <th scope="col" style={{color:"#00adee",fontSize:"1em"}}>Deal Administrator</th>
+                        <th scope="col" style={{color:"#00adee",fontSize:"1em"}}>Last Update Date</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <th scope="row"> Name of Deal </th>
-                        <td>Name of Issuer </td>
-                        <td>Other </td>
-                        <td> Name Name </td>
-                        <td>
-                          {" "}
-                          <i className="bi bi-arrow-up-right-square"> </i>{" "}
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row"> Name of Deal </th>
-                        <td>Name of Issuer </td>
-                        <td>Other </td>
-                        <td> Name Name </td>
-                        <td>
-                          {" "}
-                          <i className="bi bi-arrow-up-right-square"> </i>{" "}
-                        </td>
-                      </tr>
+                      {deals?.map((data,index)=>{
+                        return(
+                          <tr
+                          onClick={() =>
+                            monthlist("/monthslist", {
+                              state: data.Documents,
+                            })
+                          }
+                          >
+                          <th scope="row"> {data?.DealName} </th>
+                          <td>{data?.Issuer_Name} </td>
+                          <td>Other </td>
+                          <td> Name Name </td>
+                          <td>
+                            {" "}
+                            <i className="bi bi-arrow-up-right-square"> </i>{" "}
+                          </td>
+                          </tr>
+                        )
+                      })}
+                      
                     </tbody>
                   </table>{" "}
                 </div>
@@ -301,21 +316,45 @@ export default function Home() {
                   role="tabpanel"
                   aria-labelledby="pills-contact-tab"
                 >
-                  <h3> Financer Name </h3>
-                  <span>4419 Search Results</span>
+                  <h3 style={{fontFamily:"Roboto, sans-serif",fontSize:"1.5em",color:"#00adee"}}> Financer Name </h3>
+                  <span style={{color:"#00adee",fontSize:"85%",lineHeight:"1.1em"}}>{unique_financiername?.length} Search Results</span>
 
                   <table className="table text-white mt-3">
                     <thead>
                       <tr>
-                        <th scope="col">Financer Name</th>
-                        <th scope="col">Issuer Name</th>
-                        <th scope="col">Product</th>
-                        <th scope="col">Contact</th>
-                        <th></th>
+                        <th scope="col" style={{color:"#00adee",fontSize:"1em"}}>Financer Name</th>
+                        <th scope="col" style={{color:"#00adee",fontSize:"1em"}}>Deal Count</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
+                    {unique_financiername?.map((data, index) => {
+                        var financier_list_filter = deals?.filter(function (el) {
+                          return el.Financer === unique_financiername[index];
+                        });
+                        return (
+                          <tr
+                            onClick={() => {
+                              console.log(financier_list_filter);
+                              FinancierListPage("/financierlist", {
+                                state: { financier_list_filter },
+                              });
+                            }}
+                          >
+                            <th scope="row" style={{ cursor: "pointer" }}>
+                              {" "}
+                              {data}{" "}
+                            </th>
+                            <td>{financier_list_filter?.length}</td>
+                            {/* <td>
+                              {" "}
+                              <i className="bi bi-arrow-up-right-square">
+                                {" "}
+                              </i>{" "}
+                            </td> */}
+                          </tr>
+                        );
+                      })}
+                      {/* <tr>
                         <th scope="row"> Name of Financer </th>
                         <td>Name of Issuer </td>
                         <td>Other </td>
@@ -324,17 +363,7 @@ export default function Home() {
                           {" "}
                           <i className="bi bi-arrow-up-right-square"> </i>{" "}
                         </td>
-                      </tr>
-                      <tr>
-                        <th scope="row"> Name of Financer </th>
-                        <td>Name of Issuer </td>
-                        <td>Other </td>
-                        <td> Name Name </td>
-                        <td>
-                          {" "}
-                          <i className="bi bi-arrow-up-right-square"> </i>{" "}
-                        </td>
-                      </tr>
+                      </tr> */}
                     </tbody>
                   </table>
                 </div>
