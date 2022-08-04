@@ -94,7 +94,52 @@ const Login = () => {
   };
 
   const ForgotPassword = () => {
-    forgotpassword("/forgotpassword");
+    if (userdata) {
+      if (!resetemail) {
+        console.log("plz fill the all fields");
+        // setAlertmsg("Plz enter your email!");
+      } else {
+        for (let i = 0; i < userdata.length; i++) {
+          //const DecodePass = Base64.decode(userdata[i]?.Password);
+          // console.log(userdata[i]?.Email)
+          // console.log(userdata[i]?.Password)
+          if (userdata[i]?.Email === resetemail) {
+            // localStorage.setItem(
+            //   "userinfo",
+            //   JSON.stringify({
+            //     id: userdata[i].ID,
+            //     email: userdata[i].Email,
+            //   })
+            // );
+            const id = userdata[i].ID;
+            const email = userdata[i].Email;
+            axios
+              .post("http://localhost:5000/sendForgotPasswordMail", {
+                id,
+                email
+              })
+              .then(function (data) {
+                console.log(data);
+                console.log(data.data.message);
+                if (data.data.message === "send email successfully") {
+                  console.log("Sent link in your email for new password! Plz check your email.");
+                  // setAlertmsg(
+                  //   "Sent link in your email for new password! Plz check your email."
+                  // );
+                }
+              });
+            console.log("Successfully sent link in email!");
+            // setAlertmsg("Successfully sent link in email!")
+            // loginpage("/home");
+          }else if(userdata[i]?.Email !== resetemail){
+            console.log("Invalid Email!");
+          }
+        }
+      }
+    } else {
+      console.log("Server problem. User not found try after sometimes");
+      //setAlertmsg("Server problem. User not found try after sometimes");
+    }
   };
 
   useEffect(() => {
@@ -217,7 +262,7 @@ const Login = () => {
                             // type="submit"
                             // className="btn btn-primary mt-2 border-0"
                             //id="registetionbutton"
-                            onClick={()=>console.log(resetemail)}
+                            onClick={ForgotPassword}
                           >
                             Submit
                           </button>
