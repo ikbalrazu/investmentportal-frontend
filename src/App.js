@@ -13,6 +13,7 @@ import FinancierList from "./Component/FinancierList";
 import MonthsList from "./Component/MonthsList";
 import ResetPassword from "./Component/ResetPassword";
 import EmailOTPVerify from "./Component/EmailOTPVerify";
+import ConfirmResetPassword from "./Component/ConfirmResetPassword";
 import axios from "axios";
 
 
@@ -43,7 +44,8 @@ function App() {
       <Route path="/financierlist" element={<FinancierList />} />
       <Route path="/monthslist" element={<MonthsList />} />
       <Route path="/register" element={<Registration />} />
-      <Route path="/resetpassword/:token" element={<ResetPassword/>}/>
+      <Route path="/resetpassword/:id/:token" element={<ResetPassword/>}/>
+      <Route path="/confirmresetpassword" element={<ConfirmResetPassword/>}/>
       <Route path="/emailotpverify" element={<EmailOTPVerify />} />
       <Route path="/" element={<Login />} />
       
