@@ -1,35 +1,52 @@
 import React,{useEffect, useState} from "react";
 import LoginTopHeader from "../Sheard/LoginTopHeader";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import './ResetPassword.css';
+import { Base64 } from "js-base64";
 
 const ResetPassword = () => {
+  const ConfirmResetPasswordPage = useNavigate();
   const [password,setPassword] = useState();
   const [confirmpassword,setConfirmPassword] = useState();
   const [expire, setExpire] = useState();
-    const {token} = useParams();
+  const [errormsg,setErrorMsg] = useState();
+    const {id,token} = useParams();
 
-    const ResetPassword = () => {
-      if(!password || !confirmpassword){
-        console.log("Plz fill up all fields!");
-      }else if (password !== confirmpassword) {
-        console.log("password not matched!");
-      }else if (password.length < 8) {
-        console.log("Password is too short!");
-      }else{
-        axios.post("http://localhost:5000/verifyForgotMail",{token}).then(function(data){
-          console.log(data);
-          // if(data.data.message === "Data Updated Successfully"){
-            
-          // }else{
-          //   console.log("something wrong! try again later");
-          // }
-        })
+    const ResetPassword = async() => {
+      try{
+        const {data} = await axios.post("http://localhost:5000/verifyForgotMail",{token})
+        console.log(data?.result);
+        if(data?.result === "Link expired"){
+          setExpire(true);
+        }else{
+          setExpire(false);
+          if(!password || !confirmpassword){
+            setErrorMsg("Plz fill up all fields!");
+          }else if (password !== confirmpassword) {
+            setErrorMsg("password not matched!");
+          }else if (password.length < 8) {
+            setErrorMsg("Password is too short!");
+          }else{
+              axios.put("http://localhost:5000/reset-password",{id,password}).then(function(data){
+              //console.log(data);
+              if(data.data.message === "Data Updated Successfully"){
+                ConfirmResetPasswordPage("/confirmresetpassword");
+              }else{
+                setErrorMsg("something wrong! try again later");
+              }
+              })
+          }
+        }
+      }catch(error){
+        console.log(error);
       }
+      
     }
 
     useEffect(()=>{
+      console.log(id);
+      console.log(token);
       const CheckValidLink = async()=>{
         try{
           const {data} = await axios.post("http://localhost:5000/verifyForgotMail",{token})
@@ -87,6 +104,9 @@ const ResetPassword = () => {
               </div>
               <div style={{alignItems:"center",marginTop:"10px"}}>
               <button className="resetbtn" onClick={ResetPassword}>Reset Password</button>
+              </div>
+              <div>
+                <p style={{color:"red"}}>{errormsg}</p>
               </div>
               </>
               )}

@@ -360,13 +360,17 @@ const Login = () => {
                   </div>
 
                   <div class="form-group mt-3">
+                    <a href="https://www.amal.com.au/trustee-services#Discover" target="_blank">
                     <button
                       style={{ backgroundColor: "white", color: "#00ADEE" }}
                       type="button"
                       className="btn btn-primary  mt-2 border-0"
+                      
                     >
                       Discover More
                     </button>
+                    </a>
+                    
                   </div>
                 </div>
 
