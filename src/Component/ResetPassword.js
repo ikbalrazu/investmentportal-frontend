@@ -15,7 +15,7 @@ const ResetPassword = () => {
 
     const ResetPassword = async() => {
       try{
-        const {data} = await axios.post("http://localhost:5000/verifyForgotMail",{token})
+        const {data} = await axios.post("https://investmentportal.herokuapp.com/verifyForgotMail",{token})
         console.log(data?.result);
         if(data?.result === "Link expired"){
           setExpire(true);
@@ -28,7 +28,7 @@ const ResetPassword = () => {
           }else if (password.length < 8) {
             setErrorMsg("Password is too short!");
           }else{
-              axios.put("http://localhost:5000/reset-password",{id,password}).then(function(data){
+              axios.put("https://investmentportal.herokuapp.com/reset-password",{id,password}).then(function(data){
               //console.log(data);
               if(data.data.message === "Data Updated Successfully"){
                 ConfirmResetPasswordPage("/confirmresetpassword");
@@ -49,7 +49,7 @@ const ResetPassword = () => {
       console.log(token);
       const CheckValidLink = async()=>{
         try{
-          const {data} = await axios.post("http://localhost:5000/verifyForgotMail",{token})
+          const {data} = await axios.post("https://investmentportal.herokuapp.com/verifyForgotMail",{token})
           console.log(data?.result);
           if(data?.result === "Link expired"){
             setExpire(true);
@@ -69,7 +69,7 @@ const ResetPassword = () => {
             <div className="form-content">
               {expire === false &&(
                 <>
-                <p style={{color:"white",backgroundColor:"blue"}}>Your link will be expire after five minutes from the create.</p>
+                <p style={{color:"white",backgroundColor:"blue"}}>Your link will expire in 5 minutes.</p>
                 <div className="form-group mt-1" style={{width:"50%"}}>
                 <input
                   style={{
@@ -114,7 +114,7 @@ const ResetPassword = () => {
               {expire === true &&(
                 <>
                 <div className="form-group mt-1" style={{width:"50%"}}>
-                <h1 className="expiredlink">Link Expired. Plz try again!</h1>
+                <h1 className="expiredlink">Your link has expired, please try to reset your password using the Forgot Password link.</h1>
               </div>
               </>
               )}

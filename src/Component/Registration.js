@@ -11,21 +11,17 @@ const Registration = () => {
   const [email, setEmail] = useState();
   const [phone, setPhone] = useState();
   const [company, setCompany] = useState();
-  const [password, setPassword] = useState();
-  const [confirmpassword, setConfirmpassword] = useState();
-  const [picture, setPicture] = useState();
+  const [dealsaccess, setDealsAccess] = useState();
+  const [companyrole,setCompanyRole] = useState();
+  const [jobrole,setJobRole] = useState();
   const [alertmsg, setAlertmsg] = useState();
 
   const UserRegistration = () => {
-    if (!firstname || !lastname || !email || !password || !confirmpassword) {
+    console.log(firstname, lastname, email, phone, company, dealsaccess, companyrole, jobrole);
+    if (!firstname || !lastname || !email || !phone || !dealsaccess || !jobrole) {
       setAlertmsg("Plz fill up all fields!");
-    } else if (password !== confirmpassword) {
-      console.log("password not matched");
-      setAlertmsg("password not matched!");
     } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
       setAlertmsg("Invalid Email entered");
-    } else if (password.length < 8) {
-      setAlertmsg("Password is too short!");
     } else {
       const monthNames = [
         "January",
@@ -53,30 +49,35 @@ const Registration = () => {
           firstname,
           lastname,
           email,
-          password,
-          date,
+          phone,
+          company,
+          companyrole,
+          dealsaccess,
+          jobrole
         })
         .then(function (data) {
+          console.log(data);
           const userid = data.data.data.ID;
           console.log(data.data.message);
+          setAlertmsg(data.data.message);
           // console.log(data.data.data.ID);
-          if (data.data.message === "Data Added Successfully") {
-            console.log(userid);
-            setAlertmsg("Your registration created successfully!");
-            axios
-              .post("http://localhost:5000/createdeskticket", {
-                firstname,
-                lastname,
-                email,
-                userid,
-              })
-              .then(function (obj) {
-                //console.log(obj);
-                login("/");
-              });
-          } else {
-            setAlertmsg("Server error! plz try again after sometimes !");
-          }
+          // if (data.data.message === "Data Added Successfully") {
+          //   console.log(userid);
+          //   setAlertmsg("Your registration created successfully!");
+          //   axios
+          //     .post("http://localhost:5000/createdeskticket", {
+          //       firstname,
+          //       lastname,
+          //       email,
+          //       userid,
+          //     })
+          //     .then(function (obj) {
+          //       //console.log(obj);
+          //       login("/");
+          //     });
+          // } else {
+          //   setAlertmsg("Server error! plz try again after sometimes !");
+          // }
         });
     }
   };
@@ -111,7 +112,7 @@ const Registration = () => {
             <div>
               <div className="row">
                 {" "}
-                <form>
+                
                   <div
                     style={{
                       display: "flex",
@@ -128,6 +129,7 @@ const Registration = () => {
                         id="firstname"
                         aria-describedby="firstname"
                         placeholder="First Name* "
+                        onChange={(e)=>setFirstName(e.target.value)}
                       />
                     </div>
                     <div
@@ -141,6 +143,7 @@ const Registration = () => {
                         aria-describedby="firstname"
                         placeholder="Last Name* "
                         style={{ backgroundColor: "#00ADEE", color: "white" }}
+                        onChange={(e)=>setLastName(e.target.value)}
                       />
                     </div>
                   </div>
@@ -161,6 +164,7 @@ const Registration = () => {
                         aria-describedby="email"
                         placeholder="Email* "
                         style={{ backgroundColor: "#00ADEE", color: "white" }}
+                        onChange={(e)=>setEmail(e.target.value)}
                       />
                     </div>
                     <div
@@ -175,6 +179,7 @@ const Registration = () => {
                         placeholder="
                         Phone*"
                         style={{ backgroundColor: "#00ADEE", color: "white" }}
+                        onChange={(e)=>setPhone(e.target.value)}
                       />
                     </div>
                   </div>
@@ -191,6 +196,7 @@ const Registration = () => {
                         aria-describedby="company*"
                         placeholder="Company"
                         style={{ backgroundColor: "#00ADEE", color: "white" }}
+                        onChange={(e)=>setCompany(e.target.value)}
                       />
                     </div>
                   </div>
@@ -207,6 +213,7 @@ const Registration = () => {
                         aria-describedby="deals*"
                         placeholder="Which deals do you require access to?* "
                         style={{ backgroundColor: "#00ADEE", color: "white" }}
+                        onChange={(e)=>setDealsAccess(e.target.value)}
                       />
                     </div>
                   </div>
@@ -229,6 +236,7 @@ const Registration = () => {
                           backgroundColor: "transparent",
                           color: "white",
                         }}
+                        onChange={(e)=>setCompanyRole(e.target.value)}
                       >
                         <option
                           style={{
@@ -237,7 +245,7 @@ const Registration = () => {
                             backgroundColor: "transparent",
                             color: "black",
                           }}
-                          value="volvo"
+                          value="none"
                         >
                           Company Role{" "}
                         </option>
@@ -248,7 +256,7 @@ const Registration = () => {
                             backgroundColor: "transparent",
                             color: "black",
                           }}
-                          value="saab"
+                          value="Issuer"
                         >
                           Issuer{" "}
                         </option>
@@ -259,7 +267,7 @@ const Registration = () => {
                             backgroundColor: "transparent",
                             color: "black",
                           }}
-                          value="opel"
+                          value="Financier"
                           default
                         >
                           Financier
@@ -271,7 +279,7 @@ const Registration = () => {
                             backgroundColor: "transparent",
                             color: "black",
                           }}
-                          value="audi"
+                          value="Investor"
                         >
                           Investor{" "}
                         </option>
@@ -282,7 +290,7 @@ const Registration = () => {
                             backgroundColor: "transparent",
                             color: "black",
                           }}
-                          value="audi"
+                          value="Other"
                         >
                           Other{" "}
                         </option>
@@ -300,6 +308,7 @@ const Registration = () => {
                         aria-describedby="jobrole"
                         placeholder="Job Role*"
                         style={{ backgroundColor: "#00ADEE", color: "white" }}
+                        onChange={(e)=>setJobRole(e.target.value)}
                       />
                     </div>
                   </div>
@@ -310,16 +319,19 @@ const Registration = () => {
                       type="button"
                       className="btn btn-primary  mt-2 border-0"
                       id="registetionbutton"
+                      onClick={UserRegistration}
                     >
                       Submit
                     </button>
                   </div>
-                </form>
+      
               </div>
             </div>
+            <p style={{marginTop:"10px"}}>{alertmsg}</p>
           </section>
 
           {/* Registration all details end  */}
+          
         </div>
       </div>
     </div>

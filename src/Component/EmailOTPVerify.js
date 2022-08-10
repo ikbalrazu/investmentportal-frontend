@@ -37,7 +37,7 @@ const EmailOTPVerify = () => {
             dashboard("/home");
         }else{
             alertmsg.current.style.color = "red";
-            setMSG("Your entered otp is not correct!");
+            setMSG("Please check your email again as the OTP you have entered is incorrect.");
         }
     }
 
@@ -65,7 +65,7 @@ const EmailOTPVerify = () => {
     return(
         <div>
             <LoginTopHeader></LoginTopHeader>
-            <h1 style={{color:"green"}}>Verify your email otp..... Check your email. We have send otp for verification</h1>
+            <h1 style={{color:"green"}}>We have sent your registered email a one time code, please check your email and enter in the code here that you receive.</h1>
             <div className="content">
                 <div>
                 <input className="otpinput" type="text" onChange={(e)=>setOtp(e.target.value)} placeholder='Enter pin'/>
