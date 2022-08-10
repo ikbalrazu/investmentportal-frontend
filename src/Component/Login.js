@@ -114,7 +114,7 @@ const Login = () => {
             const id = userdata[i].ID;
             const email = userdata[i].Email;
             axios
-              .post("http://localhost:5000/sendForgotPasswordMail", {
+              .post("https://investmentportal.herokuapp.com/sendForgotPasswordMail", {
                 id,
                 email
               })
@@ -122,23 +122,25 @@ const Login = () => {
                 console.log(data);
                 console.log(data.data.message);
                 if (data.data.message === "send email successfully") {
-                  console.log("Sent link in your email for new password! Plz check your email.");
-                  // setAlertmsg(
-                  //   "Sent link in your email for new password! Plz check your email."
-                  // );
+                  //console.log("Sent link in your email for new password! Plz check your email.");
+                  setAlertmsg(
+                    "A link has been sent to the email address you entered above, please check your email and follow the link."
+                  );
+                }else{
+                  setAlertmsg("Something Wrong. Try again later!");
                 }
               });
-            console.log("Successfully sent link in email!");
+            //console.log("Successfully sent link in email!");
             // setAlertmsg("Successfully sent link in email!")
             // loginpage("/home");
           }else if(userdata[i]?.Email !== resetemail){
-            console.log("Invalid Email!");
+            //setAlertmsg("Invalid Email!");
           }
         }
       }
     } else {
       console.log("Server problem. User not found try after sometimes");
-      //setAlertmsg("Server problem. User not found try after sometimes");
+      setAlertmsg("Server problem. User not found try after sometimes");
     }
   };
 
@@ -219,7 +221,7 @@ const Login = () => {
                         aria-expanded="false"
                         aria-controls="collapseExample"
                       >
-                        Forget Password?
+                        Forgot Password?
                       </a>
                     </p>
                     <div
@@ -266,6 +268,7 @@ const Login = () => {
                           >
                             Submit
                           </button>
+                          <p style={{color:"green"}}>{alertmsg}</p>
                         </div>
                       </div>
                     </div>
@@ -417,7 +420,7 @@ const Login = () => {
             {/* Latest News End  */}
           </div>
 
-          <div className="col-lg-4 col-md-4 col-sm-12 col-12">
+          {/* <div className="col-lg-4 col-md-4 col-sm-12 col-12">
             <section
               className="mt-4 text-white text-start"
               style={{
@@ -502,7 +505,7 @@ const Login = () => {
                 </li>
               </ul>
             </section>
-          </div>
+          </div> */}
         </div>
       </div>
 
