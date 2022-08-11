@@ -71,10 +71,10 @@ const Login = () => {
               twofactorauth("/emailotpverify",{state: userdata[i]});
             } else if (userdata[i].UserStatus === "Pending") {
               //message.success("Your request is pending...");
-              console.log("Your request is pending...");
+              setAlertmsg("Your request is pending...");
             } else {
               //message.success("Please ask an admin to grant permission to this app.");
-              console.log(
+              setAlertmsg(
                 "Please ask an admin to grant permission to this app."
               );
             }
@@ -209,6 +209,7 @@ const Login = () => {
                       >
                         Sign In
                       </button>
+                      <p style={{color:"red"}}>{alertmsg}</p>
                     </div>
 
                     {/* test start  */}
@@ -298,7 +299,7 @@ const Login = () => {
                     </a> */}
                     <button
                     style={{ marginTop:5 }}
-                      onClick={() => registration("/register")}
+                      onClick={() => registration("/register",{state:userdata})}
                       className="buttonreg"
                     >
                       Register your Details

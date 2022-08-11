@@ -15,6 +15,7 @@ import ResetPassword from "./Component/ResetPassword";
 import EmailOTPVerify from "./Component/EmailOTPVerify";
 import ConfirmResetPassword from "./Component/ConfirmResetPassword";
 import SetUserPassword from "./Component/SetUserPassword";
+import ConfirmSetUserPassword from "./Component/ConfirmSetUserPassword";
 import axios from "axios";
 
 
@@ -48,7 +49,8 @@ function App() {
       <Route path="/resetpassword/:id/:token" element={<ResetPassword/>}/>
       <Route path="/confirmresetpassword" element={<ConfirmResetPassword/>}/>
       <Route path="/emailotpverify" element={<EmailOTPVerify />} />
-      <Route path="/setuserpassword" element={<SetUserPassword />} />
+      <Route path="/setuserpassword/:id/:token" element={<SetUserPassword />} />
+      <Route path="/confirmsetuserpassword" element={<ConfirmSetUserPassword />} />
       <Route path="/" element={<Login />} />
     </Routes>
     </div>
