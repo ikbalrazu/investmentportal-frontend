@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import "./registration.css";
 
 const Registration = () => {
   const login = useNavigate();
-
+  const UserData = useLocation();
+  const [useremail,setUserEmail] = useState();
   const [firstname, setFirstName] = useState();
   const [lastname, setLastName] = useState();
   const [email, setEmail] = useState();
@@ -17,33 +18,41 @@ const Registration = () => {
   const [alertmsg, setAlertmsg] = useState();
 
   const UserRegistration = () => {
-    console.log(firstname, lastname, email, phone, company, dealsaccess, companyrole, jobrole);
+    //console.log(firstname, lastname, email, phone, company, dealsaccess, companyrole, jobrole);
+    // if(useremail){
+    //   for(let k=0; k<useremail.length; k++){
+    //     if(useremail[k] === email){
+    //       setAlertmsg("Email already taken! Plz try with another valid email.");
+    //     }
+    //   }
+    // }
+
     if (!firstname || !lastname || !email || !phone || !dealsaccess || !jobrole) {
       setAlertmsg("Plz fill up all fields!");
     } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
       setAlertmsg("Invalid Email entered");
     } else {
-      const monthNames = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
-      ];
-      var today = new Date();
-      var date =
-        today.getDate() +
-        "-" +
-        monthNames[today.getMonth()] +
-        "-" +
-        today.getFullYear();
+      // const monthNames = [
+      //   "January",
+      //   "February",
+      //   "March",
+      //   "April",
+      //   "May",
+      //   "June",
+      //   "July",
+      //   "August",
+      //   "September",
+      //   "October",
+      //   "November",
+      //   "December",
+      // ];
+      // var today = new Date();
+      // var date =
+      //   today.getDate() +
+      //   "-" +
+      //   monthNames[today.getMonth()] +
+      //   "-" +
+      //   today.getFullYear();
       axios
         .post("http://localhost:5000/addrecord", {
           firstname,
@@ -57,9 +66,14 @@ const Registration = () => {
         })
         .then(function (data) {
           console.log(data);
-          const userid = data.data.data.ID;
-          console.log(data.data.message);
-          setAlertmsg(data.data.message);
+          const userid = data.data;
+          console.log(userid);
+          if(data.data.message === "Data Added Successfully"){
+            setAlertmsg("Your registration created successfully!");
+          }else if(data.data.error.Email === "This value already exists. Enter a unique value."){
+            setAlertmsg("Email already taken! Plz try with another valid email.");
+          }
+          
           // console.log(data.data.data.ID);
           // if (data.data.message === "Data Added Successfully") {
           //   console.log(userid);
@@ -81,6 +95,13 @@ const Registration = () => {
         });
     }
   };
+
+  useEffect(()=>{
+    console.log(UserData.state);
+    for(let i=0; i<UserData?.state?.length; i++){
+      setUserEmail(UserData.state[i].Email);
+    }
+  },[])
 
   return (
     <div>
