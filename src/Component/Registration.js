@@ -28,9 +28,9 @@ const Registration = () => {
     // }
 
     if (!firstname || !lastname || !email || !phone || !dealsaccess || !jobrole) {
-      setAlertmsg("Plz fill up all fields!");
+      setAlertmsg("Please complete all mandatory information!");
     } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-      setAlertmsg("Invalid Email entered");
+      setAlertmsg("Invalid Email entered.");
     } else {
       // const monthNames = [
       //   "January",
@@ -54,7 +54,7 @@ const Registration = () => {
       //   "-" +
       //   today.getFullYear();
       axios
-        .post("http://localhost:5000/addrecord", {
+        .post("https://investmentportal.herokuapp.com/addrecord", {
           firstname,
           lastname,
           email,

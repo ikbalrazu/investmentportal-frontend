@@ -4,11 +4,13 @@ import axios from "axios";
 const AppContext = createContext();
 
 const AppProvider = ({ children }) =>{
+    const [dealsid,setDealsId] = useState([]);
     const [deals,setDeals] = useState();
     const [issuername, setIssuerName] = useState([]);
     const [financername, setFinancerName] = useState([]);
 
     const GetDeals = async() =>{
+        console.log(dealsid);
         try{
           const data = await axios.post("https://investmentportal.herokuapp.com/getalldeals");
           console.log(data.data.data);
@@ -33,6 +35,7 @@ const AppProvider = ({ children }) =>{
     return(
         <AppContext.Provider value={{
             deals,
+            setDealsId,
             issuername,
             financername,
             setIssuerName,

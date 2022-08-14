@@ -24,13 +24,14 @@ const Login = () => {
   const [password, setPassword] = useState();
   const [resetemail, setResetEmail] = useState();
   const [alertmsg, setAlertmsg] = useState();
+  const [errormsg,setErrorMsg] = useState();
 
   const userAllData = () => {
     //Get Record - Detail View
     axios
       .get("https://investmentportal.herokuapp.com/getrecord")
       .then(function (data) {
-        //console.log(data.data.data);
+        console.log(data.data.data);
         setUserData(data.data.data);
         // localStorage.setItem("userinfo",JSON.stringify(data));
         // setVisiable(true);
@@ -50,24 +51,15 @@ const Login = () => {
       } else {
         for (let i = 0; i < userdata.length; i++) {
           const DecodePass = Base64.decode(userdata[i]?.Password);
-          // console.log(userdata[i]?.Email)
+          //console.log(userdata[i]?.Email)
           // console.log(userdata[i]?.Password)
           //console.log(DecodePass);
           if (userdata[i]?.Email === email && DecodePass === password) {
             if (userdata[i].UserStatus === "Approved") {
-              console.log(userdata[i]);
-              // localStorage.setItem(
-              //   "userinfo",
-              //   JSON.stringify({
-              //     id: userdata[i].ID,
-              //     name: userdata[i].Name.display_value,
-              //     email: userdata[i].Email,
-              //     userstatus: userdata[i].UserStatus,
-              //   })
-              // );
-              // console.log("");
-              // message.success("Successfully login!");
+              //console.log(DecodePass);
+              //console.log(userdata[i]);
               console.log("Successfully login!");
+
               twofactorauth("/emailotpverify",{state: userdata[i]});
             } else if (userdata[i].UserStatus === "Pending") {
               //message.success("Your request is pending...");
@@ -96,8 +88,8 @@ const Login = () => {
   const ForgotPassword = () => {
     if (userdata) {
       if (!resetemail) {
-        console.log("plz fill the all fields");
-        // setAlertmsg("Plz enter your email!");
+        //console.log("plz fill the all fields");
+        setErrorMsg("Plz enter your email!");
       } else {
         for (let i = 0; i < userdata.length; i++) {
           //const DecodePass = Base64.decode(userdata[i]?.Password);
@@ -123,11 +115,11 @@ const Login = () => {
                 console.log(data.data.message);
                 if (data.data.message === "send email successfully") {
                   //console.log("Sent link in your email for new password! Plz check your email.");
-                  setAlertmsg(
+                  setErrorMsg(
                     "A link has been sent to the email address you entered above, please check your email and follow the link."
                   );
                 }else{
-                  setAlertmsg("Something Wrong. Try again later!");
+                  setErrorMsg("Something Wrong. Try again later!");
                 }
               });
             //console.log("Successfully sent link in email!");
@@ -140,7 +132,7 @@ const Login = () => {
       }
     } else {
       console.log("Server problem. User not found try after sometimes");
-      setAlertmsg("Server problem. User not found try after sometimes");
+      setErrorMsg("Server problem. User not found try after sometimes");
     }
   };
 
@@ -269,7 +261,7 @@ const Login = () => {
                           >
                             Submit
                           </button>
-                          <p style={{color:"green"}}>{alertmsg}</p>
+                          <p style={{color:"green"}}>{errormsg}</p>
                         </div>
                       </div>
                     </div>
