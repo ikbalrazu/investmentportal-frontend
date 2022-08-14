@@ -108,6 +108,7 @@ const Details = () => {
                     <th scope="col">Report Date</th>
                     <th scope="col">Publish Date</th>
                     <th scope="col">Deal  Administrator</th>
+                    <th scope="col">Download</th>
                     {/* <th scope="col">Category</th>
                     <th scope="col">Status</th>
                     <th scope="col">Deal Status</th>
@@ -126,6 +127,7 @@ const Details = () => {
                       {/* <td><a href={`https://creator.zoho.com${data?.DownloadLink}`}>Download</a></td> */}
                       <td>{data?.ReportDate}</td>
                       <td>name</td>
+                      <td><a href={`https://creator.zoho.com${data?.DownloadLink}`}>Download</a></td>
                     </tr>
                     )
                   })}
