@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Footer from "../Sheard/Footer";
 import LoginTopHeader from "../Sheard/LoginTopHeader";
 import Menu from "../Sheard/Menu";
@@ -17,7 +17,7 @@ import "./registration.css";
 const Login = () => {
   const registration = useNavigate();
   const twofactorauth = useNavigate();
-  const forgotpassword = useNavigate();
+  const alertmsgstyle = useRef();
   const homepage = useNavigate();
   const [userdata, setUserData] = useState();
   const [email, setEmail] = useState();
@@ -44,11 +44,13 @@ const Login = () => {
     if (userdata) {
       if (!email || !password) {
         //console.log("plz fill the all fields");
+        //alertmsgstyle.current.style.color = "red";
         setAlertmsg("plz fill the all fields");
 
         // Adding new Messages
         //message.warning("Please fill all the fields !");
-      } else {
+      } 
+      if(email && password) {
         for (let i = 0; i < userdata.length; i++) {
           const DecodePass = Base64.decode(userdata[i]?.Password);
           //console.log(userdata[i]?.Email)
@@ -70,17 +72,14 @@ const Login = () => {
                 "Please ask an admin to grant permission to this app."
               );
             }
-          } else {
-            setAlertmsg("");
-            // setAlertmsg(<Alert message="Incorrect Email and Password" type="warning" showIcon closable />)
-
-            //message.error("Incorrect Email and Password");
+          }else if(userdata[i]?.Email === email && DecodePass !== password){
+            setAlertmsg("Password you have entered is incorrect, please try again or click on the Forgot Password link to reset your password.");
           }
         }
       }
     } else {
       // console.log("Server problem. User not found try after sometimes");
-      // setAlertmsg("Server problem. User not found try after sometimes");
+      setAlertmsg("Server problem. User not found try after sometimes");
       //   message.success("Server problem. User not found try after sometimes!");
     }
   };

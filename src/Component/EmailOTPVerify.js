@@ -11,8 +11,9 @@ const EmailOTPVerify = () => {
     const userInfo = JSON.parse(localStorage.getItem("userinfo"));
     const [randomotp,setRandomOtp] = useState();
     const [otp,setOtp] = useState();
+    //const [dealsid,setDealsId] = useState([]);
 
-    const {setDealsId} = useContext(AppContext);
+    const {setDealsId,deals} = useContext(AppContext);
 
     const alertmsg = useRef();
     const [msg, setMSG] = useState();
@@ -30,10 +31,7 @@ const EmailOTPVerify = () => {
             //console.log("two factor authentication successfully done");
             //console.log(locatiion?.state?.Deals_Allowed_for_Access);
 
-            for(let i=0; i<locatiion?.state?.Deals_Allowed_for_Access?.length; i++){
-                //console.log(locatiion?.state?.Deals_Allowed_for_Access[i]?.ID);
-                setDealsId(olddata =>[...olddata,locatiion?.state?.Deals_Allowed_for_Access[i]?.ID]);
-            }
+            
 
             localStorage.setItem(
                 "userinfo",
@@ -44,6 +42,14 @@ const EmailOTPVerify = () => {
                   userstatus: locatiion?.state?.UserStatus,
                 })
             );
+
+            //localStorage.setItem("dealsinfo", JSON.stringify({deals: locatiion?.state?.Deals_Allowed_for_Access,}))
+
+            for(let i=0; i<locatiion?.state?.Deals_Allowed_for_Access?.length; i++){
+                //console.log(locatiion?.state?.Deals_Allowed_for_Access[i]?.ID);
+                setDealsId(olddata =>[...olddata,locatiion?.state?.Deals_Allowed_for_Access[i]?.ID]);
+            }
+
             dashboard("/home");
         }else{
             alertmsg.current.style.color = "red";
@@ -70,7 +76,7 @@ const EmailOTPVerify = () => {
         axios.post("https://investmentportal.herokuapp.com/sendOTPVerificationEmail",{email,otpPin}).then(function(data){
             console.log(data?.data?.message);
         })
-    },[]);
+    },[deals]);
 
     return(
         <div>

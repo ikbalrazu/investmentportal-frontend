@@ -67,7 +67,7 @@ export default function MonthsList() {
   
   useEffect(()=>{
     DocumentHandler();
-    //console.log(location);
+    console.log(location);
   },[])
   return (
     <div>

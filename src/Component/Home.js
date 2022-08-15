@@ -23,9 +23,13 @@ export default function Home() {
   // const [financername, setFinancerName] = useState([]);
   const [unique_issuername, setUniqueIssuerName] = useState();
   const [unique_financiername, setUniqueFinancierName] = useState();
-  const { deals, issuername, financername } = useContext(AppContext);
+  const { deals, dealsid, issuername, financername } = useContext(AppContext);
 
   useEffect(() => {
+    console.log("deals id",deals.length);
+    //console.log(dealsid);
+    console.log(issuername);
+    console.log(financername);
     const userInfo = JSON.parse(localStorage.getItem("userinfo"));
     if (!userInfo) {
       loginpage("/");
@@ -38,6 +42,7 @@ export default function Home() {
         name: userInfo.name,
         email: userInfo.email,
       });
+
     } else {
       loginpage("/");
     }
@@ -82,7 +87,7 @@ export default function Home() {
     //     console.log(withoutDuplicates_issuername[k]);
     //   }
     // }).catch(console.error);
-  }, [deals]);
+  }, [deals, issuername, financername]);
 
   return (
     <div>
