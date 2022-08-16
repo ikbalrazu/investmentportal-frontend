@@ -13,7 +13,7 @@ const EmailOTPVerify = () => {
     const [otp,setOtp] = useState();
     //const [dealsid,setDealsId] = useState([]);
 
-    const {setDealsId,deals} = useContext(AppContext);
+    //const {setDealsId,deals} = useContext(AppContext);
 
     const alertmsg = useRef();
     const [msg, setMSG] = useState();
@@ -45,10 +45,10 @@ const EmailOTPVerify = () => {
 
             //localStorage.setItem("dealsinfo", JSON.stringify({deals: locatiion?.state?.Deals_Allowed_for_Access,}))
 
-            for(let i=0; i<locatiion?.state?.Deals_Allowed_for_Access?.length; i++){
-                //console.log(locatiion?.state?.Deals_Allowed_for_Access[i]?.ID);
-                setDealsId(olddata =>[...olddata,locatiion?.state?.Deals_Allowed_for_Access[i]?.ID]);
-            }
+            // for(let i=0; i<locatiion?.state?.Deals_Allowed_for_Access?.length; i++){
+            //     //console.log(locatiion?.state?.Deals_Allowed_for_Access[i]?.ID);
+            //     setDealsId(olddata =>[...olddata,locatiion?.state?.Deals_Allowed_for_Access[i]?.ID]);
+            // }
 
             dashboard("/home");
         }else{
@@ -76,7 +76,7 @@ const EmailOTPVerify = () => {
         axios.post("https://investmentportal.herokuapp.com/sendOTPVerificationEmail",{email,otpPin}).then(function(data){
             console.log(data?.data?.message);
         })
-    },[deals]);
+    },[]);
 
     return(
         <div>

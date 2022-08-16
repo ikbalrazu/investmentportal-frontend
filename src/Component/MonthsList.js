@@ -18,9 +18,9 @@ export default function MonthsList() {
     //console.log(location?.state);
     for(let i=0; i<location?.state?.length; i++){
       const id=location.state[i].ID;
-      //console.log(id);
+      console.log(id);
       axios.post("https://investmentportal.herokuapp.com/getdocuments",{id}).then(function(data){
-        //console.log(data);
+        console.log(data);
         setDealName(data?.data?.data?.Deals?.display_value)
         if(data?.data?.data?.Access_Type === "Private"){
           for(let k=0; k<data?.data?.data?.User?.length; k++){

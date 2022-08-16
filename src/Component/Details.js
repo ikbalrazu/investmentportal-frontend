@@ -21,7 +21,7 @@ const Details = () => {
       //const id = "3963856000000894007"
       
       axios.post("https://investmentportal.herokuapp.com/getdocuments",{id}).then(function(data){
-        //console.log(data);
+        console.log(data);
         //setDocuments(olddata=>[...olddata,{"document":data.data.data}]);
         //console.log(data.data.data.User);
         for(let k=0;k<data.data.data.User.length;k++){
@@ -47,9 +47,6 @@ const Details = () => {
     // }
   };
 
-  const ShowDocumentData = () => {
-    console.log(documents);
-  }
 
   useEffect(()=>{
     //AllDocumentsById();
@@ -127,7 +124,7 @@ const Details = () => {
                       {/* <td><a href={`https://creator.zoho.com${data?.DownloadLink}`}>Download</a></td> */}
                       <td>{data?.ReportDate}</td>
                       <td>name</td>
-                      <td><a href={`https://creator.zoho.com${data?.DownloadLink}`}>Download</a></td>
+                      <td><a href={`https://creator.zoho.com.au${data?.DownloadLink}`} target="blank">Download</a></td>
                     </tr>
                     )
                   })}

@@ -1,4 +1,4 @@
-import React,{useState,useEffect,createContext,useContext} from "react";
+import React,{useState,useEffect,createContext,useContext,useLayoutEffect} from "react";
 import axios from "axios";
 
 const AppContext = createContext();
@@ -13,7 +13,7 @@ const AppProvider = ({ children }) =>{
     const GetDeals = async() =>{
         //console.log(userInfo?.id);
         try{
-          const id = userInfo?.id;
+          const id = dealsid;
           const data = await axios.post("https://investmentportal.herokuapp.com/getrecordbyid",{id});
           console.log(data?.data?.data?.Deals_Allowed_for_Access?.length);
           for(let i=0; i<data?.data?.data?.Deals_Allowed_for_Access?.length; i++){
@@ -32,7 +32,7 @@ const AppProvider = ({ children }) =>{
 
     useEffect(()=>{
 
-      GetDeals();
+      //GetDeals();
 
     },[]);
 

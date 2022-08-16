@@ -85,10 +85,14 @@ const Login = () => {
   };
 
   const ForgotPassword = () => {
+    console.log(resetemail);
     if (userdata) {
+      
       if (!resetemail) {
         //console.log("plz fill the all fields");
         setErrorMsg("Plz enter your email!");
+      }else if(!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(resetemail)){
+        setErrorMsg("Invalid Email entered.");
       } else {
         for (let i = 0; i < userdata.length; i++) {
           //const DecodePass = Base64.decode(userdata[i]?.Password);
@@ -125,7 +129,8 @@ const Login = () => {
             // setAlertmsg("Successfully sent link in email!")
             // loginpage("/home");
           }else if(userdata[i]?.Email !== resetemail){
-            //setAlertmsg("Invalid Email!");
+            //setErrorMsg("Invalid Email!");
+            //console.log("Invalid password");
           }
         }
       }
@@ -247,7 +252,7 @@ const Login = () => {
                             aria-describedby="username"
                             placeholder="User Email"
                             required
-                            onChange={(e)=>setResetEmail(e.target.value)}
+                            onChange={(e)=>setResetEmail(e.target.value.toLowerCase())}
                           />
                         </div>
                         <div class="form-group mt-1">
