@@ -32,7 +32,7 @@ export default function Home() {
 
   const [unique_issuername, setUniqueIssuerName] = useState();
   const [unique_financiername, setUniqueFinancierName] = useState();
-  //const { deals, dealsid, issuername, financername } = useContext(AppContext);
+  const {  dealsid } = AppState();
 
   const GetDeals = async() =>{
     //console.log(userInfo?.id);
@@ -59,10 +59,10 @@ export default function Home() {
 
   useLayoutEffect(()=>{
     GetDeals();
-  },[])
+  },[dealsid])
 
   useEffect(() => {
-    console.log("deals id",deals.length);
+    console.log("deals id",dealsid);
     //console.log(dealsid);
     console.log(issuername);
     console.log(financername);
@@ -86,15 +86,15 @@ export default function Home() {
     //console.log(deals);
     const withoutDuplicates_issuername = [
       ...new Map(
-        issuername.map((item) => [JSON.stringify(item), item])
+        issuername?.map((item) => [JSON.stringify(item), item])
       ).values(),
     ];
     const withoutDuplicates_financiername = [
       ...new Map(
-        financername.map((item) => [JSON.stringify(item), item])
+        financername?.map((item) => [JSON.stringify(item), item])
       ).values(),
     ];
-    //console.log(withoutDuplicates_issuername);
+    // console.log(withoutDuplicates_issuername);
     setUniqueIssuerName(withoutDuplicates_issuername);
     setUniqueFinancierName(withoutDuplicates_financiername);
     // const DealsData = async () => {
@@ -294,12 +294,12 @@ export default function Home() {
                         >
                           Issuer Name
                         </th>
-                        <th
+                        {/* <th
                           scope="col"
                           style={{ color: "#00adee", fontSize: "1em" }}
                         >
                           Product Type
-                        </th>
+                        </th> */}
                         <th
                           scope="col"
                           style={{ color: "#00adee", fontSize: "1em" }}
@@ -327,7 +327,7 @@ export default function Home() {
                               {" "}
                               {data}{" "}
                             </th>
-                            <td>Other </td>
+                            {/* <td>Other </td> */}
                             <td>{issuer_list_filter?.length}</td>
                             <td>
                               {" "}
@@ -431,7 +431,7 @@ export default function Home() {
                           >
                             <th scope="row"> {data?.DealName} </th>
                             <td>{data?.Issuer_Name} </td>
-                            <td>Other </td>
+                            <td>{data?.DealType} </td>
                             <td> Name Name </td>
                             <td>
                               {" "}

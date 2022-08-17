@@ -5,6 +5,7 @@ import Menu from "../Sheard/Menu";
 import { useNavigate } from "react-router-dom";
 import { Base64 } from "js-base64";
 import axios from "axios";
+import { AppState } from "../context/Context";
 
 // All Extranal images
 import img1 from "../images/img1.svg";
@@ -25,6 +26,8 @@ const Login = () => {
   const [resetemail, setResetEmail] = useState();
   const [alertmsg, setAlertmsg] = useState();
   const [errormsg,setErrorMsg] = useState();
+
+  // const {setDealsId} = AppState();
 
   const userAllData = () => {
     //Get Record - Detail View
@@ -61,6 +64,13 @@ const Login = () => {
               //console.log(DecodePass);
               //console.log(userdata[i]);
               console.log("Successfully login!");
+              // setDealsId(userdata[i]?.ID);
+              // localStorage.setItem(
+              //   "userID",
+              //   JSON.stringify({
+              //     id: userdata.ID,
+              //   })
+              // );
 
               twofactorauth("/emailotpverify",{state: userdata[i]});
             } else if (userdata[i].UserStatus === "Pending") {
@@ -121,6 +131,7 @@ const Login = () => {
                   setErrorMsg(
                     "A link has been sent to the email address you entered above, please check your email and follow the link."
                   );
+
                 }else{
                   setErrorMsg("Something Wrong. Try again later!");
                 }
