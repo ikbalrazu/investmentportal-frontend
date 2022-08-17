@@ -163,7 +163,7 @@ export default function IssuerList() {
                           >
                             <th scope="row"> {data?.DealName} </th>
                             <td>{data?.Issuer_Name}</td>
-                            <td>RMBS</td>
+                            <td>{data?.DealType}</td>
                             <td>Nicole Wang</td>
                             <td>01/01/2022</td>
                             <td>
