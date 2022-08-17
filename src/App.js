@@ -1,4 +1,5 @@
 import logo from "./logo.svg";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import "./App.css";
 import React,{useState,useEffect} from "react";
 import Login from "./Component/Login";
@@ -16,6 +17,7 @@ import EmailOTPVerify from "./Component/EmailOTPVerify";
 import ConfirmResetPassword from "./Component/ConfirmResetPassword";
 import SetUserPassword from "./Component/SetUserPassword";
 import ConfirmSetUserPassword from "./Component/ConfirmSetUserPassword";
+import General from "./Component/General";
 import axios from "axios";
 
 
@@ -40,6 +42,7 @@ function App() {
     <Routes>
       <Route path="/home" element={<Home />} />
       <Route path="/help" element={<Help />} />
+      <Route path="/general" element={<General/>} />
       <Route path="/search" element={<Search />} />
       <Route path="/details" element={<Details />} />
       <Route path="/issuerlist" element={<IssuerList />} />

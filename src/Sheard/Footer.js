@@ -44,26 +44,26 @@ export default function Footer() {
               <div class="p-2 ">
                 <a className="text-decoration-none legal_btn" href="#">
                   {" "}
-                  Terms of Use{" "}
+                  Customer Complaint Policy{" "}
                 </a>
               </div>
               <div class="p-2 ">
                 <a className="text-decoration-none legal_btn" href="#">
                   {" "}
-                  Privacy Notice{" "}
+                  Hardship{" "}
                 </a>
               </div>
               <div class="p-2 ">
                 <a className="text-decoration-none legal_btn" href="#">
                   {" "}
-                  Disclaimer{" "}
+                  Privacy Policy{" "}
                 </a>
               </div>
 
               <div class="p-2 ">
                 <a className="text-decoration-none legal_btn" href="#">
                   {" "}
-                  Cookie Policy{" "}
+                  Credit Guide{" "}
                 </a>
               </div>
             </div>
@@ -73,19 +73,19 @@ export default function Footer() {
                 color: "#999999",
               }}
             >
-              <p className="text-start">
+              {/* <p className="text-start">
                 © 2022 The Bank of New York Mellon Corporation. All Rights
                 Reserved.
-              </p>
+              </p> */}
 
-              <div className="text-start text-justify">
+              {/* <div className="text-start text-justify">
                 Products and services are provided by various subsidiaries of
                 The Bank of New York Mellon Corporation. CUSIP identifiers have
                 been provided by CUSIP Global Services, managed on behalf of the
                 American Bankers Association by Standard & Poor's. The CUSIP
                 Database, © 2022 American Bankers Association. "CUSIP" is a
                 registered trademark of the American Bankers Association.
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

@@ -42,7 +42,8 @@ const Menu = () => {
 
             <li class="nav-item">
               <a class="nav-link" href="#">
-                General
+                <Link className="link" to="/general">General</Link>
+                
               </a>
             </li>
             <li class="nav-item">

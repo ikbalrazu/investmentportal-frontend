@@ -335,8 +335,16 @@ const Registration = () => {
                   </div>
 
                   <div class="form-group mt-3">
+                  <button
+                      type="button"
+                      className="btn btn-primary  mt-2 border-0"
+                      id="registetionbutton"
+                      onClick={()=>login(-1)}
+                    >
+                    Already have an account?
+                    </button>
                     <button
-                      //   style={{ float: "left", color: "#00ADEE" }}
+                      style={{ marginLeft:"20px" }}
                       type="button"
                       className="btn btn-primary  mt-2 border-0"
                       id="registetionbutton"

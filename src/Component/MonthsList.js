@@ -12,25 +12,32 @@ export default function MonthsList() {
   const [documents,setDocuments] = useState([]);
   const [monthreport,setMonthReport] = useState();
   const [dealname, setDealName] = useState();
+
+  const userInfo = JSON.parse(localStorage.getItem("userinfo"));
+  
   const DocumentHandler = () => {
     let MonthsReport=[];
     const userInfo = JSON.parse(localStorage.getItem("userinfo"));
     //console.log(location?.state);
     for(let i=0; i<location?.state?.length; i++){
       const id=location.state[i].ID;
-      //console.log(id);
+      console.log(id);
       axios.post("https://investmentportal.herokuapp.com/getdocuments",{id}).then(function(data){
-        //console.log(data);
+        console.log(data);
         setDealName(data?.data?.data?.Deals?.display_value)
         if(data?.data?.data?.Access_Type === "Private"){
-          for(let k=0; k<data?.data?.data?.User?.length; k++){
-            if(data?.data?.data?.User[k]?.ID === userInfo.id){
-              const filename = data.data.data.Documents;
-              const fileformat = filename.split(".")[1];
-              MonthsReport.push(data.data.data.MonthOfReport);
-              setDocuments(olddata=>[...olddata,{"Id":data.data.data.ID,"DocumentName":data.data.data.DocumentName,"DownloadLink":data.data.data.Documents,"FormatType":fileformat,"ReportDate":data.data.data.CreatedDateTime,"MonthReport":data.data.data.MonthOfReport}]);
-            }
-          }
+          const filename = data.data.data.Documents;
+          const fileformat = filename.split(".")[1];
+          MonthsReport.push(data.data.data.MonthOfReport);
+          setDocuments(olddata=>[...olddata,{"Id":data.data.data.ID,"DocumentName":data.data.data.DocumentName,"DownloadLink":data.data.data.Documents,"FormatType":fileformat,"ReportDate":data.data.data.CreatedDateTime,"MonthReport":data.data.data.MonthOfReport}]);
+          // for(let k=0; k<data?.data?.data?.User?.length; k++){
+          //   if(data?.data?.data?.User[k]?.ID === userInfo.id){
+          //     // const filename = data.data.data.Documents;
+          //     // const fileformat = filename.split(".")[1];
+          //     // MonthsReport.push(data.data.data.MonthOfReport);
+          //     // setDocuments(olddata=>[...olddata,{"Id":data.data.data.ID,"DocumentName":data.data.data.DocumentName,"DownloadLink":data.data.data.Documents,"FormatType":fileformat,"ReportDate":data.data.data.CreatedDateTime,"MonthReport":data.data.data.MonthOfReport}]);
+          //   }
+          // }
           
         }else if(data?.data?.data?.Access_Type === "Global"){
           const filename = data.data.data.Documents;
@@ -67,7 +74,7 @@ export default function MonthsList() {
   
   useEffect(()=>{
     DocumentHandler();
-    //console.log(location);
+    console.log(location);
   },[])
   return (
     <div>
@@ -89,7 +96,7 @@ export default function MonthsList() {
                 }
               >
                 <h5 className="text-start py-1" style={{ color: "#00ADEE" }}>
-                  Welcome, {dealname}
+                  Welcome, {userInfo?.name}
                 </h5>
 
                 {/* <div class="input-group mb-3">

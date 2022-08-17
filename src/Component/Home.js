@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useLayoutEffect } from "react";
 import Footer from "../Sheard/Footer";
 import Menu from "../Sheard/Menu";
 import TopHeader from "../Sheard/TopHeader";
 import Pagination2 from "./Pagination2";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import Spinner from 'react-bootstrap/Spinner';
 import { AppState } from "../context/Context";
 import { AppContext } from "../context/Context";
 
@@ -13,6 +14,7 @@ import "./registration.css";
 import classes from "./home.module.css";
 
 export default function Home() {
+  const location = useLocation();
   const loginpage = useNavigate();
   const IssuerListPage = useNavigate();
   const FinancierListPage = useNavigate();
@@ -21,12 +23,50 @@ export default function Home() {
   const [dealsdata, setDealsData] = useState();
   // const [issuername, setIssuerName] = useState([]);
   // const [financername, setFinancerName] = useState([]);
+
+  const [deals,setDeals] = useState([]);
+  const [issuername, setIssuerName] = useState([]);
+  const [financername, setFinancerName] = useState([]);
+  const [loader,setLoader] = useState(false);
+  const userInfo = JSON.parse(localStorage.getItem("userinfo"));
+
   const [unique_issuername, setUniqueIssuerName] = useState();
   const [unique_financiername, setUniqueFinancierName] = useState();
-  const { deals, issuername, financername } = useContext(AppContext);
+  const {  dealsid } = AppState();
+
+  const GetDeals = async() =>{
+    //console.log(userInfo?.id);
+    try{
+      setLoader(true);
+      const id = userInfo?.id;
+      const data = await axios.post("https://investmentportal.herokuapp.com/getrecordbyid",{id});
+      console.log(data?.data?.data?.Deals_Allowed_for_Access?.length);
+      for(let i=0; i<data?.data?.data?.Deals_Allowed_for_Access?.length; i++){
+        const dealid = data?.data?.data?.Deals_Allowed_for_Access[i]?.ID;
+        const res = await axios.post("https://investmentportal.herokuapp.com/getalldealsbyid",{dealid});
+        setDeals(preData=>[...preData,res?.data?.data]);
+        setIssuerName(preData=>[...preData,res?.data?.data?.Issuer_Name]);
+        setFinancerName(preData=>[...preData,res?.data?.data?.Financer]);
+        console.log(res);
+        setLoader(true);
+      }
+      setLoader(false)
+    }catch(error){
+      console.log(error);
+    }
+
+  }
+
+  useLayoutEffect(()=>{
+    GetDeals();
+  },[dealsid])
 
   useEffect(() => {
-    const userInfo = JSON.parse(localStorage.getItem("userinfo"));
+    console.log("deals id",dealsid);
+    //console.log(dealsid);
+    console.log(issuername);
+    console.log(financername);
+    //const userInfo = JSON.parse(localStorage.getItem("userinfo"));
     if (!userInfo) {
       loginpage("/");
     }
@@ -38,6 +78,7 @@ export default function Home() {
         name: userInfo.name,
         email: userInfo.email,
       });
+
     } else {
       loginpage("/");
     }
@@ -45,15 +86,15 @@ export default function Home() {
     //console.log(deals);
     const withoutDuplicates_issuername = [
       ...new Map(
-        issuername.map((item) => [JSON.stringify(item), item])
+        issuername?.map((item) => [JSON.stringify(item), item])
       ).values(),
     ];
     const withoutDuplicates_financiername = [
       ...new Map(
-        financername.map((item) => [JSON.stringify(item), item])
+        financername?.map((item) => [JSON.stringify(item), item])
       ).values(),
     ];
-    //console.log(withoutDuplicates_issuername);
+    // console.log(withoutDuplicates_issuername);
     setUniqueIssuerName(withoutDuplicates_issuername);
     setUniqueFinancierName(withoutDuplicates_financiername);
     // const DealsData = async () => {
@@ -82,7 +123,7 @@ export default function Home() {
     //     console.log(withoutDuplicates_issuername[k]);
     //   }
     // }).catch(console.error);
-  }, [deals]);
+  }, [deals, issuername, financername]);
 
   return (
     <div>
@@ -253,12 +294,12 @@ export default function Home() {
                         >
                           Issuer Name
                         </th>
-                        <th
+                        {/* <th
                           scope="col"
                           style={{ color: "#00adee", fontSize: "1em" }}
                         >
                           Product Type
-                        </th>
+                        </th> */}
                         <th
                           scope="col"
                           style={{ color: "#00adee", fontSize: "1em" }}
@@ -267,6 +308,7 @@ export default function Home() {
                         </th>
                       </tr>
                     </thead>
+                    {loader === false &&(
                     <tbody>
                       {unique_issuername?.map((data, index) => {
                         var issuer_list_filter = deals?.filter(function (el) {
@@ -285,7 +327,7 @@ export default function Home() {
                               {" "}
                               {data}{" "}
                             </th>
-                            <td>Other </td>
+                            {/* <td>Other </td> */}
                             <td>{issuer_list_filter?.length}</td>
                             <td>
                               {" "}
@@ -297,6 +339,20 @@ export default function Home() {
                         );
                       })}
                     </tbody>
+                    )}
+
+                    {loader === true &&(
+                    <tbody>
+                      <Spinner
+                        as="span"
+                        animation="border"
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                      />
+                    </tbody>
+                    )}
+
                   </table>
                   <Pagination2></Pagination2>
                 </div>
@@ -375,7 +431,7 @@ export default function Home() {
                           >
                             <th scope="row"> {data?.DealName} </th>
                             <td>{data?.Issuer_Name} </td>
-                            <td>Other </td>
+                            <td>{data?.DealType} </td>
                             <td> Name Name </td>
                             <td>
                               {" "}

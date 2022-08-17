@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Footer from "../Sheard/Footer";
 import LoginTopHeader from "../Sheard/LoginTopHeader";
 import Menu from "../Sheard/Menu";
 import { useNavigate } from "react-router-dom";
 import { Base64 } from "js-base64";
 import axios from "axios";
+import { AppState } from "../context/Context";
 
 // All Extranal images
 import img1 from "../images/img1.svg";
@@ -17,7 +18,7 @@ import "./registration.css";
 const Login = () => {
   const registration = useNavigate();
   const twofactorauth = useNavigate();
-  const forgotpassword = useNavigate();
+  const alertmsgstyle = useRef();
   const homepage = useNavigate();
   const [userdata, setUserData] = useState();
   const [email, setEmail] = useState();
@@ -25,6 +26,8 @@ const Login = () => {
   const [resetemail, setResetEmail] = useState();
   const [alertmsg, setAlertmsg] = useState();
   const [errormsg,setErrorMsg] = useState();
+
+  // const {setDealsId} = AppState();
 
   const userAllData = () => {
     //Get Record - Detail View
@@ -44,11 +47,13 @@ const Login = () => {
     if (userdata) {
       if (!email || !password) {
         //console.log("plz fill the all fields");
+        //alertmsgstyle.current.style.color = "red";
         setAlertmsg("plz fill the all fields");
 
         // Adding new Messages
         //message.warning("Please fill all the fields !");
-      } else {
+      } 
+      if(email && password) {
         for (let i = 0; i < userdata.length; i++) {
           const DecodePass = Base64.decode(userdata[i]?.Password);
           //console.log(userdata[i]?.Email)
@@ -59,6 +64,13 @@ const Login = () => {
               //console.log(DecodePass);
               //console.log(userdata[i]);
               console.log("Successfully login!");
+              // setDealsId(userdata[i]?.ID);
+              // localStorage.setItem(
+              //   "userID",
+              //   JSON.stringify({
+              //     id: userdata.ID,
+              //   })
+              // );
 
               twofactorauth("/emailotpverify",{state: userdata[i]});
             } else if (userdata[i].UserStatus === "Pending") {
@@ -70,26 +82,27 @@ const Login = () => {
                 "Please ask an admin to grant permission to this app."
               );
             }
-          } else {
-            setAlertmsg("");
-            // setAlertmsg(<Alert message="Incorrect Email and Password" type="warning" showIcon closable />)
-
-            //message.error("Incorrect Email and Password");
+          }else if(userdata[i]?.Email === email && DecodePass !== password){
+            setAlertmsg("Password you have entered is incorrect, please try again or click on the Forgot Password link to reset your password.");
           }
         }
       }
     } else {
       // console.log("Server problem. User not found try after sometimes");
-      // setAlertmsg("Server problem. User not found try after sometimes");
+      setAlertmsg("Server problem. User not found try after sometimes");
       //   message.success("Server problem. User not found try after sometimes!");
     }
   };
 
   const ForgotPassword = () => {
+    console.log(resetemail);
     if (userdata) {
+      
       if (!resetemail) {
         //console.log("plz fill the all fields");
         setErrorMsg("Plz enter your email!");
+      }else if(!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(resetemail)){
+        setErrorMsg("Invalid Email entered.");
       } else {
         for (let i = 0; i < userdata.length; i++) {
           //const DecodePass = Base64.decode(userdata[i]?.Password);
@@ -118,6 +131,7 @@ const Login = () => {
                   setErrorMsg(
                     "A link has been sent to the email address you entered above, please check your email and follow the link."
                   );
+
                 }else{
                   setErrorMsg("Something Wrong. Try again later!");
                 }
@@ -126,7 +140,8 @@ const Login = () => {
             // setAlertmsg("Successfully sent link in email!")
             // loginpage("/home");
           }else if(userdata[i]?.Email !== resetemail){
-            //setAlertmsg("Invalid Email!");
+            //setErrorMsg("Invalid Email!");
+            //console.log("Invalid password");
           }
         }
       }
@@ -248,7 +263,7 @@ const Login = () => {
                             aria-describedby="username"
                             placeholder="User Email"
                             required
-                            onChange={(e)=>setResetEmail(e.target.value)}
+                            onChange={(e)=>setResetEmail(e.target.value.toLowerCase())}
                           />
                         </div>
                         <div class="form-group mt-1">
