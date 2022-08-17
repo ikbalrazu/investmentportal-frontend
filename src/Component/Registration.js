@@ -106,16 +106,16 @@ const Registration = () => {
   return (
     <div>
       <div className="container">
-        <div className=" row">
+        <div className="row justify-content-md-center">
           <h3 className="text-white text-start mt-5 mb-4">
-            {" "}
+        
             Welcome to AMAL Trustees
           </h3>
 
           {/* Registration all details start  */}
 
           <section
-            className="col-lg-8 col-md-8 col-sm-12 col-12"
+            className="col-lg-12 col-md-12 col-sm-12 col-12"
             style={{
               backgroundColor: "#00ADEE",
               padding: 20,

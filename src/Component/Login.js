@@ -170,7 +170,7 @@ const Login = () => {
           </h3>
 
           {/* Login section design  Start */}
-          <div className="col-lg-8 col-md-8 col-sm-12 col-12 ">
+          <div className="col-lg-12 col-md-12 col-sm-12 col-12 ">
             {" "}
             <section
               className="p-4 mt-4"
