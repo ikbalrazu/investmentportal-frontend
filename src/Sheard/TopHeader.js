@@ -7,6 +7,7 @@ export default function TopHeader() {
 
   const logoutHandler = () => {
     localStorage.removeItem("userinfo");
+    localStorage.removeItem("dealsinfo");
     loginpage("/");
   };
 

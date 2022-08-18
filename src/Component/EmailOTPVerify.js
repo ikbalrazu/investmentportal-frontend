@@ -38,10 +38,17 @@ const EmailOTPVerify = () => {
           name: locatiion?.state?.Name.display_value,
           email: locatiion?.state?.Email,
           userstatus: locatiion?.state?.UserStatus,
+          firstname: locatiion?.state?.Name?.first_name,
+          lastname: locatiion?.state?.Name?.last_name,
+          phone: locatiion?.state?.Phone_Number,
+          company: locatiion?.state?.Company,
+          companyrole: locatiion?.state?.Company_Role,
+          role: locatiion?.state?.Role,
+          deals: locatiion?.state?.Deals_need_access_to,
         })
       );
 
-      //localStorage.setItem("dealsinfo", JSON.stringify({deals: locatiion?.state?.Deals_Allowed_for_Access,}))
+      localStorage.setItem("dealsinfo", JSON.stringify({deals: locatiion?.state?.Deals_Allowed_for_Access,}))
 
       // for(let i=0; i<locatiion?.state?.Deals_Allowed_for_Access?.length; i++){
       //     //console.log(locatiion?.state?.Deals_Allowed_for_Access[i]?.ID);
