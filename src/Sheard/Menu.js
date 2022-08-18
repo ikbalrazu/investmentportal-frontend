@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import amal from '../images/amallogo.svg';
 
 import "./Menu.css";
 const Menu = () => {
@@ -7,7 +8,8 @@ const Menu = () => {
     <nav className="navbar navbar-expand-lg ">
       <div className="container">
         <a className="navbar-brand fw-bold" href="#">
-          <span className="schol-name-color"> Investment Report</span>
+          {/* <span className="schol-name-color"> Investment Report</span> */}
+          <img src={amal} alt="example" style={{ height: 33 }} />
         </a>
 
         <button
@@ -40,7 +42,8 @@ const Menu = () => {
 
             <li class="nav-item">
               <a class="nav-link" href="#">
-                General
+                <Link className="link" to="/general">General</Link>
+                
               </a>
             </li>
             <li class="nav-item">

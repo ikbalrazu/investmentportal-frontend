@@ -13,6 +13,8 @@ export default function IssuerList() {
   const [issuerlist, setIssuerList] = useState();
   const [issuername, setIssuerName] = useState([]);
 
+  const userInfo = JSON.parse(localStorage.getItem("userinfo"));
+
   const IssuerList = () => {
     setIssuerList(location?.state?.financier_list_filter);
     for (let i = 0; i < location?.state?.financier_list_filter?.length; i++) {
@@ -44,7 +46,7 @@ export default function IssuerList() {
                 }
               >
                 <h5 className="text-start py-1" style={{ color: "#00ADEE" }}>
-                  wellcome {issuername}
+                  Wellcome, {userInfo?.name}
                 </h5>
 
                 {/* <div class="input-group mb-3">
@@ -161,7 +163,7 @@ export default function IssuerList() {
                           >
                             <th scope="row"> {data?.DealName} </th>
                             <td>{data?.Financer}</td>
-                            <td>RMBS</td>
+                            <td>{data?.DealType}</td>
                             <td>Nicole Wang</td>
                             <td>01/01/2022</td>
                             <td>

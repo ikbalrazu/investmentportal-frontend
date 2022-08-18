@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Footer from "../Sheard/Footer";
 import LoginTopHeader from "../Sheard/LoginTopHeader";
 import Menu from "../Sheard/Menu";
 import { useNavigate } from "react-router-dom";
 import { Base64 } from "js-base64";
 import axios from "axios";
+import { AppState } from "../context/Context";
 
 // All Extranal images
 import img1 from "../images/img1.svg";
@@ -16,13 +17,17 @@ import "./registration.css";
 
 const Login = () => {
   const registration = useNavigate();
-  const forgotpassword = useNavigate();
+  const twofactorauth = useNavigate();
+  const alertmsgstyle = useRef();
   const homepage = useNavigate();
   const [userdata, setUserData] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [resetemail, setResetEmail] = useState();
   const [alertmsg, setAlertmsg] = useState();
+  const [errormsg,setErrorMsg] = useState();
+
+  // const {setDealsId} = AppState();
 
   const userAllData = () => {
     //Get Record - Detail View
@@ -42,57 +47,108 @@ const Login = () => {
     if (userdata) {
       if (!email || !password) {
         //console.log("plz fill the all fields");
+        //alertmsgstyle.current.style.color = "red";
         setAlertmsg("plz fill the all fields");
 
         // Adding new Messages
         //message.warning("Please fill all the fields !");
-      } else {
+      } 
+      if(email && password) {
         for (let i = 0; i < userdata.length; i++) {
           const DecodePass = Base64.decode(userdata[i]?.Password);
-          // console.log(userdata[i]?.Email)
+          //console.log(userdata[i]?.Email)
           // console.log(userdata[i]?.Password)
           //console.log(DecodePass);
           if (userdata[i]?.Email === email && DecodePass === password) {
             if (userdata[i].UserStatus === "Approved") {
-              localStorage.setItem(
-                "userinfo",
-                JSON.stringify({
-                  id: userdata[i].ID,
-                  name: userdata[i].Name.display_value,
-                  email: userdata[i].Email,
-                  userstatus: userdata[i].UserStatus,
-                })
-              );
-              // console.log("");
-              // message.success("Successfully login!");
+              //console.log(DecodePass);
+              //console.log(userdata[i]);
               console.log("Successfully login!");
-              registration("/home");
+              // setDealsId(userdata[i]?.ID);
+              // localStorage.setItem(
+              //   "userID",
+              //   JSON.stringify({
+              //     id: userdata.ID,
+              //   })
+              // );
+
+              twofactorauth("/emailotpverify",{state: userdata[i]});
             } else if (userdata[i].UserStatus === "Pending") {
               //message.success("Your request is pending...");
-              console.log("Your request is pending...");
+              setAlertmsg("Your request is pending...");
             } else {
               //message.success("Please ask an admin to grant permission to this app.");
-              console.log(
+              setAlertmsg(
                 "Please ask an admin to grant permission to this app."
               );
             }
-          } else {
-            setAlertmsg("");
-            // setAlertmsg(<Alert message="Incorrect Email and Password" type="warning" showIcon closable />)
-
-            //message.error("Incorrect Email and Password");
+          }else if(userdata[i]?.Email === email && DecodePass !== password){
+            setAlertmsg("Password you have entered is incorrect, please try again or click on the Forgot Password link to reset your password.");
           }
         }
       }
     } else {
       // console.log("Server problem. User not found try after sometimes");
-      // setAlertmsg("Server problem. User not found try after sometimes");
+      setAlertmsg("Server problem. User not found try after sometimes");
       //   message.success("Server problem. User not found try after sometimes!");
     }
   };
 
   const ForgotPassword = () => {
-    forgotpassword("/forgotpassword");
+    console.log(resetemail);
+    if (userdata) {
+      
+      if (!resetemail) {
+        //console.log("plz fill the all fields");
+        setErrorMsg("Plz enter your email!");
+      }else if(!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(resetemail)){
+        setErrorMsg("Invalid Email entered.");
+      } else {
+        for (let i = 0; i < userdata.length; i++) {
+          //const DecodePass = Base64.decode(userdata[i]?.Password);
+          // console.log(userdata[i]?.Email)
+          // console.log(userdata[i]?.Password)
+          if (userdata[i]?.Email === resetemail) {
+            // localStorage.setItem(
+            //   "userinfo",
+            //   JSON.stringify({
+            //     id: userdata[i].ID,
+            //     email: userdata[i].Email,
+            //   })
+            // );
+            const id = userdata[i].ID;
+            const email = userdata[i].Email;
+            axios
+              .post("https://investmentportal.herokuapp.com/sendForgotPasswordMail", {
+                id,
+                email
+              })
+              .then(function (data) {
+                console.log(data);
+                console.log(data.data.message);
+                if (data.data.message === "send email successfully") {
+                  //console.log("Sent link in your email for new password! Plz check your email.");
+                  setErrorMsg(
+                    "A link has been sent to the email address you entered above, please check your email and follow the link."
+                  );
+
+                }else{
+                  setErrorMsg("Something Wrong. Try again later!");
+                }
+              });
+            //console.log("Successfully sent link in email!");
+            // setAlertmsg("Successfully sent link in email!")
+            // loginpage("/home");
+          }else if(userdata[i]?.Email !== resetemail){
+            //setErrorMsg("Invalid Email!");
+            //console.log("Invalid password");
+          }
+        }
+      }
+    } else {
+      console.log("Server problem. User not found try after sometimes");
+      setErrorMsg("Server problem. User not found try after sometimes");
+    }
   };
 
   useEffect(() => {
@@ -114,7 +170,7 @@ const Login = () => {
           </h3>
 
           {/* Login section design  Start */}
-          <div className="col-lg-8 col-md-8 col-sm-12 col-12 ">
+          <div className="col-lg-12 col-md-12 col-sm-12 col-12 ">
             {" "}
             <section
               className="p-4 mt-4"
@@ -160,6 +216,7 @@ const Login = () => {
                       >
                         Sign In
                       </button>
+                      <p style={{color:"red"}}>{alertmsg}</p>
                     </div>
 
                     {/* test start  */}
@@ -172,7 +229,7 @@ const Login = () => {
                         aria-expanded="false"
                         aria-controls="collapseExample"
                       >
-                        Forget Password?
+                        Forgot Password?
                       </a>
                     </p>
                     <div
@@ -206,7 +263,7 @@ const Login = () => {
                             aria-describedby="username"
                             placeholder="User Email"
                             required
-                            onChange={(e)=>setResetEmail(e.target.value)}
+                            onChange={(e)=>setResetEmail(e.target.value.toLowerCase())}
                           />
                         </div>
                         <div class="form-group mt-1">
@@ -215,10 +272,11 @@ const Login = () => {
                             // type="submit"
                             // className="btn btn-primary mt-2 border-0"
                             //id="registetionbutton"
-                            onClick={()=>console.log(resetemail)}
+                            onClick={ForgotPassword}
                           >
                             Submit
                           </button>
+                          <p style={{color:"green"}}>{errormsg}</p>
                         </div>
                       </div>
                     </div>
@@ -248,7 +306,7 @@ const Login = () => {
                     </a> */}
                     <button
                     style={{ marginTop:5 }}
-                      onClick={() => registration("/register")}
+                      onClick={() => registration("/register",{state:userdata})}
                       className="buttonreg"
                     >
                       Register your Details
@@ -313,13 +371,17 @@ const Login = () => {
                   </div>
 
                   <div class="form-group mt-3">
+                    <a href="https://www.amal.com.au/trustee-services#Discover" target="_blank">
                     <button
                       style={{ backgroundColor: "white", color: "#00ADEE" }}
                       type="button"
                       className="btn btn-primary  mt-2 border-0"
+                      
                     >
                       Discover More
                     </button>
+                    </a>
+                    
                   </div>
                 </div>
 
@@ -366,7 +428,7 @@ const Login = () => {
             {/* Latest News End  */}
           </div>
 
-          <div className="col-lg-4 col-md-4 col-sm-12 col-12">
+          {/* <div className="col-lg-4 col-md-4 col-sm-12 col-12">
             <section
               className="mt-4 text-white text-start"
               style={{
@@ -451,7 +513,7 @@ const Login = () => {
                 </li>
               </ul>
             </section>
-          </div>
+          </div> */}
         </div>
       </div>
 

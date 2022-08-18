@@ -26,8 +26,8 @@ const Details = () => {
         //console.log(data.data.data.User);
         for(let k=0;k<data.data.data.User.length;k++){
           if(data.data.data.User[k].ID === userInfo.id){
-            console.log("matched",data.data.data.ID)
-            console.log("Documents Link", data.data.data.Documents);
+            //console.log("matched",data.data.data.ID)
+            //console.log("Documents Link", data.data.data.Documents);
             const filename = data.data.data.Documents
             const fileformat = filename.split(".")[1];
             //console.log(fileformat);
@@ -47,13 +47,10 @@ const Details = () => {
     // }
   };
 
-  const ShowDocumentData = () => {
-    console.log(documents);
-  }
 
   useEffect(()=>{
     //AllDocumentsById();
-    console.log(location.state);
+    //console.log(location.state);
     setDocumenstList(location?.state?.months_list_filter);
   },[]);
 
@@ -108,6 +105,7 @@ const Details = () => {
                     <th scope="col">Report Date</th>
                     <th scope="col">Publish Date</th>
                     <th scope="col">Deal  Administrator</th>
+                    <th scope="col">Download</th>
                     {/* <th scope="col">Category</th>
                     <th scope="col">Status</th>
                     <th scope="col">Deal Status</th>
@@ -126,6 +124,7 @@ const Details = () => {
                       {/* <td><a href={`https://creator.zoho.com${data?.DownloadLink}`}>Download</a></td> */}
                       <td>{data?.ReportDate}</td>
                       <td>name</td>
+                      <td><a href={`https://creator.zoho.com.au${data?.DownloadLink}`} target="blank">Download</a></td>
                     </tr>
                     )
                   })}
