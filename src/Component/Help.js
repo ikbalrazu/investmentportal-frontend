@@ -9,7 +9,6 @@ const Help = () => {
     <div>
       <TopHeader />
       <Menu></Menu>
-      
 
       {/* Help Section Start  */}
       <div className="container mt-5">
@@ -32,8 +31,7 @@ const Help = () => {
                     aria-controls="flush-helpOne"
                     style={{
                       color: "#61dafb",
-                      fontSize:25
-
+                      fontSize: 25,
                     }}
                   >
                     Contact Us
@@ -46,39 +44,17 @@ const Help = () => {
                   data-bs-parent="#accordionFlushExample"
                 >
                   <div class="accordion-body text-start text-white">
-                    Contact details to go here
+                    <span>
+                      <i
+                        class="bi bi-envelope-fill"
+                        style={{ fontSize: 20, color: "#0694c9" }}
+                      ></i>
+                    </span>{" "}
+                    &nbsp;support@amalinvestorportal.com.au
                   </div>
                 </div>
               </div>
-              <div class="accordion-item">
-                <h2 class="accordion-header" id="flush-help-headingTwo">
-                  <button
-                    class="accordion-button collapsed"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#flush-help-CollapseTwo"
-                    aria-expanded="false"
-                    aria-controls="flush-helpCollapseTwo"
-                    style={{
-                      color: "#61dafb",
-                      fontSize:25
 
-                    }}
-                  >
-                    FAQ's
-                  </button>
-                </h2>
-                <div
-                  id="flush-help-CollapseTwo"
-                  class="accordion-collapse collapse"
-                  aria-labelledby="flush-help-headingTwo"
-                  data-bs-parent="#accordionFlushExample"
-                >
-                  <div class="accordion-body text-start text-white">
-                    FAQ's to go here
-                  </div>
-                </div>
-              </div>
               <div class="accordion-item">
                 <h2 class="accordion-header" id="flush-heading-help-Three">
                   <button
@@ -90,8 +66,7 @@ const Help = () => {
                     aria-controls="flush-heading-help-Three"
                     style={{
                       color: "#61dafb",
-                      fontSize:25
-
+                      fontSize: 25,
                     }}
                   >
                     File Naming Convension
@@ -146,8 +121,7 @@ const Help = () => {
 
       {/* Help Section End  */}
 
-      <Footer>
-      </Footer>
+      <Footer></Footer>
     </div>
   );
 };

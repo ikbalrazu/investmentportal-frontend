@@ -24,7 +24,7 @@ const EmailOTPVerify = () => {
     // console.log(typeof(otp));
     if (!otp) {
       alertmsg.current.style.color = "red";
-      setMSG("Plz enter otp!");
+      setMSG("Please enter otp!");
     }
 
     if (otp === randomotp.toString()) {

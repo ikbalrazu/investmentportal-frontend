@@ -36,3 +36,18 @@
   text-align: center;
   margin-top: 0.4rem;
 }
+
+.confirm_set_user_signin_btn {
+  color: #02a5e2;
+}
+
+/* Genarel  */
+
+.mysilt {
+  list-style: none;
+  padding-left: 0;
+}
+.mysilti {
+  padding-right: 15px;
+  color: #00adee;
+}

@@ -49,7 +49,7 @@ const Login = () => {
       if (!email || !password) {
         //console.log("plz fill the all fields");
         //alertmsgstyle.current.style.color = "red";
-        setAlertmsg("plz fill the all fields");
+        setAlertmsg("Please fill the all fields");
 
         // Adding new Messages
         //message.warning("Please fill all the fields !");
@@ -85,14 +85,15 @@ const Login = () => {
             }
           } else if (userdata[i]?.Email === email && DecodePass !== password) {
             setAlertmsg(
-              "Password you have entered is incorrect, please try again or click on the Forgot Password link to reset your password."
+              // "Password you have entered is incorrect, please try again or click on the Forgot Password link to reset your password."
+              "The username or password you have entered is incorrect, please try again or click on the Forgot Password link to reset your password"
             );
           }
         }
       }
     } else {
       // console.log("Server problem. User not found try after sometimes");
-      setAlertmsg("Server problem. User not found try after sometimes");
+      setAlertmsg("The Username and Password does't match !");
       //   message.success("Server problem. User not found try after sometimes!");
     }
   };
@@ -102,9 +103,9 @@ const Login = () => {
     if (userdata) {
       if (!resetemail) {
         //console.log("plz fill the all fields");
-        setErrorMsg("Plz enter your email!");
+        setErrorMsg("Please enter your email !");
       } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(resetemail)) {
-        setErrorMsg("Invalid Email entered.");
+        setErrorMsg("Invalid Email !.");
       } else {
         for (let i = 0; i < userdata.length; i++) {
           //const DecodePass = Base64.decode(userdata[i]?.Password);
@@ -150,8 +151,8 @@ const Login = () => {
         }
       }
     } else {
-      console.log("Server problem. User not found try after sometimes");
-      setErrorMsg("Server problem. User not found try after sometimes");
+      // console.log("Server problem. User not found try after sometimes");
+      setErrorMsg("The Username and Password does't match !");
     }
   };
 
@@ -175,7 +176,6 @@ const Login = () => {
 
           {/* Login section design  Start */}
           <div className="col-lg-12 col-md-12 col-sm-12 col-12 ">
-            {" "}
             <section
               className="p-4 mt-4"
               style={{
@@ -183,9 +183,43 @@ const Login = () => {
               }}
             >
               <h3 className="text-white text-start mb-3">Please sign in</h3>
+
               <div className="row">
                 <div className="col-lg-6 col-md-6 col-sm-12 col-12 ">
-                  {" "}
+                  {alertmsg ? (
+                    <div
+                      class="alert alert-warning alert-dismissible fade show"
+                      role="alert"
+                    >
+                      {alertmsg}
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                  ) : (
+                    <> </>
+                  )}
+
+                  {errormsg ? (
+                    <div
+                      class="alert alert-error alert-dismissible fade show"
+                      role="alert"
+                    >
+                      {errormsg}
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                  ) : (
+                    <> </>
+                  )}
+
                   {/* <form> */}
                   <div class="form-group mt-2">
                     <input
@@ -219,10 +253,10 @@ const Login = () => {
                     >
                       Sign In
                     </button>
-                    <p style={{ color: "red" }}>{alertmsg}</p>
+                    {/* <p style={{ color: "red" }}>{alertmsg}</p> */}
                   </div>
                   {/* test start  */}
-                  <p style={{ marginTop: 5 }}>
+                  <p style={{ marginTop: 7 }}>
                     <a
                       style={{ color: "white" }}
                       data-bs-toggle="collapse"
@@ -280,7 +314,7 @@ const Login = () => {
                         >
                           Submit
                         </button>
-                        <p style={{ color: "green" }}>{errormsg}</p>
+                        {/* <p style={{ color: "green" }}>{errormsg}</p> */}
                       </div>
                     </div>
                   </div>

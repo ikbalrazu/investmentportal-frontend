@@ -23,3 +23,15 @@
   color: white;
   text-align: center;
 }
+
+/* Genarel Pages css */
+.default_and_personal_link {
+  color: white;
+  text-decoration: none;
+  margin-top: 1rem;
+}
+
+.default_and_personal_link:hover {
+  color: #00adee;
+  cursor: grab;
+}
