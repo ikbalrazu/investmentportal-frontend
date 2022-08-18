@@ -14,6 +14,7 @@ import img3 from "../images/img3.svg";
 
 // Styling Extranal css
 import "./registration.css";
+import classes from "./login.module.css";
 
 const Login = () => {
   const registration = useNavigate();
@@ -25,7 +26,7 @@ const Login = () => {
   const [password, setPassword] = useState();
   const [resetemail, setResetEmail] = useState();
   const [alertmsg, setAlertmsg] = useState();
-  const [errormsg,setErrorMsg] = useState();
+  const [errormsg, setErrorMsg] = useState();
 
   // const {setDealsId} = AppState();
 
@@ -52,8 +53,8 @@ const Login = () => {
 
         // Adding new Messages
         //message.warning("Please fill all the fields !");
-      } 
-      if(email && password) {
+      }
+      if (email && password) {
         for (let i = 0; i < userdata.length; i++) {
           const DecodePass = Base64.decode(userdata[i]?.Password);
           //console.log(userdata[i]?.Email)
@@ -72,7 +73,7 @@ const Login = () => {
               //   })
               // );
 
-              twofactorauth("/emailotpverify",{state: userdata[i]});
+              twofactorauth("/emailotpverify", { state: userdata[i] });
             } else if (userdata[i].UserStatus === "Pending") {
               //message.success("Your request is pending...");
               setAlertmsg("Your request is pending...");
@@ -82,8 +83,10 @@ const Login = () => {
                 "Please ask an admin to grant permission to this app."
               );
             }
-          }else if(userdata[i]?.Email === email && DecodePass !== password){
-            setAlertmsg("Password you have entered is incorrect, please try again or click on the Forgot Password link to reset your password.");
+          } else if (userdata[i]?.Email === email && DecodePass !== password) {
+            setAlertmsg(
+              "Password you have entered is incorrect, please try again or click on the Forgot Password link to reset your password."
+            );
           }
         }
       }
@@ -97,11 +100,10 @@ const Login = () => {
   const ForgotPassword = () => {
     console.log(resetemail);
     if (userdata) {
-      
       if (!resetemail) {
         //console.log("plz fill the all fields");
         setErrorMsg("Plz enter your email!");
-      }else if(!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(resetemail)){
+      } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(resetemail)) {
         setErrorMsg("Invalid Email entered.");
       } else {
         for (let i = 0; i < userdata.length; i++) {
@@ -119,10 +121,13 @@ const Login = () => {
             const id = userdata[i].ID;
             const email = userdata[i].Email;
             axios
-              .post("https://investmentportal.herokuapp.com/sendForgotPasswordMail", {
-                id,
-                email
-              })
+              .post(
+                "https://investmentportal.herokuapp.com/sendForgotPasswordMail",
+                {
+                  id,
+                  email,
+                }
+              )
               .then(function (data) {
                 console.log(data);
                 console.log(data.data.message);
@@ -131,15 +136,14 @@ const Login = () => {
                   setErrorMsg(
                     "A link has been sent to the email address you entered above, please check your email and follow the link."
                   );
-
-                }else{
+                } else {
                   setErrorMsg("Something Wrong. Try again later!");
                 }
               });
             //console.log("Successfully sent link in email!");
             // setAlertmsg("Successfully sent link in email!")
             // loginpage("/home");
-          }else if(userdata[i]?.Email !== resetemail){
+          } else if (userdata[i]?.Email !== resetemail) {
             //setErrorMsg("Invalid Email!");
             //console.log("Invalid password");
           }
@@ -183,107 +187,105 @@ const Login = () => {
                 <div className="col-lg-6 col-md-6 col-sm-12 col-12 ">
                   {" "}
                   {/* <form> */}
-                    <div class="form-group mt-2">
-                      <input
-                        style={{ backgroundColor: "#00ADEE", color: "white" }}
-                        type="text"
-                        class="form-control"
-                        id="username"
-                        aria-describedby="username"
-                        placeholder="User Email"
-                        onChange={(e) => setEmail(e.target.value)}
-                      />
-                    </div>
-                    <div class="form-group mt-3">
-                      <input
-                        style={{ backgroundColor: "#00ADEE", color: "white" }}
-                        type="password"
-                        class="form-control"
-                        id="password"
-                        aria-describedby="password"
-                        placeholder="Password"
-                        onChange={(e) => setPassword(e.target.value)}
-                      />
-                    </div>
-
-                    <div class="form-group mt-3">
-                      <button
-                        //  style={{ float: "left", color: "#00ADEE" }}
-                        type="button"
-                        className="btn btn-primary mt-2 border-0"
-                        onClick={userLogin}
-                        id="registetionbutton"
-                      >
-                        Sign In
-                      </button>
-                      <p style={{color:"red"}}>{alertmsg}</p>
-                    </div>
-
-                    {/* test start  */}
-                    <p style={{ marginTop: 5 }}>
-                      <a
-                        style={{ color: "white" }}
-                        data-bs-toggle="collapse"
-                        href="#collapseExample"
-                        role="button"
-                        aria-expanded="false"
-                        aria-controls="collapseExample"
-                      >
-                        Forgot Password?
-                      </a>
-                    </p>
+                  <div class="form-group mt-2">
+                    <input
+                      style={{ backgroundColor: "#00ADEE", color: "white" }}
+                      type="text"
+                      class="form-control"
+                      id="username"
+                      aria-describedby="username"
+                      placeholder="User Email"
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                  </div>
+                  <div class="form-group mt-3">
+                    <input
+                      style={{ backgroundColor: "#00ADEE", color: "white" }}
+                      type="password"
+                      class="form-control"
+                      id="password"
+                      aria-describedby="password"
+                      placeholder="Password"
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                  </div>
+                  <div class="form-group mt-3">
+                    <button
+                      //  style={{ float: "left", color: "#00ADEE" }}
+                      type="button"
+                      className="btn btn-primary mt-2 border-0"
+                      onClick={userLogin}
+                      id="registetionbutton"
+                    >
+                      Sign In
+                    </button>
+                    <p style={{ color: "red" }}>{alertmsg}</p>
+                  </div>
+                  {/* test start  */}
+                  <p style={{ marginTop: 5 }}>
+                    <a
+                      style={{ color: "white" }}
+                      data-bs-toggle="collapse"
+                      href="#collapseExample"
+                      role="button"
+                      aria-expanded="false"
+                      aria-controls="collapseExample"
+                    >
+                      Forgot Password?
+                    </a>
+                  </p>
+                  <div
+                    className="collapse"
+                    id="collapseExample"
+                    style={{
+                      marginLeft: 0,
+                    }}
+                  >
                     <div
-                      className="collapse"
-                      id="collapseExample"
+                      className="card card-body"
                       style={{
-                        marginLeft: 0,
+                        backgroundColor: "#00ADEE",
+                        border: 0,
+                        color: "white",
+                        marginTop: "-5px",
                       }}
                     >
-                      <div
-                        className="card card-body"
-                        style={{
-                          backgroundColor: "#00ADEE",
-                          border: 0,
-                          color: "white",
-                          marginTop: "-5px",
-                        }}
-                      >
-                        In order to reset your password, please enter your email
-                        address and we will send you a password reset link
-                        shortly.
-                        <div class="form-group mt-1">
-                          <input
-                            style={{
-                              backgroundColor: "#00ADEE",
-                              color: "white",
-                            }}
-                            type="text"
-                            className="form-control"
-                            id=""
-                            aria-describedby="username"
-                            placeholder="User Email"
-                            required
-                            onChange={(e)=>setResetEmail(e.target.value.toLowerCase())}
-                          />
-                        </div>
-                        <div class="form-group mt-1">
-                          <button
-                            //  style={{ float: "left", color: "#00ADEE" }}
-                            // type="submit"
-                            // className="btn btn-primary mt-2 border-0"
-                            //id="registetionbutton"
-                            onClick={ForgotPassword}
-                          >
-                            Submit
-                          </button>
-                          <p style={{color:"green"}}>{errormsg}</p>
-                        </div>
+                      In order to reset your password, please enter your email
+                      address and we will send you a password reset link
+                      shortly.
+                      <div class="form-group mt-1">
+                        <input
+                          style={{
+                            backgroundColor: "#00ADEE",
+                            color: "white",
+                          }}
+                          type="text"
+                          className="form-control"
+                          id=""
+                          aria-describedby="username"
+                          placeholder="User Email"
+                          required
+                          onChange={(e) =>
+                            setResetEmail(e.target.value.toLowerCase())
+                          }
+                        />
+                      </div>
+                      <div class="form-group mt-1">
+                        <button
+                          // style={{ float: "left", color: "#00ADEE" }}
+                          // type="submit"
+                          className={`${classes.ptimaryBtm}  btn btn-primary mt-2 border-0`}
+                          //id="registetionbutton"
+                          onClick={ForgotPassword}
+                        >
+                          Submit
+                        </button>
+                        <p style={{ color: "green" }}>{errormsg}</p>
                       </div>
                     </div>
-
-                    {/* Test end  */}
-
-                    {/* <div class="form-group mt-2">
+                  </div>
+                  {/* Test end  */}
+                  {/* <div class="form-group mt-2">
                   
                   <a  style={{ float: "left", color: "white" }}> 
                     
@@ -305,19 +307,22 @@ const Login = () => {
                       register now
                     </a> */}
                     <button
-                    style={{ marginTop:5 }}
-                      onClick={() => registration("/register",{state:userdata})}
+                      style={{ marginTop: 5 }}
+                      onClick={() =>
+                        registration("/register", { state: userdata })
+                      }
                       className="buttonreg"
                     >
                       Register your Details
                     </button>
-                   <p style={{
-                    marginTop:5,
-                   }}> 
-                        Once you have completed your registration, you may sign into
-                    the website.
-                   </p>
-                
+                    <p
+                      style={{
+                        marginTop: 5,
+                      }}
+                    >
+                      Once you have completed your registration, you may sign
+                      into the website.
+                    </p>
                   </div>
 
                   <div className="mt-3">
@@ -358,7 +363,8 @@ const Login = () => {
               >
                 <div className="col-lg-4 col-md-4 col-sm-12 col-12">
                   <img src={img1} alt="example" style={{ height: 33 }} />
-                  <h4>Funds</h4>
+
+                  <h4 className="mt-3">Funds</h4>
 
                   <ul>
                     <li>Wholesale Trustee (including Custody).</li>
@@ -371,24 +377,25 @@ const Login = () => {
                   </div>
 
                   <div class="form-group mt-3">
-                    <a href="https://www.amal.com.au/trustee-services#Discover" target="_blank">
-                    <button
-                      style={{ backgroundColor: "white", color: "#00ADEE" }}
-                      type="button"
-                      className="btn btn-primary  mt-2 border-0"
-                      
+                    <a
+                      href="https://www.amal.com.au/trustee-services#Discover"
+                      target="_blank"
                     >
-                      Discover More
-                    </button>
+                      <button
+                        style={{ backgroundColor: "white", color: "#00ADEE" }}
+                        type="button"
+                        className="btn btn-primary  mt-2 border-0"
+                      >
+                        Discover More
+                      </button>
                     </a>
-                    
                   </div>
                 </div>
 
                 <div className="col-lg-4 col-md-4 col-sm-12 col-12">
-                  <img src={img3} alt="example" style={{ height: 33 }} />
+                  <img src={img3} alt="example" style={{ height: 40 }} />
 
-                  <h4>Agency Services</h4>
+                  <h4 className="mt-2">Agency Services</h4>
 
                   <ul>
                     <li>Escrow Agent.</li>
@@ -407,9 +414,9 @@ const Login = () => {
                 </div>
 
                 <div className="col-lg-4 col-md-4 col-sm-12 col-12">
-                  <img src={img2} alt="example" style={{ height: 33 }} />
+                  <img src={img2} alt="example" style={{ height: 40 }} />
 
-                  <h3>Structured Finance</h3>
+                  <h3 className="mt-2">Structured Finance</h3>
                   <ul>
                     <li>Trustee.</li>
                     <li>Security Trustee.</li>

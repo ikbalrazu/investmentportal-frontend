@@ -96,36 +96,46 @@ const EmailOTPVerify = () => {
           <div class="col-md-6 text-center">
             <div class="row">
               <div className="col-sm-12 mt-5 ">
-                <div className={classes.bgWhite}>
-                  <div className={classes.title}>
-                    We have sent your registered email a one time code, please
-                    check your email and enter in the code here that you
-                    receive.
+                <div className="card text-white bg-dark ">
+                  <div className="card-header text-center p-3">
+                    OTP Verification
                   </div>
-
-                  <hr className={classes.line} />
-
-                  <input
-                    className={classes.otpinput}
-                    type="text"
-                    onChange={(e) => setOtp(e.target.value)}
-                    placeholder="Enter pin"
-                  />
-                  <button
-                    className="btn btn-primary btn-block mt-4 mb-4 customBtn"
-                    onClick={verifyPin}
-                  >
-                    Verify
-                  </button>
-
-                  <div>
-                    <h5 className="text-white"> Don't receive the code? </h5>
-
-                    <div>
-                      <a className={classes.resendBtn} onClick={sendEmail}>
-                        Resend
-                      </a>
+                  <div class="card-body">
+                    <div
+                      class="alert alert-success alert-dismissible fade show"
+                      role="alert"
+                    >
+                      We have sent your registered email a one time code, please
+                      check your email and enter in the code here that you
+                      receive.
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close"
+                      ></button>
                     </div>
+
+                    <input
+                      className={classes.otpinput}
+                      type="text"
+                      onChange={(e) => setOtp(e.target.value)}
+                      placeholder="Enter pin"
+                    />
+                    <button
+                      className="btn btn-primary btn-block mt-4 mb-4 customBtn"
+                      onClick={verifyPin}
+                    >
+                      Verify
+                    </button>
+
+                    <p>
+                      {" "}
+                      Haven't received the code? &nbsp;&nbsp;
+                      <a className={classes.resendBtn} onClick={sendEmail}>
+                        Resend Code
+                      </a>
+                    </p>
                   </div>
                 </div>
               </div>
@@ -133,8 +143,10 @@ const EmailOTPVerify = () => {
           </div>
         </div>
       </div>
-        <div className={classes.alert_message} ref={alertmsg}>{msg}</div>
-  
+      <div className={classes.alert_message} ref={alertmsg}>
+        {msg}
+      </div>
+
       {/* New DEsign End  */}
       {/* 
       <div>
