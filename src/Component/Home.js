@@ -30,12 +30,43 @@ export default function Home() {
   const [loader,setLoader] = useState(false);
   const userInfo = JSON.parse(localStorage.getItem("userinfo"));
 
+
   const [unique_issuername, setUniqueIssuerName] = useState();
   const [unique_financiername, setUniqueFinancierName] = useState();
   const {  dealsid } = AppState();
 
+
+  //sessionStorage.setItem('key', JSON.stringify({exp: new Date() + 5, data: data}));
+
+  // const GetToken = () => {
+  //   const token = sessionStorage.getItem('access_token');
+  //   const tokenl = JSON.parse(token)
+  //   //console.log(tokenl.data);
+  //   // console.log(tokenl.exp);
+  //   let expirationDate = new Date(tokenl.exp);
+  //   //console.log(expirationDate);
+  //   if(expirationDate > new Date()){
+  //     console.log("not expire",tokenl.data);
+  //     return tokenl.data;
+  //   }else{
+  //     console.log("expired");
+  //     StoreToken();
+
+
+  //   }
+  // }
+
+  // const StoreToken = async() => {
+  //   //console.log(token?.data);
+  //   var extratime =  new Date(new Date().getTime() + (60000 * 2));
+  //   const accesstoken = await axios.post("http://localhost:5000/accesstokendealsbyid");
+  //   //console.log(accesstoken.data);
+  //   sessionStorage.setItem('access_token',JSON.stringify({exp: extratime,data: accesstoken.data}))
+  //   return accesstoken.data;
+  // }
+
   const GetDeals = async() =>{
-    //console.log(userInfo?.id);
+    console.log(dealsid);
     try{
       setLoader(true);
       const id = userInfo?.id;
@@ -47,9 +78,18 @@ export default function Home() {
         setDeals(preData=>[...preData,res?.data?.data]);
         setIssuerName(preData=>[...preData,res?.data?.data?.Issuer_Name]);
         setFinancerName(preData=>[...preData,res?.data?.data?.Financer]);
-        console.log(res);
+        //console.log(res);
         setLoader(true);
       }
+      // for(let i=0; i<dealsid?.length; i++){
+      //   const dealid = dealsid[i];
+      //   const res = await axios.post("https://investmentportal.herokuapp.com/getalldealsbyid",{dealid});
+      //   setDeals(preData=>[...preData,res?.data?.data]);
+      //   setIssuerName(preData=>[...preData,res?.data?.data?.Issuer_Name]);
+      //   setFinancerName(preData=>[...preData,res?.data?.data?.Financer]);
+      //   //console.log(res);
+      //   setLoader(true);
+      // }
       setLoader(false)
     }catch(error){
       console.log(error);
@@ -59,13 +99,13 @@ export default function Home() {
 
   useLayoutEffect(()=>{
     GetDeals();
-  },[dealsid])
+  },[])
 
   useEffect(() => {
-    console.log("deals id",dealsid);
+    //console.log("deals id",dealsid);
     //console.log(dealsid);
-    console.log(issuername);
-    console.log(financername);
+    // console.log(issuername);
+    // console.log(financername);
     //const userInfo = JSON.parse(localStorage.getItem("userinfo"));
     if (!userInfo) {
       loginpage("/");
