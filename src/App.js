@@ -1,7 +1,7 @@
 import logo from "./logo.svg";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Login from "./Component/Login";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Component/Home";
@@ -20,42 +20,50 @@ import ConfirmSetUserPassword from "./Component/ConfirmSetUserPassword";
 import General from "./Component/General";
 import axios from "axios";
 
-
 function App() {
-//   const [deals,setDeals] = useState();
-//   const GetDeals = async() =>{
-//     try{
-//       const data = await axios.post("https://investmentportal.herokuapp.com/getalldeals");
-//       console.log(data.data.data);
-//       setDeals(data.data.data);
-//     }catch(error){
-//       console.log(error);
-//     }
+  //   const [deals,setDeals] = useState();
+  //   const GetDeals = async() =>{
+  //     try{
+  //       const data = await axios.post("https://investmentportal.herokuapp.com/getalldeals");
+  //       console.log(data.data.data);
+  //       setDeals(data.data.data);
+  //     }catch(error){
+  //       console.log(error);
+  //     }
 
-// }
-// useEffect(()=>{
-//   GetDeals();
-// },[]);
+  // }
+  // useEffect(()=>{
+  //   GetDeals();
+  // },[]);
   return (
     // <div className="App" style={{ backgroundColor: "#333333" }}>
     <div>
-    <Routes>
-      <Route path="/home" element={<Home />} />
-      <Route path="/help" element={<Help />} />
-      <Route path="/general" element={<General/>} />
-      <Route path="/search" element={<Search />} />
-      <Route path="/details" element={<Details />} />
-      <Route path="/issuerlist" element={<IssuerList />} />
-      <Route path="/financierlist" element={<FinancierList />} />
-      <Route path="/monthslist" element={<MonthsList />} />
-      <Route path="/register" element={<Registration />} />
-      <Route path="/resetpassword/:id/:token" element={<ResetPassword/>}/>
-      <Route path="/confirmresetpassword" element={<ConfirmResetPassword/>}/>
-      <Route path="/emailotpverify" element={<EmailOTPVerify />} />
-      <Route path="/setuserpassword/:id/:token" element={<SetUserPassword />} />
-      <Route path="/confirmsetuserpassword" element={<ConfirmSetUserPassword />} />
-      <Route path="/" element={<Login />} />
-    </Routes>
+      <Routes>
+        <Route path="/home" element={<Home />} />
+        <Route path="/help" element={<Help />} />
+        <Route path="/general" element={<General />} />
+        <Route path="/search" element={<Search />} />
+        <Route path="/details" element={<Details />} />
+        <Route path="/issuerlist" element={<IssuerList />} />
+        <Route path="/financierlist" element={<FinancierList />} />
+        <Route path="/monthslist" element={<MonthsList />} />
+        <Route path="/register" element={<Registration />} />
+        <Route path="/resetpassword/:id/:token" element={<ResetPassword />} />
+        <Route
+          path="/confirmresetpassword"
+          element={<ConfirmResetPassword />}
+        />
+        <Route path="/emailotpverify" element={<EmailOTPVerify />} />
+        <Route
+          path="/setuserpassword/:id/:token"
+          element={<SetUserPassword />}
+        />
+        <Route
+          path="/confirmsetuserpassword"
+          element={<ConfirmSetUserPassword />}
+        />
+        <Route path="/" element={<Login />} />
+      </Routes>
     </div>
   );
 }

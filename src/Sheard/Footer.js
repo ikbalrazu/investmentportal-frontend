@@ -8,7 +8,7 @@ export default function Footer() {
       style={{
         backgroundColor: "#232323",
         width: "100% ",
-        bottom:'0px !important',
+        bottom: "0px !important",
       }}
     >
       <div className="container py-5">
