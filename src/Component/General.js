@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Menu from "../Sheard/Menu";
 import TopHeader from "../Sheard/TopHeader";
 import ConfirmSetUserPassword from "./ConfirmSetUserPassword";
 import classes from "./home.module.css";
 
 const General = () => {
+  const userInfo = JSON.parse(localStorage.getItem("userinfo"));
+  const deals = JSON.parse(localStorage.getItem("dealsinfo"));
+  const [alldeals, setAllDeals] = useState([]);
+
+  useEffect(()=>{
+    for(let i=0;i<deals?.deals?.length;i++){
+      setAllDeals(preData => [...preData,deals?.deals[i].display_value]);
+    }
+  },[])
+
   return (
     <div>
       <TopHeader />
@@ -146,17 +156,24 @@ const General = () => {
                   <div className="accordion-body text-start text-white">
                     <div className="row">
                       <div className="col-lg-6 col-md-6 col-sm-12 col-12">
-                        <p>First Name : </p>
-                        <p>Email : </p>
-                        <p> Company :</p>
-                        <p> Role : </p>
+                        <p>First Name : {userInfo?.firstname}</p>
+                        <p>Email : {userInfo?.email}</p>
+                        <p> Company : {userInfo?.company}</p>
+                        <p> Role : {userInfo?.role}</p>
                       </div>
 
                       <div className="col-lg-6 col-md-6 col-sm-12 col-12">
-                        <p>Last Name :</p>
-                        <p> Phone : </p>
-                        <p> Company Role : </p>
-                        <p> Deals : </p>
+                        <p>Last Name : {userInfo?.lastname}</p>
+                        <p> Phone : {userInfo?.phone}</p>
+                        <p> Company Role : {userInfo.companyrole}</p>
+                        {/* {alldeals?.map((data,index)=>{
+                          return (<p> Deals : {data}</p>)
+                        })} */}
+                        <div>
+                        <p> Deals : {alldeals.map((data,index)=>{
+                          return <p>{data}</p>
+                        })}</p>
+                        </div>
                       </div>
                     </div>
                   </div>
