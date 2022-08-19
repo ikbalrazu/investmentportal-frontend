@@ -147,7 +147,7 @@ export default function IssuerList() {
                         <th scope="col">Financier Name</th>
                         <th scope="col">Product Type</th>
                         <th scope="col">Deal Administrator</th>
-                        <th scope="col">Last Update Date</th>
+                        
                         <th></th>
                       </tr>
                     </thead>
@@ -164,8 +164,8 @@ export default function IssuerList() {
                             <th scope="row"> {data?.DealName} </th>
                             <td>{data?.Financer}</td>
                             <td>{data?.DealType}</td>
-                            <td>Nicole Wang</td>
-                            <td>01/01/2022</td>
+                            <td>{data?.Deal_Administrator}</td>
+                            
                             <td>
                               {" "}
                               <i className="bi bi-arrow-up-right-square">
