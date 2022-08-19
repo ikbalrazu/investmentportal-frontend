@@ -42,26 +42,38 @@ export default function Footer() {
               }}
             >
               <div class="p-2 ">
-                <a className="text-decoration-none legal_btn" href="#">
+                <a
+                  className="text-decoration-none legal_btn"
+                  href="https://amaltrustees.webflow.io/dashboard"
+                >
                   {" "}
                   Customer Complaint Policy{" "}
                 </a>
               </div>
               <div class="p-2 ">
-                <a className="text-decoration-none legal_btn" href="#">
+                <a
+                  className="text-decoration-none legal_btn"
+                  href="https://amaltrustees.webflow.io/dashboard"
+                >
                   {" "}
                   Hardship{" "}
                 </a>
               </div>
               <div class="p-2 ">
-                <a className="text-decoration-none legal_btn" href="#">
+                <a
+                  className="text-decoration-none legal_btn"
+                  href="https://amaltrustees.webflow.io/dashboard"
+                >
                   {" "}
                   Privacy Policy{" "}
                 </a>
               </div>
 
               <div class="p-2 ">
-                <a className="text-decoration-none legal_btn" href="#">
+                <a
+                  className="text-decoration-none legal_btn"
+                  href="https://amaltrustees.webflow.io/dashboard"
+                >
                   {" "}
                   Credit Guide{" "}
                 </a>

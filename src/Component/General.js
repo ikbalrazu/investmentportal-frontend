@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 import Menu from "../Sheard/Menu";
 import TopHeader from "../Sheard/TopHeader";
-import ConfirmSetUserPassword from "./ConfirmSetUserPassword";
+import Footer from "../Sheard/Footer";
 import classes from "./home.module.css";
-
+import ResetPassword from "./ResetPassword";
 const General = () => {
   const userInfo = JSON.parse(localStorage.getItem("userinfo"));
   const deals = JSON.parse(localStorage.getItem("dealsinfo"));
   const [alldeals, setAllDeals] = useState([]);
 
-  useEffect(()=>{
-    for(let i=0;i<deals?.deals?.length;i++){
-      setAllDeals(preData => [...preData,deals?.deals[i].display_value]);
+  useEffect(() => {
+    for (let i = 0; i < deals?.deals?.length; i++) {
+      setAllDeals((preData) => [...preData, deals?.deals[i].display_value]);
     }
-  },[])
+  }, []);
 
   return (
     <div>
@@ -170,9 +170,13 @@ const General = () => {
                           return (<p> Deals : {data}</p>)
                         })} */}
                         <div>
-                        <p> Deals : {alldeals.map((data,index)=>{
-                          return <p>{data}</p>
-                        })}</p>
+                          <p>
+                            {" "}
+                            Deals :{" "}
+                            {alldeals.map((data, index) => {
+                              return <p>{data}</p>;
+                            })}
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -212,6 +216,8 @@ const General = () => {
           </div>
         </div>
       </div>
+
+      <Footer></Footer>
     </div>
   );
 };
