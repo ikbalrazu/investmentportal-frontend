@@ -98,6 +98,7 @@ const ResetPassword = () => {
                             style={{
                               backgroundColor: "#00ADEE",
                               color: "white",
+                              width: "200%",
                             }}
                             onChange={(e) => setPassword(e.target.value)}
                             type="password"
@@ -114,6 +115,7 @@ const ResetPassword = () => {
                             style={{
                               backgroundColor: "#00ADEE",
                               color: "white",
+                              width: "200%",
                             }}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                             type="password"
@@ -138,9 +140,13 @@ const ResetPassword = () => {
                           </button>
                           {/* <p style={{ color: "red" }}>{alertmsg}</p> */}
 
-                          <div class="alert alert-danger" role="alert">
-                            {errormsg}
-                          </div>
+                          {errormsg ? (
+                            <div class="alert alert-danger mt-5" role="alert">
+                              {errormsg}
+                            </div>
+                          ) : (
+                            <> </>
+                          )}
                         </div>
                       </div>
                     </div>
