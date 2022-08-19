@@ -15,14 +15,25 @@ export default function MonthsList() {
 
   const userInfo = JSON.parse(localStorage.getItem("userinfo"));
   
-  const DocumentHandler = () => {
+  const DocumentHandler = async() => {
     let MonthsReport=[];
     const userInfo = JSON.parse(localStorage.getItem("userinfo"));
     //console.log(location?.state);
+
+    const globaldoc = await axios.get("http://localhost:5000/allglobaldocuments");
+    console.log(globaldoc?.data?.data[1]);
+
+    for(let k=0; k<globaldoc?.data?.data?.length; k++){
+      const filename = globaldoc.data.data[k].Documents;
+      const fileformat = filename.split(".")[1];
+      MonthsReport.push(globaldoc.data.data[k].MonthOfReport);
+      setDocuments(olddata=>[...olddata,{"Id":globaldoc.data.data[k].ID,"DocumentName":globaldoc.data.data[k].DocumentName,"DownloadLink":globaldoc.data.data[k].Documents,"FormatType":fileformat,"ReportDate":globaldoc.data.data[k].CreatedDateTime,"MonthReport":globaldoc.data.data[k].MonthOfReport}]);
+    }
+
     for(let i=0; i<location?.state?.length; i++){
       const id=location.state[i].ID;
       console.log(id);
-      axios.post("https://investmentportal.herokuapp.com/getdocuments",{id}).then(function(data){
+      await axios.post("https://investmentportal.herokuapp.com/getdocuments",{id}).then(function(data){
         console.log(data);
         setDealName(data?.data?.data?.Deals?.display_value)
         if(data?.data?.data?.Access_Type === "Private"){
@@ -39,12 +50,13 @@ export default function MonthsList() {
           //   }
           // }
           
-        }else if(data?.data?.data?.Access_Type === "Global"){
-          const filename = data.data.data.Documents;
-          const fileformat = filename.split(".")[1];
-          MonthsReport.push(data.data.data.MonthOfReport);
-          setDocuments(olddata=>[...olddata,{"Id":data.data.data.ID,"DocumentName":data.data.data.DocumentName,"DownloadLink":data.data.data.Documents,"FormatType":fileformat,"ReportDate":data.data.data.CreatedDateTime,"MonthReport":data.data.data.MonthOfReport}]);
         }
+        // else if(data?.data?.data?.Access_Type === "Global"){
+        //   const filename = data.data.data.Documents;
+        //   const fileformat = filename.split(".")[1];
+        //   MonthsReport.push(data.data.data.MonthOfReport);
+        //   setDocuments(olddata=>[...olddata,{"Id":data.data.data.ID,"DocumentName":data.data.data.DocumentName,"DownloadLink":data.data.data.Documents,"FormatType":fileformat,"ReportDate":data.data.data.CreatedDateTime,"MonthReport":data.data.data.MonthOfReport}]);
+        // }
         // for(let k=0; k<data?.data?.data?.User?.length; k++){
         //   if(data?.data?.data?.AccessType === "Private"){
 
@@ -194,8 +206,8 @@ export default function MonthsList() {
                     <thead>
                       <tr>
                         <th scope="col">Month</th>
-                        <th scope="col">Product Title</th>
-                        <th scope="col">Deal Administrator</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
                         <th></th>
                       </tr>
                     </thead>
@@ -210,8 +222,8 @@ export default function MonthsList() {
                             console.log(months_list_filter);
                             detailspage("/details",{state:{months_list_filter}})}} >
                           <th scope="row" style={{cursor:"pointer"}}> {data} </th>
-                          <td>Other </td>
-                          <td>--</td>
+                          <td></td>
+                          <td></td>
                           <td>
                           {" "}
                           <i className="bi bi-arrow-up-right-square"> </i>{" "}
