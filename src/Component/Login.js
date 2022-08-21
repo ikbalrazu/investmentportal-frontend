@@ -33,14 +33,15 @@ const Login = () => {
   const userAllData = () => {
     //Get Record - Detail View
     axios
-      .get("http://localhost:5000/getrecord")
+      .get("https://investmentportal.herokuapp.com/getrecord")
       .then(function (data) {
-        console.log(data.data.data);
+        console.log("Response Successfully.");
+        //console.log(data.data.data);
         setUserData(data.data.data);
         // localStorage.setItem("userinfo",JSON.stringify(data));
         // setVisiable(true);
       }).catch(function(error){
-        console.log(error.message);
+        //console.log(error.message);
         if(error.message === "Network Error"){
           setAlertmsg("Please check your internet connection.")
         }

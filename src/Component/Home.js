@@ -70,12 +70,12 @@ export default function Home() {
     try{
       setLoader(true);
       const id = userInfo?.id;
-      const data = await axios.post("http://localhost:5000/getrecordbyid",{id});
-      console.log(data?.data?.data?.Deals_Allowed_for_Access?.length);
+      const data = await axios.post("https://investmentportal.herokuapp.com/getrecordbyid",{id});
+      //console.log(data?.data?.data?.Deals_Allowed_for_Access?.length);
       for(let i=0; i<data?.data?.data?.Deals_Allowed_for_Access?.length; i++){
         const dealid = data?.data?.data?.Deals_Allowed_for_Access[i]?.ID;
-        const res = await axios.post("http://localhost:5000/getdealsbyid",{dealid});
-        console.log(res);
+        const res = await axios.post("https://investmentportal.herokuapp.com/getdealsbyid",{dealid});
+        //console.log(res);
         setDeals(preData=>[...preData,res?.data?.data]);
         setIssuerName(preData=>[...preData,res?.data?.data?.Issuer_Name]);
         setFinancerName(preData=>[...preData,res?.data?.data?.Financer]);

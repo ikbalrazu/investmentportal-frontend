@@ -20,8 +20,8 @@ export default function MonthsList() {
     const userInfo = JSON.parse(localStorage.getItem("userinfo"));
     //console.log(location?.state);
 
-    const globaldoc = await axios.get("http://localhost:5000/allglobaldocuments");
-    console.log(globaldoc?.data?.data[1]);
+    const globaldoc = await axios.get("https://investmentportal.herokuapp.com/allglobaldocuments");
+    //console.log(globaldoc?.data?.data[1]);
 
     for(let k=0; k<globaldoc?.data?.data?.length; k++){
       const filename = globaldoc.data.data[k].Documents;
@@ -32,9 +32,9 @@ export default function MonthsList() {
 
     for(let i=0; i<location?.state?.length; i++){
       const id=location.state[i].ID;
-      console.log(id);
-      await axios.post("https://investmentportal.herokuapp.com/getdocuments",{id}).then(function(data){
-        console.log(data);
+      //console.log(id);
+      await axios.post("https://investmentportal.herokuapp.com/getdocumentsbyid",{id}).then(function(data){
+        //console.log(data);
         setDealName(data?.data?.data?.Deals?.display_value)
         if(data?.data?.data?.Access_Type === "Private"){
           const filename = data.data.data.Documents;
@@ -86,7 +86,7 @@ export default function MonthsList() {
   
   useEffect(()=>{
     DocumentHandler();
-    console.log(location);
+    //console.log(location);
   },[])
   return (
     <div>
@@ -219,7 +219,7 @@ export default function MonthsList() {
                         return(
                           <tr onClick={()=>{
                             
-                            console.log(months_list_filter);
+                            //console.log(months_list_filter);
                             detailspage("/details",{state:{months_list_filter}})}} >
                           <th scope="row" style={{cursor:"pointer"}}> {data} </th>
                           <td></td>
