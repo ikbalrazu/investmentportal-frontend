@@ -78,9 +78,6 @@ const Details = () => {
   };
 
 
-
-
-
   const location = useLocation();
   const [documents, setDocuments] = useState([]);
   const [documentslist, setDocumenstList] = useState([]);
@@ -101,10 +98,6 @@ const Details = () => {
       <Menu> </Menu>
 
       {/*  Breadcrumb start  */}
-
-
-
-
       <div className="container mt-5 mb-5">
         <nav aria-label="breadcrumb">
           <ol

@@ -30,8 +30,6 @@ input::placeholder {
   text-decoration: none !important;
 }
 
-/* test renee code */
-
 .btn {
   background-color: #222222;
   color: #fff;
@@ -46,4 +44,8 @@ input::placeholder {
   position: absolute;
   background: none;
   transition: width 0.3s ease 0s, left 0.3s ease 0s;
+}
+
+.nav-pills .nav-link.active {
+  background-color: rgb(0, 173, 238);
 }

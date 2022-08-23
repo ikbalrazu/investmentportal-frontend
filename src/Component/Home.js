@@ -139,7 +139,13 @@ export default function Home() {
 
       data2?.data?.data.map((list) => {
         if (issuerArry.filter((e) => e.name === list.Issuer_Name).length < 1) {
-          issuerArry.push({ name: list.Issuer_Name, dealname: list.DealName, producttype:list.DealType, dealadministrator:list.Deal_Administrator, count: 1 });
+          issuerArry.push({
+            name: list.Issuer_Name,
+            dealname: list.DealName,
+            producttype: list.DealType,
+            dealadministrator: list.Deal_Administrator,
+            count: 1,
+          });
         }
         if (issuerArry.filter((e) => e.name === list.Financer).length < 1) {
           finaceArray.push({ name: list.Financer, count: 1 });
@@ -287,7 +293,7 @@ export default function Home() {
                   Welcome, {userinfo?.name}
                 </h5>
 
-                <div class="input-group mb-3">
+                <div className="input-group mb-3">
                   <input
                     type="text"
                     class="form-control  border-0"
@@ -321,10 +327,10 @@ export default function Home() {
                 padding: 25,
               }}
             >
-              <ul class="nav nav-pills nav-fill" id="myTab" role="tablist">
-                <li class="nav-item" role="presentation">
+              <ul className="nav nav-pills nav-fill" id="myTab" role="tablist">
+                <li className="nav-item" role="presentation">
                   <button
-                    class="nav-link active"
+                    class="nav-link active py-2"
                     id="issuerName-tab"
                     data-bs-toggle="tab"
                     data-bs-target="#issuerName"
@@ -336,9 +342,9 @@ export default function Home() {
                     Issuser Name
                   </button>
                 </li>
-                <li class="nav-item" role="presentation">
+                <li className="nav-item" role="presentation">
                   <button
-                    class="nav-link"
+                    className="nav-link  py-2"
                     id="dealName-tab"
                     data-bs-toggle="tab"
                     data-bs-target="#dealName"
@@ -350,9 +356,9 @@ export default function Home() {
                     Deal Name
                   </button>
                 </li>
-                <li class="nav-item" role="presentation">
+                <li className="nav-item" role="presentation">
                   <button
-                    class="nav-link"
+                    className="nav-link  py-2"
                     id="financerName-tab"
                     data-bs-toggle="tab"
                     data-bs-target="#financerName"

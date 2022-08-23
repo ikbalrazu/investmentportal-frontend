@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import DataTable, { createTheme } from "react-data-table-component";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { defaultDesign } from "./tableDesign.ts";
+
 const IssuserName = (props) => {
-  console.log(props);
   const IssuerListPage = useNavigate();
+
   createTheme(
     "solarized",
     {
@@ -64,9 +66,7 @@ const IssuserName = (props) => {
     });
   };
 
-  useEffect(() => {
-
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <div>
@@ -76,6 +76,7 @@ const IssuserName = (props) => {
         data={props.data}
         theme="solarized"
         pagination
+        customStyles={defaultDesign}
       />
     </div>
   );

@@ -1,70 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import DataTable, { createTheme } from "react-data-table-component";
+import DataTable from "react-data-table-component";
+import { defaultDesign } from "./tableDesign.ts";
 
 const GlobalData = () => {
   const [documents, setDocuments] = useState([]);
   const [monthreport, setMonthReport] = useState();
-
-  createTheme(
-    "solarized",
-    {
-      text: {
-        primary: "#fff",
-        secondary: "#fff",
-        disabled: "#fff",
-      },
-      background: {
-        default: "#222222",
-      },
-      context: {
-        background: "#e3f2fd",
-        text: "rgba(0, 0, 0, 0.87)",
-      },
-      divider: {
-        default: "#474747",
-      },
-      button: {
-        default: "#fff",
-        focus: "#fff",
-        hover: "#fff",
-        disabled: "#fff",
-      },
-    },
-
-    "dark"
-  );
-
-  const customStyles = {
-    rows: {
-      style: {
-        minHeight: "72px", // override the row height
-      },
-    },
-    headCells: {
-      style: {
-        paddingLeft: "8px", // override the cell padding for head cells
-        paddingRight: "8px",
-      },
-    },
-    cells: {
-      style: {
-        paddingLeft: "8px", // override the cell padding for data cells
-        paddingRight: "8px",
-      },
-    },
-    header: {
-      style: {
-        color: "#00adee",
-        paddingLeft: "5px",
-      },
-    },
-    headRow: {
-      style: {
-        fontSize: "15px",
-      },
-    },
-  };
 
   const columns = [
     {
@@ -174,7 +115,7 @@ const GlobalData = () => {
           data={documents}
           theme="solarized"
           pagination
-          customStyles={customStyles}
+          customStyles={defaultDesign}
         />
       </div>
     </section>

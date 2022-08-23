@@ -9,23 +9,24 @@ import { useLocation } from "react-router-dom";
 export default function MonthsList() {
   const location = useLocation();
   const detailspage = useNavigate();
-  const [documents,setDocuments] = useState([]);
-  const [monthreport,setMonthReport] = useState();
+  const [documents, setDocuments] = useState([]);
+  const [monthreport, setMonthReport] = useState();
   const [dealname, setDealName] = useState();
 
   const userInfo = JSON.parse(localStorage.getItem("userinfo"));
-  
-  const DocumentHandler = async() => {
-    let MonthsReport=[];
+
+  const DocumentHandler = async () => {
+    let MonthsReport = [];
     const userInfo = JSON.parse(localStorage.getItem("userinfo"));
     //console.log(location?.state);
 
-    
     const dealid = location?.state;
-    await axios.post("http://localhost:5000/documentswithdealsid",{dealid}).then(function(data){
-      console.log(data);
-    })
-    
+    await axios
+      .post("http://localhost:5000/documentswithdealsid", { dealid })
+      .then(function (data) {
+        console.log(data);
+      });
+
     // for(let i=0; i<data?.data?.data?.length; i++){
     //   const filename = data.data.data.Documents;
     //   const fileformat = filename.split(".")[1];
@@ -33,99 +34,144 @@ export default function MonthsList() {
     //   setDocuments(olddata=>[...olddata,{"Id":data.data.data.ID,"DocumentName":data.data.data.DocumentName,"DownloadLink":data.data.data.Documents,"FormatType":fileformat,"ReportDate":data.data.data.CreatedDateTime,"MonthReport":data.data.data.MonthOfReport}]);
     // }
 
-    const globaldoc = await axios.get("https://investmentportal.herokuapp.com/allglobaldocuments");
+    const globaldoc = await axios.get(
+      "https://investmentportal.herokuapp.com/allglobaldocuments"
+    );
     console.log(globaldoc?.data?.data[1]);
 
-    for(let k=0; k<globaldoc?.data?.data?.length; k++){
+    for (let k = 0; k < globaldoc?.data?.data?.length; k++) {
       const filename = globaldoc.data.data[k].Documents;
       const fileformat = filename.split(".")[1];
       MonthsReport.push(globaldoc.data.data[k].MonthOfReport);
-      setDocuments(olddata=>[...olddata,{"Id":globaldoc.data.data[k].ID,"DocumentName":globaldoc.data.data[k].DocumentName,"DownloadLink":globaldoc.data.data[k].Documents,"FormatType":fileformat,"ReportDate":globaldoc.data.data[k].CreatedDateTime,"MonthReport":globaldoc.data.data[k].MonthOfReport}]);
+      setDocuments((olddata) => [
+        ...olddata,
+        {
+          Id: globaldoc.data.data[k].ID,
+          DocumentName: globaldoc.data.data[k].DocumentName,
+          DownloadLink: globaldoc.data.data[k].Documents,
+          FormatType: fileformat,
+          ReportDate: globaldoc.data.data[k].CreatedDateTime,
+          MonthReport: globaldoc.data.data[k].MonthOfReport,
+        },
+      ]);
     }
 
-    for(let i=0; i<location?.state?.length; i++){
-      const id=location.state[i].ID;
+    for (let i = 0; i < location?.state?.length; i++) {
+      const id = location.state[i].ID;
       console.log(id);
-      await axios.post("https://investmentportal.herokuapp.com/getdocumentsbyid",{id}).then(function(data){
-        console.log(data);
-        setDealName(data?.data?.data?.Deals?.display_value)
-        if(data?.data?.data?.Access_Type === "Private"){
-          const filename = data.data.data.Documents;
-          const fileformat = filename.split(".")[1];
-          MonthsReport.push(data.data.data.MonthOfReport);
-          setDocuments(olddata=>[...olddata,{"Id":data.data.data.ID,"DocumentName":data.data.data.DocumentName,"DownloadLink":data.data.data.Documents,"FormatType":fileformat,"ReportDate":data.data.data.CreatedDateTime,"MonthReport":data.data.data.MonthOfReport}]);
-          // for(let k=0; k<data?.data?.data?.User?.length; k++){
-          //   if(data?.data?.data?.User[k]?.ID === userInfo.id){
-          //     // const filename = data.data.data.Documents;
-          //     // const fileformat = filename.split(".")[1];
-          //     // MonthsReport.push(data.data.data.MonthOfReport);
-          //     // setDocuments(olddata=>[...olddata,{"Id":data.data.data.ID,"DocumentName":data.data.data.DocumentName,"DownloadLink":data.data.data.Documents,"FormatType":fileformat,"ReportDate":data.data.data.CreatedDateTime,"MonthReport":data.data.data.MonthOfReport}]);
-          //   }
-          // }
-          
-        }
-        else if(data?.data?.data?.Access_Type === "Global"){
-          const filename = data.data.data.Documents;
-          const fileformat = filename.split(".")[1];
-          MonthsReport.push(data.data.data.MonthOfReport);
-          setDocuments(olddata=>[...olddata,{"Id":data.data.data.ID,"DocumentName":data.data.data.DocumentName,"DownloadLink":data.data.data.Documents,"FormatType":fileformat,"ReportDate":data.data.data.CreatedDateTime,"MonthReport":data.data.data.MonthOfReport}]);
-        }
-        for(let k=0; k<data?.data?.data?.User?.length; k++){
-          if(data?.data?.data?.AccessType === "Private"){
-
+      await axios
+        .post("https://investmentportal.herokuapp.com/getdocumentsbyid", { id })
+        .then(function (data) {
+          console.log(data);
+          setDealName(data?.data?.data?.Deals?.display_value);
+          if (data?.data?.data?.Access_Type === "Private") {
+            const filename = data.data.data.Documents;
+            const fileformat = filename.split(".")[1];
+            MonthsReport.push(data.data.data.MonthOfReport);
+            setDocuments((olddata) => [
+              ...olddata,
+              {
+                Id: data.data.data.ID,
+                DocumentName: data.data.data.DocumentName,
+                DownloadLink: data.data.data.Documents,
+                FormatType: fileformat,
+                ReportDate: data.data.data.CreatedDateTime,
+                MonthReport: data.data.data.MonthOfReport,
+              },
+            ]);
+            // for(let k=0; k<data?.data?.data?.User?.length; k++){
+            //   if(data?.data?.data?.User[k]?.ID === userInfo.id){
+            //     // const filename = data.data.data.Documents;
+            //     // const fileformat = filename.split(".")[1];
+            //     // MonthsReport.push(data.data.data.MonthOfReport);
+            //     // setDocuments(olddata=>[...olddata,{"Id":data.data.data.ID,"DocumentName":data.data.data.DocumentName,"DownloadLink":data.data.data.Documents,"FormatType":fileformat,"ReportDate":data.data.data.CreatedDateTime,"MonthReport":data.data.data.MonthOfReport}]);
+            //   }
+            // }
+          } else if (data?.data?.data?.Access_Type === "Global") {
+            const filename = data.data.data.Documents;
+            const fileformat = filename.split(".")[1];
+            MonthsReport.push(data.data.data.MonthOfReport);
+            setDocuments((olddata) => [
+              ...olddata,
+              {
+                Id: data.data.data.ID,
+                DocumentName: data.data.data.DocumentName,
+                DownloadLink: data.data.data.Documents,
+                FormatType: fileformat,
+                ReportDate: data.data.data.CreatedDateTime,
+                MonthReport: data.data.data.MonthOfReport,
+              },
+            ]);
           }
-          // if(data?.data?.data?.User[k]?.ID === userInfo.id){
-          //   const filename = data.data.data.Documents
-          //   const fileformat = filename.split(".")[1];
-          //   //console.log(fileformat);
-          //   MonthsReport.push(data.data.data.MonthOfReport);
-          //   setDocuments(olddata=>[...olddata,{"Id":data.data.data.ID,"DocumentName":data.data.data.DocumentName,"DownloadLink":data.data.data.Documents,"FormatType":fileformat,"ReportDate":data.data.data.CreatedDateTime,"MonthReport":data.data.data.MonthOfReport}]);
-          // }
+          for (let k = 0; k < data?.data?.data?.User?.length; k++) {
+            if (data?.data?.data?.AccessType === "Private") {
+            }
+            // if(data?.data?.data?.User[k]?.ID === userInfo.id){
+            //   const filename = data.data.data.Documents
+            //   const fileformat = filename.split(".")[1];
+            //   //console.log(fileformat);
+            //   MonthsReport.push(data.data.data.MonthOfReport);
+            //   setDocuments(olddata=>[...olddata,{"Id":data.data.data.ID,"DocumentName":data.data.data.DocumentName,"DownloadLink":data.data.data.Documents,"FormatType":fileformat,"ReportDate":data.data.data.CreatedDateTime,"MonthReport":data.data.data.MonthOfReport}]);
+            // }
+          }
+          console.log("MONTH REPORT: ", MonthsReport);
+          return MonthsReport;
+        })
+        .then((MonthsReport) => {
+          //console.log(MonthsReport);
+          const withoutDuplicates_MonthsReport = [...new Set(MonthsReport)];
+          //console.log(withoutDuplicates_MonthsReport);
+          setMonthReport(withoutDuplicates_MonthsReport);
+          // var MonthsReport_filter = documents?.filter(function(el){
+          //   return el.MonthOfReport === unique_issuername[index];
+          // })
+        });
+    }
+  };
+
+  const DocumentHandler2 = async () => {
+    let MonthsReport = [];
+    const dealid = location?.state;
+    await axios
+      .post("https://investmentportal.herokuapp.com/documentswithdealsid", {
+        dealid,
+      })
+      .then(function (data) {
+        console.log(data);
+        // setDealName(data?.data?.data?.Deals?.display_value)
+        for (let i = 0; i < data?.data?.data?.length; i++) {
+          const filename = data?.data?.data[i]?.Documents;
+          const fileformat = filename?.split(".")[1];
+          MonthsReport.push(data.data.data[i].MonthOfReport);
+          setDocuments((olddata) => [
+            ...olddata,
+            {
+              Id: data.data.data[i].ID,
+              DocumentName: data.data.data[i].DocumentName,
+              DownloadLink: data.data.data[i].Documents,
+              FormatType: fileformat,
+              ReportDate: data.data.data[i].CreatedDateTime,
+              MonthReport: data.data.data[i].MonthOfReport,
+            },
+          ]);
         }
-        console.log("MONTH REPORT: ",MonthsReport);
         return MonthsReport;
-      }).then(MonthsReport=>{
+      })
+      .then((MonthsReport) => {
         //console.log(MonthsReport);
-        const withoutDuplicates_MonthsReport= [...new Set(MonthsReport)];
+        const withoutDuplicates_MonthsReport = [...new Set(MonthsReport)];
         //console.log(withoutDuplicates_MonthsReport);
         setMonthReport(withoutDuplicates_MonthsReport);
         // var MonthsReport_filter = documents?.filter(function(el){
         //   return el.MonthOfReport === unique_issuername[index];
         // })
-      })
-    }
-    
-  }
+      });
+  };
 
-  const DocumentHandler2 = async() => {
-    let MonthsReport=[];
-    const dealid = location?.state;
-    await axios.post("https://investmentportal.herokuapp.com/documentswithdealsid",{dealid}).then(function(data){
-      console.log(data);
-      // setDealName(data?.data?.data?.Deals?.display_value)
-      for(let i=0; i<data?.data?.data?.length; i++){
-        const filename = data?.data?.data[i]?.Documents;
-        const fileformat = filename?.split(".")[1];
-        MonthsReport.push(data.data.data[i].MonthOfReport);
-        setDocuments(olddata=>[...olddata,{"Id":data.data.data[i].ID,"DocumentName":data.data.data[i].DocumentName,"DownloadLink":data.data.data[i].Documents,"FormatType":fileformat,"ReportDate":data.data.data[i].CreatedDateTime,"MonthReport":data.data.data[i].MonthOfReport}]);
-      }
-      return MonthsReport;
-    }).then(MonthsReport=>{
-      //console.log(MonthsReport);
-      const withoutDuplicates_MonthsReport= [...new Set(MonthsReport)];
-      //console.log(withoutDuplicates_MonthsReport);
-      setMonthReport(withoutDuplicates_MonthsReport);
-      // var MonthsReport_filter = documents?.filter(function(el){
-      //   return el.MonthOfReport === unique_issuername[index];
-      // })
-    })
-
-  }
-  
-  useEffect(()=>{
+  useEffect(() => {
     DocumentHandler2();
     //console.log(location?.state);
-  },[])
+  }, []);
   return (
     <div>
       <TopHeader></TopHeader>
@@ -250,24 +296,35 @@ export default function MonthsList() {
                       </tr>
                     </thead>
                     <tbody>
-                    {monthreport?.map((data,index)=>{
-                        var months_list_filter = documents?.filter(function(el){
+                      {monthreport?.map((data, index) => {
+                        var months_list_filter = documents?.filter(function (
+                          el
+                        ) {
                           return el.MonthReport === monthreport[index];
-                        })
-                        return(
-                          <tr onClick={()=>{
-                            
-                            //console.log(months_list_filter);
-                            detailspage("/details",{state:{months_list_filter}})}} >
-                          <th scope="row" style={{cursor:"pointer"}}> {data} </th>
-                          <td></td>
-                          <td></td>
-                          <td>
-                          {" "}
-                          <i className="bi bi-arrow-up-right-square"> </i>{" "}
-                          </td>
+                        });
+                        return (
+                          <tr
+                            onClick={() => {
+                              //console.log(months_list_filter);
+                              detailspage("/details", {
+                                state: { months_list_filter },
+                              });
+                            }}
+                          >
+                            <th scope="row" style={{ cursor: "pointer" }}>
+                              {" "}
+                              {data}{" "}
+                            </th>
+                            <td></td>
+                            <td></td>
+                            <td>
+                              {" "}
+                              <i className="bi bi-arrow-up-right-square">
+                                {" "}
+                              </i>{" "}
+                            </td>
                           </tr>
-                        )
+                        );
                       })}
                     </tbody>
                   </table>

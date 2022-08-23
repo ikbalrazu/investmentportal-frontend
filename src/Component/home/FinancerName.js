@@ -1,37 +1,10 @@
 import React, { useEffect, useState } from "react";
-
 import DataTable, { createTheme } from "react-data-table-component";
 import { useNavigate, useLocation } from "react-router-dom";
+import { defaultDesign } from "./tableDesign.ts";
+
 const FinancerName = (props) => {
   const FinancierListPage = useNavigate();
-
-  createTheme(
-    "solarized",
-    {
-      text: {
-        primary: "#fff",
-        secondary: "#fff",
-        disabled: "#fff",
-      },
-      background: {
-        default: "#222222",
-      },
-      context: {
-        background: "#e3f2fd",
-        text: "rgba(0, 0, 0, 0.87)",
-      },
-      divider: {
-        default: "#474747",
-      },
-      button: {
-        default: "#fff",
-        focus: "#fff",
-        hover: "#fff",
-        disabled: "#fff",
-      },
-    },
-    "dark"
-  );
 
   const columns = [
     {
@@ -74,6 +47,7 @@ const FinancerName = (props) => {
         data={props.data}
         theme="solarized"
         pagination
+        customStyles={defaultDesign}
       />
     </div>
   );
