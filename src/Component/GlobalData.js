@@ -31,8 +31,40 @@ const GlobalData = () => {
         disabled: "#fff",
       },
     },
+
     "dark"
   );
+
+  const customStyles = {
+    rows: {
+      style: {
+        minHeight: "72px", // override the row height
+      },
+    },
+    headCells: {
+      style: {
+        paddingLeft: "8px", // override the cell padding for head cells
+        paddingRight: "8px",
+      },
+    },
+    cells: {
+      style: {
+        paddingLeft: "8px", // override the cell padding for data cells
+        paddingRight: "8px",
+      },
+    },
+    header: {
+      style: {
+        color: "#00adee",
+        paddingLeft: "5px",
+      },
+    },
+    headRow: {
+      style: {
+        fontSize: "15px",
+      },
+    },
+  };
 
   const columns = [
     {
@@ -58,17 +90,34 @@ const GlobalData = () => {
     {
       name: "Download",
       cell: (row) => (
-        <a
-          href={`https://creator.zoho.com.au${row.DownloadLink}`}
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          onClick={handleButtonClick}
+          name={`https://creator.zoho.com.au${row.DownloadLink}`}
+          className="btn btn-primary py-1"
         >
           Download
-        </a>
+        </button>
       ),
     },
   ];
+  const handleButtonClick = (state) => {
+    let link = state.target.name;
 
+    // axios
+    //   .get(
+    //     `https://creator.zoho.com.au/api/v2/nickprocterau_amaltrustees2/investment-portal/report/All_Documents/9824000000167007/Documents/download`,
+    //     {
+    //       headers: {
+    //         Authorization: `Zoho-oauthtoken 1000.41fd85ed9f132f226a0c8bcac439e299.7f19f5de56f637bc4448264664ae1798`,
+    //       },
+    //     }
+    //   )
+    //   .then(function (response) {
+    //     console.log(response);
+    //   });
+
+    // alert(link);
+  };
   const AllGlobalDocuments = async () => {
     let MonthsReport = [];
     await axios
@@ -111,15 +160,24 @@ const GlobalData = () => {
   }, []);
 
   return (
-    <div className=" mb-3 mt-5">
-      <DataTable
-        title="Global Documents"
-        columns={columns}
-        data={documents}
-        theme="solarized"
-        pagination
-      />
-    </div>
+    <section>
+      <div
+        className=" mt-4"
+        style={{
+          backgroundColor: "#232323",
+          padding: "0 15px",
+        }}
+      >
+        <DataTable
+          title="Global Documents"
+          columns={columns}
+          data={documents}
+          theme="solarized"
+          pagination
+          customStyles={customStyles}
+        />
+      </div>
+    </section>
   );
 };
 
