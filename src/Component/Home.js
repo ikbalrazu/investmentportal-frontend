@@ -5,10 +5,13 @@ import TopHeader from "../Sheard/TopHeader";
 import Pagination2 from "./Pagination2";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
-import Spinner from 'react-bootstrap/Spinner';
+import Spinner from "react-bootstrap/Spinner";
 import { AppState } from "../context/Context";
 import { AppContext } from "../context/Context";
 import GlobalData from "./GlobalData";
+import IssuserName from "./home/IssuserName";
+import DealName from "./home/DealName";
+import FinancerName from "./home/FinancerName";
 
 import "./registration.css";
 
@@ -25,18 +28,20 @@ export default function Home() {
   // const [issuername, setIssuerName] = useState([]);
   // const [financername, setFinancerName] = useState([]);
 
-  const [deals,setDeals] = useState([]);
+  const [deals, setDeals] = useState([]);
   //const [dealid,setDealsid] = useState([]);
   const [issuername, setIssuerName] = useState([]);
   const [financername, setFinancerName] = useState([]);
-  const [loader,setLoader] = useState(false);
+  const [loader, setLoader] = useState(false);
   const userInfo = JSON.parse(localStorage.getItem("userinfo"));
-
 
   const [unique_issuername, setUniqueIssuerName] = useState();
   const [unique_financiername, setUniqueFinancierName] = useState();
-  //const {  dealsid } = AppState();
 
+  // New State
+  const [issuerList, setIssuerList] = useState([]);
+  const [finiceList, setFininceList] = useState([]);
+  //const {  dealsid } = AppState();
 
   //sessionStorage.setItem('key', JSON.stringify({exp: new Date() + 5, data: data}));
 
@@ -53,7 +58,6 @@ export default function Home() {
   //   }else{
   //     console.log("expired");
   //     StoreToken();
-
 
   //   }
   // }
@@ -100,38 +104,93 @@ export default function Home() {
 
   // }
 
-  const GetDeals2 = async() => {
+  const GetDeals2 = async () => {
     const id = userInfo?.id;
     let dealid = [];
-    try{
-      const data = await axios.post("https://investmentportal.herokuapp.com/getrecordbyid",{id});
-        
+    try {
+      const data = await axios.post(
+        "https://investmentportal.herokuapp.com/getrecordbyid",
+        { id }
+      );
+
       console.log(data?.data?.data?.Deals_Allowed_for_Access?.length);
-      for(let p=0; p<data?.data?.data?.Deals_Allowed_for_Access?.length; p++){
+      for (
+        let p = 0;
+        p < data?.data?.data?.Deals_Allowed_for_Access?.length;
+        p++
+      ) {
         //setDealsid(preData=>[...preData,data?.data?.data?.Deals_Allowed_for_Access[p].ID]);
         dealid.push(data?.data?.data?.Deals_Allowed_for_Access[p].ID);
         //console.log(data?.data?.data?.Deals_Allowed_for_Access[p].ID);
       }
 
-      const data2 = await axios.post("https://investmentportal.herokuapp.com/dealswithuserid",{dealid});
+      const data2 = await axios.post(
+        "https://investmentportal.herokuapp.com/dealswithuserid",
+        { dealid }
+      );
+
+      console.log("data 2 ", data2?.data?.data);
+
+      let issuerArry = [];
+      let issuerAllArry = [];
+
+      let finaceArray = [];
+      let finaceAllArray = [];
+
+      data2?.data?.data.map((list) => {
+        if (issuerArry.filter((e) => e.name === list.Issuer_Name).length < 1) {
+          issuerArry.push({ name: list.Issuer_Name, count: 1 });
+        }
+        if (issuerArry.filter((e) => e.name === list.Financer).length < 1) {
+          finaceArray.push({ name: list.Financer, count: 1 });
+        }
+        issuerAllArry.push({ name: list.Issuer_Name, count: 1 });
+        finaceAllArray.push({ name: list.Financer, count: 1 });
+      });
+      issuerArry.map((list) => {
+        var filtered = issuerAllArry.filter(function (d) {
+          return d.name === list.name;
+        });
+        // console.log(list, "+++");
+        list.count = filtered.length;
+      });
+      console.log("finaceArray", finaceArray);
+      console.log("finaceAllArray", finaceAllArray);
+      // Finace array
+      finaceArray.map((list) => {
+        var filtered = finaceAllArray.filter(function (d) {
+          return d.name === list.name;
+        });
+        // console.log(list, "+++");
+        list.count = filtered.length;
+      });
+
+      setFininceList(finaceArray);
+
+      setIssuerList(issuerArry);
+
+      // Finace
+
       //console.log(data2);
-      for(let l = 0; l<data2?.data?.data?.length; l++){
-        setDeals(preData=>[...preData,data2?.data?.data[l]]);
-        setIssuerName(preData=>[...preData,data2?.data?.data[l].Issuer_Name]);
-        setFinancerName(preData=>[...preData,data2?.data?.data[l].Financer]);
+      for (let l = 0; l < data2?.data?.data?.length; l++) {
+        setDeals((preData) => [...preData, data2?.data?.data[l]]);
+        setIssuerName((preData) => [
+          ...preData,
+          data2?.data?.data[l].Issuer_Name,
+        ]);
+        setFinancerName((preData) => [
+          ...preData,
+          data2?.data?.data[l].Financer,
+        ]);
       }
-      
-      
-    }catch(error){
+    } catch (error) {
       console.log(error);
     }
-    
-  }
+  };
 
-  useEffect(()=>{
+  useEffect(() => {
     GetDeals2();
-
-  },[]);
+  }, []);
 
   // useEffect(()=>{
   //   const GetDeals = async() =>{
@@ -140,7 +199,7 @@ export default function Home() {
   //       setLoader(true);
   //       const id = userInfo?.id;
   //       const data = await axios.post("https://investmentportal.herokuapp.com/getrecordbyid",{id});
-        
+
   //       console.log(data?.data?.data?.Deals_Allowed_for_Access?.length);
   //       for(let i=0; i<data?.data?.data?.Deals_Allowed_for_Access?.length; i++){
   //         const dealid = data?.data?.data?.Deals_Allowed_for_Access[i]?.ID;
@@ -152,12 +211,12 @@ export default function Home() {
   //         //console.log(res);
   //         setLoader(true);
   //       }
-    
+
   //       setLoader(false)
   //     }catch(error){
   //       console.log(error);
   //     }
-  
+
   //   }
   //   GetDeals();
   // },[])
@@ -174,7 +233,6 @@ export default function Home() {
         name: userInfo.name,
         email: userInfo.email,
       });
-
     } else {
       loginpage("/");
     }
@@ -262,358 +320,79 @@ export default function Home() {
                 padding: 25,
               }}
             >
-              <ul
-                className="nav nav-pills mb-3 d-flex justify-content-center"
-                id="pills-tab"
-                role="tablist"
-                style={{
-                  padding: 15,
-                }}
-              >
-                <li
-                  className="nav-item"
-                  role="presentation"
-                  style={{ backgroundColor: "#333" }}
-                >
+              <ul class="nav nav-pills nav-fill" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
                   <button
-                    className={`${classes.t} ${classes.tt} `}
-                    id="pills-home-tab"
-                    data-bs-toggle="pill"
-                    data-bs-target="#pills-home"
+                    class="nav-link active"
+                    id="issuerName-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#issuerName"
                     type="button"
                     role="tab"
-                    aria-controls="pills-home"
+                    aria-controls="issuerName"
                     aria-selected="true"
                   >
                     Issuser Name
                   </button>
                 </li>
-                <li className="nav-item" role="presentation">
+                <li class="nav-item" role="presentation">
                   <button
-                    className={`${classes.t} ${classes.tt} `}
-                    id="pills-profile-tab"
-                    data-bs-toggle="pill"
-                    data-bs-target="#pills-profile"
+                    class="nav-link"
+                    id="dealName-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#dealName"
                     type="button"
                     role="tab"
-                    aria-controls="pills-profile"
+                    aria-controls="dealName"
                     aria-selected="false"
                   >
                     Deal Name
                   </button>
                 </li>
-                <li className="nav-item" role="presentation">
+                <li class="nav-item" role="presentation">
                   <button
-                    className={`${classes.t} ${classes.tt} `}
-                    id="pills-contact-tab"
-                    data-bs-toggle="pill"
-                    data-bs-target="#pills-contact"
+                    class="nav-link"
+                    id="financerName-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#financerName"
                     type="button"
                     role="tab"
-                    aria-controls="pills-contact"
+                    aria-controls="financerName"
                     aria-selected="false"
                   >
                     Financer Name
                   </button>
                 </li>
               </ul>
-              <div
-                // style={{
-                //   backgroundColor: "#232323",
-                //   padding: 25,
-                // }}
-                className="tab-content"
-                id="pills-tabContent"
-              >
+              <div class="tab-content" id="myTabContent">
                 <div
-                  className="tab-pane fade show active text-white"
-                  id="pills-home"
+                  class="tab-pane fade show active text-white"
+                  id="issuerName"
                   role="tabpanel"
-                  aria-labelledby="pills-home-tab"
-                  style={{
-                    padding: "0px 50px 50px 0px",
-                  }}
+                  aria-labelledby="issuerName-tab"
                 >
-                  <h3
-                    style={{
-                      fontFamily: "Roboto, sans-serif",
-                      fontSize: "1.5em",
-                      color: "#00adee",
-                    }}
-                  >
-                    {" "}
-                    Issuser Name{" "}
-                  </h3>
-
-                  <span
-                    style={{
-                      color: "#00adee",
-                      fontSize: "85%",
-                      lineHeight: "1.1em",
-                    }}
-                  >
-                    {unique_issuername?.length} Search Results
-                  </span>
-
-                  <table className="table text-white mt-3">
-                    <thead>
-                      <tr>
-                        <th
-                          scope="col"
-                          style={{ color: "#00adee", fontSize: "1em" }}
-                        >
-                          Issuer Name
-                        </th>
-                        {/* <th
-                          scope="col"
-                          style={{ color: "#00adee", fontSize: "1em" }}
-                        >
-                          Product Type
-                        </th> */}
-                        <th
-                          scope="col"
-                          style={{ color: "#00adee", fontSize: "1em" }}
-                        >
-                          Deal Count
-                        </th>
-                      </tr>
-                    </thead>
-                    {loader === false &&(
-                    <tbody>
-                      {unique_issuername?.map((data, index) => {
-                        var issuer_list_filter = deals?.filter(function (el) {
-                          return el.Issuer_Name === unique_issuername[index];
-                        });
-                        return (
-                          <tr
-                            onClick={() => {
-                              console.log(issuer_list_filter);
-                              IssuerListPage("/issuerlist", {
-                                state: { issuer_list_filter },
-                              });
-                            }}
-                          >
-                            <th scope="row" style={{ cursor: "pointer" }}>
-                              {" "}
-                              {data}{" "}
-                            </th>
-                            {/* <td>Other </td> */}
-                            <td>{issuer_list_filter?.length}</td>
-                            
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                    )}
-
-                    {loader === true &&(
-                    <tbody>
-                      <Spinner
-                        as="span"
-                        animation="border"
-                        size="sm"
-                        role="status"
-                        aria-hidden="true"
-                      />
-                    </tbody>
-                    )}
-
-                  </table>
-                  <Pagination2></Pagination2>
+                  <IssuserName data={issuerList} />
                 </div>
                 <div
-                  className="tab-pane fade text-white"
-                  id="pills-profile"
+                  class="tab-pane fade text-white"
+                  id="dealName"
                   role="tabpanel"
-                  aria-labelledby="pills-profile-tab"
-                  style={{
-                    padding: "0px 50px 50px 0px",
-                  }}
+                  aria-labelledby="dealName-tab"
                 >
-                  <h3
-                    style={{
-                      fontFamily: "Roboto, sans-serif",
-                      fontSize: "1.5em",
-                      color: "#00adee",
-                    }}
-                  >
-                    {" "}
-                    Deal Name{" "}
-                  </h3>
-                  <span
-                    style={{
-                      color: "#00adee",
-                      fontSize: "85%",
-                      lineHeight: "1.1em",
-                    }}
-                  >
-                    {deals?.length} Search Results
-                  </span>
-                  <table className="table text-white mt-3">
-                    <thead>
-                      <tr>
-                        <th
-                          scope="col"
-                          style={{ color: "#00adee", fontSize: "1em" }}
-                        >
-                          Deal Name
-                        </th>
-                        <th
-                          scope="col"
-                          style={{ color: "#00adee", fontSize: "1em" }}
-                        >
-                          Issuer Name
-                        </th>
-                        <th
-                          scope="col"
-                          style={{ color: "#00adee", fontSize: "1em" }}
-                        >
-                          Product Type
-                        </th>
-                        <th
-                          scope="col"
-                          style={{ color: "#00adee", fontSize: "1em" }}
-                        >
-                          Deal Administrator
-                        </th>
-                        <th
-                          scope="col"
-                          style={{ color: "#00adee", fontSize: "1em" }}
-                        >
-                          Last Update Date
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {deals?.map((data, index) => {
-                        return (
-                          <tr
-                            onClick={() =>
-                              monthlist("/monthslist", {
-                                state: data.ID,
-                              })
-                            }
-                          >
-                            <th scope="row"> {data?.DealName} </th>
-                            <td>{data?.Issuer_Name} </td>
-                            <td>{data?.DealType} </td>
-                            <td>{data?.Deal_Administrator}</td>
-                            <td>
-                              {data?.Added_Time}
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>{" "}
+                  <DealName data={deals} />
                 </div>
                 <div
-                  className="tab-pane fade text-white"
-                  id="pills-contact"
+                  class="tab-pane fade text-white"
+                  id="financerName"
                   role="tabpanel"
-                  aria-labelledby="pills-contact-tab"
+                  aria-labelledby="financerName-tab"
                 >
-                  <h3
-                    style={{
-                      fontFamily: "Roboto, sans-serif",
-                      fontSize: "1.5em",
-                      color: "#00adee",
-                    }}
-                  >
-                    {" "}
-                    Financer Name{" "}
-                  </h3>
-                  <span
-                    style={{
-                      color: "#00adee",
-                      fontSize: "85%",
-                      lineHeight: "1.1em",
-                    }}
-                  >
-                    {unique_financiername?.length} Search Results
-                  </span>
-
-                  <table className="table text-white mt-3">
-                    <thead>
-                      <tr>
-                        <th
-                          scope="col"
-                          style={{ color: "#00adee", fontSize: "1em" }}
-                        >
-                          Financer Name
-                        </th>
-                        <th
-                          scope="col"
-                          style={{ color: "#00adee", fontSize: "1em" }}
-                        >
-                          Deal Count
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {unique_financiername?.map((data, index) => {
-                        var financier_list_filter = deals?.filter(function (
-                          el
-                        ) {
-                          return el.Financer === unique_financiername[index];
-                        });
-                        return (
-                          <tr
-                            onClick={() => {
-                              console.log(financier_list_filter);
-                              FinancierListPage("/financierlist", {
-                                state: { financier_list_filter },
-                              });
-                            }}
-                          >
-                            <th scope="row" style={{ cursor: "pointer" }}>
-                              {" "}
-                              {data}{" "}
-                            </th>
-                            <td>{financier_list_filter?.length}</td>
-                            {/* <td>
-                              {" "}
-                              <i className="bi bi-arrow-up-right-square">
-                                {" "}
-                              </i>{" "}
-                            </td> */}
-                          </tr>
-                        );
-                      })}
-                      {/* <tr>
-                        <th scope="row"> Name of Financer </th>
-                        <td>Name of Issuer </td>
-                        <td>Other </td>
-                        <td> Name Name </td>
-                        <td>
-                          {" "}
-                          <i className="bi bi-arrow-up-right-square"> </i>{" "}
-                        </td>
-                      </tr> */}
-                    </tbody>
-                  </table>
+                  <FinancerName data={finiceList} />
                 </div>
-
-                {/* End table of All content  */}
-
-                {/*
-                <h1 style={{color:"white"}}>File Upload</h1>
-
-               <form onSubmit={UploadFileHandler}>
-              <input style={{color:"white"}} type="file" name="featuredImage" onChange={FileData}/>
-              <label style={{color:"white"}}>Document ID </label>
-              <input placeholder="Document id" id="id" onChange={(e)=>setDocumentName(e.target.value)}/>
-              <br />
-              <br />
-              <button type="submit">Submit File</button>
-              </form>
-
-              <button onClick={AllDocuments}>Get Documents</button>
-              <br/>
-              <button onClick={AllDeals}>Get Deals</button> */}
               </div>
             </section>
-            <GlobalData/>
+
+            <GlobalData />
 
             {/* File Section End  */}
           </div>
