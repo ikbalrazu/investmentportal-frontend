@@ -139,7 +139,7 @@ export default function Home() {
 
       data2?.data?.data.map((list) => {
         if (issuerArry.filter((e) => e.name === list.Issuer_Name).length < 1) {
-          issuerArry.push({ name: list.Issuer_Name, count: 1 });
+          issuerArry.push({ name: list.Issuer_Name, dealname: list.DealName, producttype:list.DealType, dealadministrator:list.Deal_Administrator, count: 1 });
         }
         if (issuerArry.filter((e) => e.name === list.Financer).length < 1) {
           finaceArray.push({ name: list.Financer, count: 1 });
@@ -168,6 +168,7 @@ export default function Home() {
       setFininceList(finaceArray);
 
       setIssuerList(issuerArry);
+      console.log(issuerArry);
 
       // Finace
 
