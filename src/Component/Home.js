@@ -8,6 +8,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Spinner from 'react-bootstrap/Spinner';
 import { AppState } from "../context/Context";
 import { AppContext } from "../context/Context";
+import GlobalData from "./GlobalData";
 
 import "./registration.css";
 
@@ -612,6 +613,7 @@ export default function Home() {
               <button onClick={AllDeals}>Get Deals</button> */}
               </div>
             </section>
+            <GlobalData/>
 
             {/* File Section End  */}
           </div>
