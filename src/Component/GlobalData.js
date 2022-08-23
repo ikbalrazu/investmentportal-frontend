@@ -111,17 +111,14 @@ const GlobalData = () => {
   }, []);
 
   return (
-    <div>
-      <div className=" mb-3 mt-5">
-        <DataTable
-          style={{ padding: 113 }}
-          title="Global Documents"
-          columns={columns}
-          data={documents}
-          theme="solarized"
-          pagination
-        />
-      </div>
+    <div className=" mb-3 mt-5">
+      <DataTable
+        title="Global Documents"
+        columns={columns}
+        data={documents}
+        theme="solarized"
+        pagination
+      />
     </div>
   );
 };

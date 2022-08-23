@@ -32,17 +32,18 @@ input::placeholder {
 
 /* test renee code */
 
-.btn{
+.btn {
   background-color: #222222;
   color: #fff;
-
 }
 
-
-.btn:hover{
-  background-color: #00ADEE;
+.btn:hover {
+  background-color: #00adee;
   border-radius: 0px;
-
 }
 
-
+.nav-link:after {
+  position: absolute;
+  background: none;
+  transition: width 0.3s ease 0s, left 0.3s ease 0s;
+}
