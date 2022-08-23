@@ -15,6 +15,8 @@ const AppProvider = ({ children }) =>{
         try{
           const id = dealsid;
           const data = await axios.post("https://investmentportal.herokuapp.com/getrecordbyid",{id});
+          localStorage.setItem("dealsinfo", JSON.stringify({deals: data?.data?.data?.Deals_Allowed_for_Access,}))
+          setDealsId(data?.data?.data?.Deals_Allowed_for_Access);
           console.log(data?.data?.data?.Deals_Allowed_for_Access?.length);
           // for(let i=0; i<data?.data?.data?.Deals_Allowed_for_Access?.length; i++){
           //   const dealid = data?.data?.data?.Deals_Allowed_for_Access[i]?.ID;

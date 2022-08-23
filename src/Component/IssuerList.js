@@ -15,16 +15,20 @@ export default function IssuerList() {
 
   const userInfo = JSON.parse(localStorage.getItem("userinfo"));
 
-  const IssuerList = () => {
+  const IssuerList = async() => {
     setIssuerList(location?.state?.issuer_list_filter);
+    // const dealid = "9824000000158003";
+    // const data = await axios.post("http://localhost:5000/documentswithdealsid",{dealid});
+    // console.log(data);
     for (let i = 0; i < location?.state?.issuer_list_filter?.length; i++) {
+      //console.log(location?.state?.issuer_list_filter[i].ID);
       setIssuerName(location.state.issuer_list_filter[0].Issuer_Name);
     }
   };
 
   useEffect(() => {
     IssuerList();
-    //console.log(location?.state.issuer_list_filter.length);
+    console.log(location?.state?.issuer_list_filter);
   }, []);
   return (
     <div>
@@ -155,11 +159,14 @@ export default function IssuerList() {
                       {issuerlist?.map((data, index) => {
                         return (
                           <tr
-                            onClick={() =>
+                            onClick={async() =>{
+                              const dealid = data.ID;
+                              const {res} = await axios.post("http://localhost:5000/getdealsbyid",{dealid});
+                              console.log(res);
                               monthlist("/monthslist", {
-                                state: data.Documents,
+                                state: data.ID,
                               })
-                            }
+                            }}
                           >
                             <th scope="row"> {data?.DealName} </th>
                             <td>{data?.Issuer_Name}</td>
