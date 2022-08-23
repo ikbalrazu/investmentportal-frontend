@@ -35,11 +35,17 @@ const Login = () => {
     axios
       .get("https://investmentportal.herokuapp.com/getrecord")
       .then(function (data) {
-        console.log(data.data.data);
+        console.log("Response Successfully.");
+        //console.log(data.data.data);
         setUserData(data.data.data);
         // localStorage.setItem("userinfo",JSON.stringify(data));
         // setVisiable(true);
-      });
+      }).catch(function(error){
+        //console.log(error.message);
+        if(error.message === "Network Error"){
+          setAlertmsg("Please check your internet connection.")
+        }
+      })
   };
 
   //console.log(email);
@@ -93,7 +99,7 @@ const Login = () => {
       }
     } else {
       // console.log("Server problem. User not found try after sometimes");
-      setAlertmsg("The Username and Password does't match !");
+      //setAlertmsg("The Username and Password does't match !");
       //   message.success("Server problem. User not found try after sometimes!");
     }
   };

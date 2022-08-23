@@ -25,6 +25,7 @@ export default function Home() {
   // const [financername, setFinancerName] = useState([]);
 
   const [deals,setDeals] = useState([]);
+  //const [dealid,setDealsid] = useState([]);
   const [issuername, setIssuerName] = useState([]);
   const [financername, setFinancerName] = useState([]);
   const [loader,setLoader] = useState(false);
@@ -33,7 +34,7 @@ export default function Home() {
 
   const [unique_issuername, setUniqueIssuerName] = useState();
   const [unique_financiername, setUniqueFinancierName] = useState();
-  const {  dealsid } = AppState();
+  //const {  dealsid } = AppState();
 
 
   //sessionStorage.setItem('key', JSON.stringify({exp: new Date() + 5, data: data}));
@@ -65,48 +66,102 @@ export default function Home() {
   //   return accesstoken.data;
   // }
 
-  const GetDeals = async() =>{
-    console.log(dealsid);
+  // const GetDeals = async() =>{
+  //   //console.log(dealsid);
+  //   try{
+  //     setLoader(true);
+  //     const id = userInfo?.id;
+  //     const data = await axios.post("https://investmentportal.herokuapp.com/getrecordbyid",{id});
+  //     //console.log(data?.data?.data?.Deals_Allowed_for_Access?.length);
+  //     for(let i=0; i<data?.data?.data?.Deals_Allowed_for_Access?.length; i++){
+  //       const dealid = data?.data?.data?.Deals_Allowed_for_Access[i]?.ID;
+  //       const res = await axios.post("https://investmentportal.herokuapp.com/getdealsbyid",{dealid});
+  //       //console.log(res);
+  //       setDeals(preData=>[...preData,res?.data?.data]);
+  //       setIssuerName(preData=>[...preData,res?.data?.data?.Issuer_Name]);
+  //       setFinancerName(preData=>[...preData,res?.data?.data?.Financer]);
+  //       //console.log(res);
+  //       setLoader(true);
+  //     }
+  //     // for(let i=0; i<dealsid?.length; i++){
+  //     //   const dealid = dealsid[i];
+  //     //   const res = await axios.post("https://investmentportal.herokuapp.com/getalldealsbyid",{dealid});
+  //     //   setDeals(preData=>[...preData,res?.data?.data]);
+  //     //   setIssuerName(preData=>[...preData,res?.data?.data?.Issuer_Name]);
+  //     //   setFinancerName(preData=>[...preData,res?.data?.data?.Financer]);
+  //     //   //console.log(res);
+  //     //   setLoader(true);
+  //     // }
+  //     setLoader(false)
+  //   }catch(error){
+  //     console.log(error);
+  //   }
+
+  // }
+
+  const GetDeals2 = async() => {
+    const id = userInfo?.id;
+    let dealid = [];
     try{
-      setLoader(true);
-      const id = userInfo?.id;
       const data = await axios.post("https://investmentportal.herokuapp.com/getrecordbyid",{id});
+        
       console.log(data?.data?.data?.Deals_Allowed_for_Access?.length);
-      for(let i=0; i<data?.data?.data?.Deals_Allowed_for_Access?.length; i++){
-        const dealid = data?.data?.data?.Deals_Allowed_for_Access[i]?.ID;
-        const res = await axios.post("https://investmentportal.herokuapp.com/getalldealsbyid",{dealid});
-        setDeals(preData=>[...preData,res?.data?.data]);
-        setIssuerName(preData=>[...preData,res?.data?.data?.Issuer_Name]);
-        setFinancerName(preData=>[...preData,res?.data?.data?.Financer]);
-        //console.log(res);
-        setLoader(true);
+      for(let p=0; p<data?.data?.data?.Deals_Allowed_for_Access?.length; p++){
+        //setDealsid(preData=>[...preData,data?.data?.data?.Deals_Allowed_for_Access[p].ID]);
+        dealid.push(data?.data?.data?.Deals_Allowed_for_Access[p].ID);
+        //console.log(data?.data?.data?.Deals_Allowed_for_Access[p].ID);
       }
-      // for(let i=0; i<dealsid?.length; i++){
-      //   const dealid = dealsid[i];
-      //   const res = await axios.post("https://investmentportal.herokuapp.com/getalldealsbyid",{dealid});
-      //   setDeals(preData=>[...preData,res?.data?.data]);
-      //   setIssuerName(preData=>[...preData,res?.data?.data?.Issuer_Name]);
-      //   setFinancerName(preData=>[...preData,res?.data?.data?.Financer]);
-      //   //console.log(res);
-      //   setLoader(true);
-      // }
-      setLoader(false)
+
+      const data2 = await axios.post("https://investmentportal.herokuapp.com/dealswithuserid",{dealid});
+      //console.log(data2);
+      for(let l = 0; l<data2?.data?.data?.length; l++){
+        setDeals(preData=>[...preData,data2?.data?.data[l]]);
+        setIssuerName(preData=>[...preData,data2?.data?.data[l].Issuer_Name]);
+        setFinancerName(preData=>[...preData,data2?.data?.data[l].Financer]);
+      }
+      
+      
     }catch(error){
       console.log(error);
     }
-
+    
   }
 
-  useLayoutEffect(()=>{
-    GetDeals();
-  },[])
+  useEffect(()=>{
+    GetDeals2();
+
+  },[]);
+
+  // useEffect(()=>{
+  //   const GetDeals = async() =>{
+  //     //console.log(dealsid);
+  //     try{
+  //       setLoader(true);
+  //       const id = userInfo?.id;
+  //       const data = await axios.post("https://investmentportal.herokuapp.com/getrecordbyid",{id});
+        
+  //       console.log(data?.data?.data?.Deals_Allowed_for_Access?.length);
+  //       for(let i=0; i<data?.data?.data?.Deals_Allowed_for_Access?.length; i++){
+  //         const dealid = data?.data?.data?.Deals_Allowed_for_Access[i]?.ID;
+  //         const res = await axios.post("http://localhost:5000/getdealsbyid",{dealid});
+  //         console.log(res);
+  //         setDeals(preData=>[...preData,res?.data?.data]);
+  //         setIssuerName(preData=>[...preData,res?.data?.data?.Issuer_Name]);
+  //         setFinancerName(preData=>[...preData,res?.data?.data?.Financer]);
+  //         //console.log(res);
+  //         setLoader(true);
+  //       }
+    
+  //       setLoader(false)
+  //     }catch(error){
+  //       console.log(error);
+  //     }
+  
+  //   }
+  //   GetDeals();
+  // },[])
 
   useEffect(() => {
-    //console.log("deals id",dealsid);
-    //console.log(dealsid);
-    // console.log(issuername);
-    // console.log(financername);
-    //const userInfo = JSON.parse(localStorage.getItem("userinfo"));
     if (!userInfo) {
       loginpage("/");
     }
@@ -137,32 +192,6 @@ export default function Home() {
     // console.log(withoutDuplicates_issuername);
     setUniqueIssuerName(withoutDuplicates_issuername);
     setUniqueFinancierName(withoutDuplicates_financiername);
-    // const DealsData = async () => {
-    //   try{
-    //     const data = await axios.post("https://investmentportal.herokuapp.com/getalldeals");
-    //     setDealsData(data.data.data);
-    //     for(let i=0; i<data.data.data.length; i++){
-    //       console.log(data.data.data[i].Issuer_Name);
-    //       setIssuerName(preData=>[...preData,data.data.data[i].Issuer_Name]);
-    //       setFinancerName(preData=>[...preData,data.data.data[i].Financer]);
-    //       console.log(data.data.data[i].Financer);
-    //     }
-    //     return data.data.data;
-
-    //   }catch(error){
-    //     console.log(error);
-    //   }
-
-    // }
-
-    // DealsData().then(data=>{
-    //   //const withoutDuplicates_issuername = [...new Set(issuername)]; //0, 1
-    //   const withoutDuplicates_issuername = [...new Map(issuername?.map(item => [JSON.stringify(item), item])).values()];
-    //   console.log(data);
-    //   for(let k=0; k<withoutDuplicates_issuername?.length; k++){
-    //     console.log(withoutDuplicates_issuername[k]);
-    //   }
-    // }).catch(console.error);
   }, [deals, issuername, financername]);
 
   return (
@@ -369,12 +398,7 @@ export default function Home() {
                             </th>
                             {/* <td>Other </td> */}
                             <td>{issuer_list_filter?.length}</td>
-                            <td>
-                              {" "}
-                              <i className="bi bi-arrow-up-right-square">
-                                {" "}
-                              </i>{" "}
-                            </td>
+                            
                           </tr>
                         );
                       })}
@@ -465,19 +489,16 @@ export default function Home() {
                           <tr
                             onClick={() =>
                               monthlist("/monthslist", {
-                                state: data.Documents,
+                                state: data.ID,
                               })
                             }
                           >
                             <th scope="row"> {data?.DealName} </th>
                             <td>{data?.Issuer_Name} </td>
                             <td>{data?.DealType} </td>
-                            <td> Name Name </td>
+                            <td>{data?.Deal_Administrator}</td>
                             <td>
-                              {" "}
-                              <i className="bi bi-arrow-up-right-square">
-                                {" "}
-                              </i>{" "}
+                              {data?.Added_Time}
                             </td>
                           </tr>
                         );

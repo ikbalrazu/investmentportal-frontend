@@ -110,7 +110,7 @@ const ResetPassword = () => {
                             // onChange={(e)=>setResetEmail(e.target.value)}
                           />
                         </div>
-                        <div class="form-group mt-1" style={{ width: "50%" }}>
+                        <div class="form-group mt-3" style={{ width: "50%" }}>
                           <input
                             style={{
                               backgroundColor: "#00ADEE",

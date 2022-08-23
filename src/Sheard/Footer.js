@@ -44,7 +44,8 @@ export default function Footer() {
               <div class="p-2 ">
                 <a
                   className="text-decoration-none legal_btn"
-                  href="https://amaltrustees.webflow.io/dashboard"
+                  href="https://uploads-ssl.webflow.com/5ea28cd50047dff7ff19c631/62bbe1660b3fe1c3a0fab60e_Customer_Complaint_Policy_290622.pdf"
+                  target="_blank"
                 >
                   {" "}
                   Customer Complaint Policy{" "}
@@ -53,7 +54,8 @@ export default function Footer() {
               <div class="p-2 ">
                 <a
                   className="text-decoration-none legal_btn"
-                  href="https://amaltrustees.webflow.io/dashboard"
+                  href="https://uploads-ssl.webflow.com/5ea28cd50047dff7ff19c631/62bbe1572a82fd991c355dc8_Hardship_290622.pdf"
+                  target="_blank"
                 >
                   {" "}
                   Hardship{" "}
@@ -62,7 +64,8 @@ export default function Footer() {
               <div class="p-2 ">
                 <a
                   className="text-decoration-none legal_btn"
-                  href="https://amaltrustees.webflow.io/dashboard"
+                  href="https://uploads-ssl.webflow.com/5ea28cd50047dff7ff19c631/61a6cdb931085f3dce0488af_Privacy.pdf"
+                  target="_blank"
                 >
                   {" "}
                   Privacy Policy{" "}
@@ -72,7 +75,8 @@ export default function Footer() {
               <div class="p-2 ">
                 <a
                   className="text-decoration-none legal_btn"
-                  href="https://amaltrustees.webflow.io/dashboard"
+                  href="https://uploads-ssl.webflow.com/5ea28cd50047dff7ff19c631/62bbe13f0b3fe130d3fa9829_Credit_Guide_290622.pdf"
+                  target="_blank"
                 >
                   {" "}
                   Credit Guide{" "}
