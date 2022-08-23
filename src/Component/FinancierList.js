@@ -157,7 +157,7 @@ export default function IssuerList() {
                           <tr
                             onClick={() =>
                               monthlist("/monthslist", {
-                                state: data.Documents,
+                                state: data.ID,
                               })
                             }
                           >
