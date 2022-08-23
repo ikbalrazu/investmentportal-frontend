@@ -56,11 +56,7 @@ const Details = () => {
       sortable: true,
       selector: (row) => row.ReportDate,
     },
-    {
-      name: "Deal Administrator	",
-      sortable: true,
-      selector: (row) => row.ReportDate,
-    },
+
     {
       name: "Download",
       cell: (row) => (
