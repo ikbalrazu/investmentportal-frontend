@@ -28,7 +28,7 @@ export default function IssuerList() {
 
   useEffect(() => {
     IssuerList();
-    console.log(location?.state?.issuer_list_filter);
+    console.log(location);
   }, []);
   return (
     <div>

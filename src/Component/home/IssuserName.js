@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import DataTable, { createTheme } from "react-data-table-component";
 import { useNavigate, useLocation } from "react-router-dom";
 const IssuserName = (props) => {
+  console.log(props);
   const IssuerListPage = useNavigate();
   createTheme(
     "solarized",
@@ -56,13 +57,16 @@ const IssuserName = (props) => {
     },
   ];
   const handleButtonClick = (state) => {
-    let link = state.target.name;
+    //console.log(state);
+    //let link = state.target.name;
     IssuerListPage("/issuerlist", {
-      state: { link },
+      state: { props },
     });
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+
+  }, []);
 
   return (
     <div>
