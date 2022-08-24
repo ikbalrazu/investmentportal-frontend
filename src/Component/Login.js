@@ -55,7 +55,7 @@ const Login = () => {
       if (!email || !password) {
         //console.log("plz fill the all fields");
         //alertmsgstyle.current.style.color = "red";
-        setAlertmsg("Please fill the all fields");
+        setAlertmsg("Please fill in all the fields");
 
         // Adding new Messages
         //message.warning("Please fill all the fields !");
@@ -176,7 +176,6 @@ const Login = () => {
       <div className="container">
         <div className=" row ">
           <h3 className="text-white text-start mt-5">
-            {" "}
             Welcome to AMAL Trustees
           </h3>
 
@@ -194,13 +193,13 @@ const Login = () => {
                 <div className="col-lg-6 col-md-6 col-sm-12 col-12 ">
                   {alertmsg ? (
                     <div
-                      class="alert alert-warning alert-dismissible fade show"
+                      className="alert alert-warning alert-dismissible fade show"
                       role="alert"
                     >
                       {alertmsg}
                       <button
                         type="button"
-                        class="btn-close"
+                        className="btn-close"
                         data-bs-dismiss="alert"
                         aria-label="Close"
                       ></button>
@@ -211,13 +210,13 @@ const Login = () => {
 
                   {errormsg ? (
                     <div
-                      class="alert alert-error alert-dismissible fade show"
+                      className="alert alert-error alert-dismissible fade show"
                       role="alert"
                     >
                       {errormsg}
                       <button
                         type="button"
-                        class="btn-close"
+                        className="btn-close"
                         data-bs-dismiss="alert"
                         aria-label="Close"
                       ></button>
@@ -227,29 +226,30 @@ const Login = () => {
                   )}
 
                   {/* <form> */}
-                  <div class="form-group mt-2">
+                  <div className="form-group mt-2">
                     <input
-                      style={{ backgroundColor: "#00ADEE", color: "white" }}
-                      type="text"
-                      class="form-control"
+                      style={{ backgroundColor: "#00ADEE"}}
+                      type="email"
+                      className="form-control text-white"
                       id="username"
                       aria-describedby="username"
                       placeholder="User Email"
                       onChange={(e) => setEmail(e.target.value)}
+                      
                     />
                   </div>
-                  <div class="form-group mt-3">
+                  <div className="form-group mt-3">
                     <input
-                      style={{ backgroundColor: "#00ADEE", color: "white" }}
+                      style={{ backgroundColor: "#00ADEE"}}
                       type="password"
-                      class="form-control"
+                      className="form-control text-white"
                       id="password"
                       aria-describedby="password"
                       placeholder="Password"
                       onChange={(e) => setPassword(e.target.value)}
                     />
                   </div>
-                  <div class="form-group mt-3">
+                  <div className="form-group mt-3">
                     <button
                       //  style={{ float: "left", color: "#00ADEE" }}
                       type="button"
@@ -293,14 +293,13 @@ const Login = () => {
                       In order to reset your password, please enter your email
                       address and we will send you a password reset link
                       shortly.
-                      <div class="form-group mt-1">
+                      <div className="form-group mt-1">
                         <input
                           style={{
                             backgroundColor: "#00ADEE",
-                            color: "white",
                           }}
-                          type="text"
-                          className="form-control"
+                          type="email"
+                          className="form-control text-white"
                           id=""
                           aria-describedby="username"
                           placeholder="User Email"
@@ -310,10 +309,8 @@ const Login = () => {
                           }
                         />
                       </div>
-                      <div class="form-group mt-1">
+                      <div className="form-group mt-1">
                         <button
-                          // style={{ float: "left", color: "#00ADEE" }}
-                          // type="submit"
                           className={`${classes.ptimaryBtm}  btn btn-primary mt-2 border-0`}
                           //id="registetionbutton"
                           onClick={ForgotPassword}
@@ -416,7 +413,7 @@ const Login = () => {
                     private equity and fixed interest funds.
                   </div>
 
-                  <div class="form-group mt-3">
+                  <div className="form-group mt-3">
                     <a
                       href="https://www.amal.com.au/trustee-services#Discover"
                       target="_blank"
