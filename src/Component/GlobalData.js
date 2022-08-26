@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import DataTable from "react-data-table-component";
 import { defaultDesign } from "./tableDesign.ts";
-
+import { zohoFilenameParserFromDownloadUrl } from "./Helpers/functions";
 const GlobalData = () => {
   const [documents, setDocuments] = useState([]);
   const [monthreport, setMonthReport] = useState();
@@ -33,7 +33,8 @@ const GlobalData = () => {
       cell: (row) => (
         <button
           onClick={handleButtonClick}
-          name={`https://creator.zoho.com.au${row.DownloadLink}`}
+          name={row.DownloadLink}
+          id={row.Id}
           className="btn btn-primary py-1"
         >
           Download
@@ -41,28 +42,83 @@ const GlobalData = () => {
       ),
     },
   ];
-  const handleButtonClick = (state) => {
-    let link = state.target.name;
+  const handleButtonClick = async (state) => {
+    let docname = zohoFilenameParserFromDownloadUrl(state.target.name);
+    let docid = state.target.id;
 
-    // axios
-    //   .get(
-    //     `https://creator.zoho.com.au/api/v2/nickprocterau_amaltrustees2/investment-portal/report/All_Documents/9824000000167007/Documents/download`,
-    //     {
-    //       headers: {
-    //         Authorization: `Zoho-oauthtoken 1000.41fd85ed9f132f226a0c8bcac439e299.7f19f5de56f637bc4448264664ae1798`,
-    //       },
-    //     }
-    //   )
-    //   .then(function (response) {
-    //     console.log(response);
-    //   });
-
-    // alert(link);
+    await axios
+      .get(
+        `http://localhost:5000/w3s/v1/alldocdownload?id=${docid}&filename=${docname}`
+      )
+      .then(function (response) {
+        window.open(response.data);
+      });
+    // console.log(data);
+    // setGlobalDocuments(data?.data?.data);
   };
+
+  // fetch(
+  //   "http://localhost:5000/download?filename=1660916233153_V2_Changes_12_Aug_22.docx",
+  //   {
+  //     method: "GET",
+  //     responseType: "blob",
+  //     headers: {
+  //       Authorization: `Zoho-oauthtoken 1000.2f6f214158da1b12765547588cb58f28.2f9948949725eee4ca97b83689113f81`,
+  //     },
+  //   }
+  // )
+  //   .then((response) => response.blob())
+  //   .then((arrayBuffer) => {
+  // Create blob link to download
+  // const url = window.URL.createObjectURL(new Blob([arrayBuffer]));
+
+  // const link = document.createElement("a");
+  // link.href = url;
+  // link.setAttribute("download", `FileName.docx`);
+
+  // Append to html link element
+  // document.body.appendChild(link);
+
+  // Start download
+  // window.open(
+  //   "http://localhost:3000/67592451-4747-466b-a916-955e9be72a8f"
+  // );
+  // console.log(url);
+  // link.click();
+
+  // Clean up and remove the link
+  // link.parentNode.removeChild(link);
+  // });
+
+  // axios
+  //   .get(
+  //     `https://creator.zoho.com.au/api/v2/nickprocterau_amaltrustees2/investment-portal/report/All_Documents/9824000000159029/Documents/download`,
+  //     {
+  //       headers: {
+  //         Authorization: `Zoho-oauthtoken 1000.b7b8da7a047694d1bd378e609fb43e44.aadb3021b76a63b933d7696876cadaeb`,
+
+  //         "Access-Control-Allow-Origin": "*",
+  //       },
+  //     }
+  //   )
+  //   .then(function (response) {
+  //     var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+  //     var fileLink = document.createElement("a");
+  //     fileLink.href = fileURL;
+  //     fileLink.setAttribute("download", "file.pdf");
+  //     // GLOBAL.document = new JSDOM(html).window.document;
+  //     // document.body.appendChild(fileLink);
+  //     fileLink.click();
+  //   });
+
+  // alert(link);
+  // console.log(link);
+  // };
+
   const AllGlobalDocuments = async () => {
     let MonthsReport = [];
     await axios
-      .get("https://investmentportal.herokuapp.com/allglobaldocuments")
+      .get("http://localhost:5000/w3s/v1/allglobaldocuments")
       .then(function (data) {
         console.log(data);
         for (let i = 0; i < data?.data?.data?.length; i++) {

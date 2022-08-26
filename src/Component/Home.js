@@ -43,73 +43,12 @@ export default function Home() {
   const [finiceList, setFininceList] = useState([]);
   //const {  dealsid } = AppState();
 
-  //sessionStorage.setItem('key', JSON.stringify({exp: new Date() + 5, data: data}));
-
-  // const GetToken = () => {
-  //   const token = sessionStorage.getItem('access_token');
-  //   const tokenl = JSON.parse(token)
-  //   //console.log(tokenl.data);
-  //   // console.log(tokenl.exp);
-  //   let expirationDate = new Date(tokenl.exp);
-  //   //console.log(expirationDate);
-  //   if(expirationDate > new Date()){
-  //     console.log("not expire",tokenl.data);
-  //     return tokenl.data;
-  //   }else{
-  //     console.log("expired");
-  //     StoreToken();
-
-  //   }
-  // }
-
-  // const StoreToken = async() => {
-  //   //console.log(token?.data);
-  //   var extratime =  new Date(new Date().getTime() + (60000 * 2));
-  //   const accesstoken = await axios.post("http://localhost:5000/accesstokendealsbyid");
-  //   //console.log(accesstoken.data);
-  //   sessionStorage.setItem('access_token',JSON.stringify({exp: extratime,data: accesstoken.data}))
-  //   return accesstoken.data;
-  // }
-
-  // const GetDeals = async() =>{
-  //   //console.log(dealsid);
-  //   try{
-  //     setLoader(true);
-  //     const id = userInfo?.id;
-  //     const data = await axios.post("https://investmentportal.herokuapp.com/getrecordbyid",{id});
-  //     //console.log(data?.data?.data?.Deals_Allowed_for_Access?.length);
-  //     for(let i=0; i<data?.data?.data?.Deals_Allowed_for_Access?.length; i++){
-  //       const dealid = data?.data?.data?.Deals_Allowed_for_Access[i]?.ID;
-  //       const res = await axios.post("https://investmentportal.herokuapp.com/getdealsbyid",{dealid});
-  //       //console.log(res);
-  //       setDeals(preData=>[...preData,res?.data?.data]);
-  //       setIssuerName(preData=>[...preData,res?.data?.data?.Issuer_Name]);
-  //       setFinancerName(preData=>[...preData,res?.data?.data?.Financer]);
-  //       //console.log(res);
-  //       setLoader(true);
-  //     }
-  //     // for(let i=0; i<dealsid?.length; i++){
-  //     //   const dealid = dealsid[i];
-  //     //   const res = await axios.post("https://investmentportal.herokuapp.com/getalldealsbyid",{dealid});
-  //     //   setDeals(preData=>[...preData,res?.data?.data]);
-  //     //   setIssuerName(preData=>[...preData,res?.data?.data?.Issuer_Name]);
-  //     //   setFinancerName(preData=>[...preData,res?.data?.data?.Financer]);
-  //     //   //console.log(res);
-  //     //   setLoader(true);
-  //     // }
-  //     setLoader(false)
-  //   }catch(error){
-  //     console.log(error);
-  //   }
-
-  // }
-
   const GetDeals2 = async () => {
     const id = userInfo?.id;
     let dealid = [];
     try {
       const data = await axios.post(
-        "https://investmentportal.herokuapp.com/getrecordbyid",
+        "http://localhost:5000/w3s/v1/getrecordbyid",
         { id }
       );
 
@@ -125,7 +64,7 @@ export default function Home() {
       }
 
       const data2 = await axios.post(
-        "https://investmentportal.herokuapp.com/dealswithuserid",
+        "http://localhost:5000/w3s/v1/dealswithuserid",
         { dealid }
       );
 
@@ -198,35 +137,6 @@ export default function Home() {
   useEffect(() => {
     GetDeals2();
   }, []);
-
-  // useEffect(()=>{
-  //   const GetDeals = async() =>{
-  //     //console.log(dealsid);
-  //     try{
-  //       setLoader(true);
-  //       const id = userInfo?.id;
-  //       const data = await axios.post("https://investmentportal.herokuapp.com/getrecordbyid",{id});
-
-  //       console.log(data?.data?.data?.Deals_Allowed_for_Access?.length);
-  //       for(let i=0; i<data?.data?.data?.Deals_Allowed_for_Access?.length; i++){
-  //         const dealid = data?.data?.data?.Deals_Allowed_for_Access[i]?.ID;
-  //         const res = await axios.post("http://localhost:5000/getdealsbyid",{dealid});
-  //         console.log(res);
-  //         setDeals(preData=>[...preData,res?.data?.data]);
-  //         setIssuerName(preData=>[...preData,res?.data?.data?.Issuer_Name]);
-  //         setFinancerName(preData=>[...preData,res?.data?.data?.Financer]);
-  //         //console.log(res);
-  //         setLoader(true);
-  //       }
-
-  //       setLoader(false)
-  //     }catch(error){
-  //       console.log(error);
-  //     }
-
-  //   }
-  //   GetDeals();
-  // },[])
 
   useEffect(() => {
     if (!userInfo) {
