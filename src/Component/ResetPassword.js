@@ -16,7 +16,7 @@ const ResetPassword = () => {
   const ResetPassword = async () => {
     try {
       const { data } = await axios.post(
-        "https://investmentportal.herokuapp.com/verifyForgotMail",
+        "/verifyForgotMail",
         { token }
       );
       //console.log(data?.result);
@@ -32,7 +32,7 @@ const ResetPassword = () => {
           setErrorMsg("Password is too short!");
         } else {
           axios
-            .put("https://investmentportal.herokuapp.com/reset-password", {
+            .put("/reset-password", {
               id,
               password,
             })
@@ -57,7 +57,7 @@ const ResetPassword = () => {
     const CheckValidLink = async () => {
       try {
         const { data } = await axios.post(
-          "https://investmentportal.herokuapp.com/verifyForgotMail",
+          "/verifyForgotMail",
           { token }
         );
         //console.log(data?.result);
@@ -136,7 +136,7 @@ const ResetPassword = () => {
                             onClick={ResetPassword}
                             id="registetionbutton"
                           >
-                            Sign In
+                            Submit
                           </button>
                           {/* <p style={{ color: "red" }}>{alertmsg}</p> */}
 

@@ -6,7 +6,7 @@ import "./registration.css";
 const Registration = () => {
   const login = useNavigate();
   const UserData = useLocation();
-  const [useremail,setUserEmail] = useState();
+  const [useremail,setUserEmail] = useState([]);
   const [firstname, setFirstName] = useState();
   const [lastname, setLastName] = useState();
   const [email, setEmail] = useState();
@@ -18,6 +18,8 @@ const Registration = () => {
   const [alertmsg, setAlertmsg] = useState();
 
   const UserRegistration = () => {
+
+    //console.log(useremail);
     //console.log(firstname, lastname, email, phone, company, dealsaccess, companyrole, jobrole);
     // if(useremail){
     //   for(let k=0; k<useremail.length; k++){
@@ -54,7 +56,7 @@ const Registration = () => {
       //   "-" +
       //   today.getFullYear();
       axios
-        .post("https://investmentportal.herokuapp.com/addrecord", {
+        .post("/addrecord", {
           firstname,
           lastname,
           email,
@@ -68,39 +70,23 @@ const Registration = () => {
           //console.log(data);
           const userid = data.data;
           //console.log(userid);
-          if(data.data.message === "Data Added Successfully"){
+          if(data?.data?.message === "Data Added Successfully"){
             setAlertmsg("Your registration created successfully!");
-          }else if(data.data.error.Email === "This value already exists. Enter a unique value."){
+          }
+          else if(data?.data?.error?.Email === "This value already exists. Enter a unique value."){
             setAlertmsg("Email already taken! Plz try with another valid email.");
           }
           
-          // console.log(data.data.data.ID);
-          // if (data.data.message === "Data Added Successfully") {
-          //   console.log(userid);
-          //   setAlertmsg("Your registration created successfully!");
-          //   axios
-          //     .post("http://localhost:5000/createdeskticket", {
-          //       firstname,
-          //       lastname,
-          //       email,
-          //       userid,
-          //     })
-          //     .then(function (obj) {
-          //       //console.log(obj);
-          //       login("/");
-          //     });
-          // } else {
-          //   setAlertmsg("Server error! plz try again after sometimes !");
-          // }
+          
         });
     }
   };
 
   useEffect(()=>{
     //console.log(UserData.state);
-    for(let i=0; i<UserData?.state?.length; i++){
-      setUserEmail(UserData.state[i].Email);
-    }
+    // for(let i=0; i<UserData?.state?.length; i++){
+    //   setUserEmail(predata=>[...predata,UserData.state[i].Email]);
+    // }
   },[])
 
   return (

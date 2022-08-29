@@ -33,14 +33,14 @@ const Login = () => {
   const userAllData = () => {
     //Get Record - Detail View
     axios
-      .get("https://investmentportal.herokuapp.com/getrecord")
+      .get("/getrecord")
       .then(function (data) {
         console.log("Response Successfully.");
         
         setUserData(data.data.data);
   
       }).catch(function(error){
-        
+        console.log(error);
         if(error.message === "Network Error"){
           setAlertmsg("Please check your internet connection.")
         }
@@ -106,7 +106,7 @@ const Login = () => {
             const email = userdata[i].Email;
             axios
               .post(
-                "https://investmentportal.herokuapp.com/sendForgotPasswordMail",
+                "/sendForgotPasswordMail",
                 {
                   id,
                   email,

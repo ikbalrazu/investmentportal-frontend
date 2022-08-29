@@ -1,12 +1,26 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import DataTable, { createTheme } from "react-data-table-component";
+import { zohoFilenameParserFromDownloadUrl } from "./Helpers/functions";
 
 
 const GlobalData = () => {
   const [documents, setDocuments] = useState([]);
   const [monthreport, setMonthReport] = useState();
 
+  const defaultDesign ={
+    header: {
+      style: {
+        color: "#00adee",
+        paddingLeft: "5px",
+      },
+    },
+    headRow: {
+      style: {
+        fontSize: "15px",
+      },
+    },
+  }
   createTheme(
     "solarized",
     {
@@ -41,16 +55,16 @@ const GlobalData = () => {
       sortable: true,
       selector: (row) => row.DocumentName,
     },
-    {
-      name: "Format Type",
-      sortable: true,
-      selector: (row) => row.FormatType,
-    },
-    {
-      name: "Report Date",
-      sortable: true,
-      selector: (row) => row.ReportDate,
-    },
+    // {
+    //   name: "Format Type",
+    //   sortable: true,
+    //   selector: (row) => row.FormatType,
+    // },
+    // {
+    //   name: "Report Date",
+    //   sortable: true,
+    //   selector: (row) => row.ReportDate,
+    // },
     {
       name: "Publish Date",
       sortable: true,
@@ -61,7 +75,8 @@ const GlobalData = () => {
       cell: (row) => (
         <button
           onClick={handleButtonClick}
-          name={`https://creator.zoho.com.au${row.DownloadLink}`}
+          name={row.DownloadLink}
+          id={row.Id}
           className="btn btn-primary py-1"
         >
           Download
@@ -71,43 +86,29 @@ const GlobalData = () => {
   ];
 
   const handleButtonClick = async(state) => {
-    let link = state.target.name;
+    let docname = zohoFilenameParserFromDownloadUrl(state.target.name);
+    let docid = state.target.id;
 
-    const accesstoken = await axios
+    await axios
       .get(
-        "https://investmentportal.herokuapp.com/accesstoken"
+        `/alldocdownload?id=${docid}&filename=${docname}`
       )
-
-    console.log(accesstoken?.data);
-
-    await axios.get(`${link}`, {
-      headers: {
-        Authorization: `Zoho-oauthtoken ${accesstoken}`,
-        'Access-Control-Allow-Origin' : '*',
-        'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-      },
-    })
-    .then(function (response) {
-    console.log(response);
-    
-    //res.status(200).json(response);
-    }).catch(function(error){
-      console.log(error);
-    })
-
-    // alert(link);
+      .then(function (response) {
+        window.open(response.data);
+      });
   };
 
   const AllGlobalDocuments = async () => {
     let MonthsReport = [];
     await axios
-      .get("https://investmentportal.herokuapp.com/allglobaldocuments")
+      .get("/allglobaldocuments")
       .then(function (data) {
-        //console.log(data);
+        console.log(data);
         for (let i = 0; i < data?.data?.data?.length; i++) {
           const filename = data?.data?.data[i]?.Documents;
           const fileformat = filename?.split(".")[1];
-          MonthsReport.push(data.data.data[i].MonthOfReport);
+          const MonthReport = data?.data?.data[i]?.MonthOfReport?.split(" & ").join(" ");
+          MonthsReport.push(MonthReport);
           setDocuments((olddata) => [
             ...olddata,
             {
@@ -116,7 +117,7 @@ const GlobalData = () => {
               DownloadLink: data.data.data[i].Documents,
               FormatType: fileformat,
               ReportDate: data.data.data[i].CreatedDateTime,
-              MonthReport: data.data.data[i].MonthOfReport,
+              MonthReport: MonthReport,
             },
           ]);
         }

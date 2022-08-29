@@ -48,7 +48,7 @@ export default function Home() {
     let dealid = [];
     try {
       const data = await axios.post(
-        "https://investmentportal.herokuapp.com/getrecordbyid",
+        "/getrecordbyid",
         { id }
       );
 
@@ -64,7 +64,7 @@ export default function Home() {
       }
 
       const data2 = await axios.post(
-        "https://investmentportal.herokuapp.com/dealswithuserid",
+        "/dealswithuserid",
         { dealid }
       );
 
@@ -268,7 +268,7 @@ export default function Home() {
               <ul class="nav nav-pills nav-fill" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
                   <button
-                    class="nav-link active"
+                    className="nav-link active py-2"
                     id="issuerName-tab"
                     data-bs-toggle="tab"
                     data-bs-target="#issuerName"
@@ -282,7 +282,7 @@ export default function Home() {
                 </li>
                 <li class="nav-item" role="presentation">
                   <button
-                    class="nav-link"
+                    className="nav-link py-2"
                     id="dealName-tab"
                     data-bs-toggle="tab"
                     data-bs-target="#dealName"
@@ -296,7 +296,7 @@ export default function Home() {
                 </li>
                 <li class="nav-item" role="presentation">
                   <button
-                    class="nav-link"
+                    className="nav-link py-2"
                     id="financerName-tab"
                     data-bs-toggle="tab"
                     data-bs-target="#financerName"

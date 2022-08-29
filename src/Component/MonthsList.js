@@ -20,7 +20,7 @@ export default function MonthsList() {
     let MonthsReport=[];
     const dealid = location?.state;
     //console.log(dealid);
-    await axios.post("https://investmentportal.herokuapp.com/documentswithdealsid",{dealid}).then(function(data){
+    await axios.post("/documentswithdealsid",{dealid}).then(function(data){
       //console.log(data);
       // setDealName(data?.data?.data?.Deals?.display_value)
       for(let i=0; i<data?.data?.data?.length; i++){
@@ -28,8 +28,9 @@ export default function MonthsList() {
           //console.log(data?.data?.data[i]?.DocumentName);
           const filename = data?.data?.data[i]?.Documents;
           const fileformat = filename?.split(".")[1];
-          MonthsReport.push(data.data.data[i].MonthOfReport);
-          setDocuments(olddata=>[...olddata,{"Id":data.data.data[i].ID,"DocumentName":data.data.data[i].DocumentName,"DownloadLink":data.data.data[i].Documents,"FormatType":fileformat,"ReportDate":data.data.data[i].CreatedDateTime,"MonthReport":data.data.data[i].MonthOfReport}]);
+          const MonthReport = data?.data?.data[i]?.MonthOfReport?.split(" & ").join(" ");
+          MonthsReport.push(MonthReport);
+          setDocuments(olddata=>[...olddata,{"Id":data.data.data[i].ID,"DocumentName":data.data.data[i].DocumentName,"DownloadLink":data.data.data[i].Documents,"FormatType":fileformat,"ReportDate":data.data.data[i].CreatedDateTime,"MonthReport":MonthReport}]);
         }
       }
       return MonthsReport;

@@ -5,6 +5,7 @@ import TopHeader from "../Sheard/TopHeader";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import DataTable, { createTheme } from "react-data-table-component";
+import { zohoFilenameParserFromDownloadUrl } from "./Helpers/functions";
 
 const Details = () => {
   createTheme(
@@ -60,21 +61,33 @@ const Details = () => {
     {
       name: "Download",
       cell: (row) => (
-        <a
-          href={`https://creator.zoho.com.au${row.DownloadLink}`}
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          onClick={handleButtonClick}
+          name={row.DownloadLink}
+          id={row.Id}
+          className="btn btn-primary py-1"
         >
           Download
-        </a>
+        </button>
       ),
     },
   ];
-  const handleButtonClick = (state) => {
-    // let link = state.target.name;
-    // IssuerListPage("/issuerlist", {
-    //   state: { link },
-    // });
+
+
+  const handleButtonClick = async(state) => {
+    //console.log(state.target.name);
+    let docname = zohoFilenameParserFromDownloadUrl(state.target.name);
+    //console.log(docname);
+    let docid = state.target.id;
+
+    await axios
+      .get(
+        `/alldocdownload?id=${docid}&filename=${docname}`
+      )
+      .then(function (response) {
+        //console.log(response);
+        window.open(response.data);
+      });
   };
 
 
@@ -106,25 +119,11 @@ const Details = () => {
 
 
       <div className="container mt-5 mb-5">
-        <nav aria-label="breadcrumb">
-          <ol
-            class="breadcrumb"
-            style={{
-              color: "white",
-              fontSize: 25,
-            }}
-          >
-            <li class="breadcrumb-item">Home</li>
-            <li class="breadcrumb-item">Library</li>
-            <li class="breadcrumb-item" aria-current="page">
-              Data
-            </li>
-          </ol>
-        </nav>
+        
 
         <div className=" mb-3 mt-5">
           <DataTable
-            title="Global Documents"
+            title="Documents"
             columns={columns}
             data={documentslist}
             theme="solarized"

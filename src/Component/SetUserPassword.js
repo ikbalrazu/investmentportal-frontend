@@ -14,7 +14,7 @@ const SetUserPassword = () => {
 
     const PasswordHandler = async() => {
         try{
-            const {data} = await axios.post("https://investmentportal.herokuapp.com/verifyForgotMail",{token})
+            const {data} = await axios.post("/verifyForgotMail",{token})
             console.log(data?.result);
             if(data?.result === "Link expired"){
               setExpire(true);
@@ -27,7 +27,7 @@ const SetUserPassword = () => {
               }else if (password.length < 8) {
                 setErrorMsg("Password is too short!");
               }else{
-                  axios.put("https://investmentportal.herokuapp.com/reset-password",{id,password}).then(function(data){
+                  axios.put("/reset-password",{id,password}).then(function(data){
                   //console.log(data);
                   if(data.data.message === "Data Updated Successfully"){
                     ConfirmResetPasswordPage("/confirmsetuserpassword");
@@ -48,7 +48,7 @@ const SetUserPassword = () => {
         console.log(token);
         const CheckValidLink = async()=>{
             try{
-            const {data} = await axios.post("https://investmentportal.herokuapp.com/verifyForgotMail",{token})
+            const {data} = await axios.post("/verifyForgotMail",{token})
             console.log(data?.result);
             if(data?.result === "Link expired"){
                 setExpire(true);

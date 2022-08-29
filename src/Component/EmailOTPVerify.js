@@ -69,7 +69,7 @@ const EmailOTPVerify = () => {
     const otpPin = Math.floor(1000 + Math.random() * 9000);
     setRandomOtp(otpPin);
     axios
-      .post("https://investmentportal.herokuapp.com/sendOTPVerificationEmail", {
+      .post("/sendOTPVerificationEmail", {
         email,
         otpPin,
       })
@@ -85,7 +85,7 @@ const EmailOTPVerify = () => {
     const otpPin = Math.floor(1000 + Math.random() * 9000);
     setRandomOtp(otpPin);
     axios
-      .post("https://investmentportal.herokuapp.com/sendOTPVerificationEmail", {
+      .post("/sendOTPVerificationEmail", {
         email,
         otpPin,
       })

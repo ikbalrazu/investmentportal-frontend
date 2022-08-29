@@ -5,6 +5,10 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import {AppProvider} from "./context/Context";
+import axios from "axios";
+
+//axios.defaults.baseURL = "http://localhost:5000/w3s/v1";
+axios.defaults.baseURL = "https://investmentportal.herokuapp.com/w3s/v1";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
